@@ -20,7 +20,7 @@ export default function Header() {
           </Button>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
             <Link href="/asistente-medico">
-              Asistente GuaGua
+              Firu AI
               <Stethoscope className="ml-2 h-4 w-4" />
             </Link>
           </Button>
