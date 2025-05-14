@@ -52,7 +52,7 @@ export default function MedicalAssistantPage() {
           if (error && error.message) {
             logMessage += ` Message: ${error.message}`;
           }
-          console.error(logMessage, error); 
+          console.error(logMessage); 
           setLocationStatus(newStatus);
         },
         { timeout: 10000 } 
