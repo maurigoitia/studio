@@ -68,17 +68,8 @@ export default function HomePage() {
       <section id="tutores" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para tutores</h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="flex justify-center items-center min-h-[300px] bg-muted/30 rounded-xl shadow-inner p-8">
-              <Image
-                src="https://placehold.co/600x400.png"
-                alt="Beneficios para tutores de mascotas"
-                width={600}
-                height={400}
-                className="rounded-lg object-cover"
-                data-ai-hint="pet owner"
-              />
-            </div>
+          <div className="grid md:grid-cols-1 gap-12 items-center"> {/* Changed to md:grid-cols-1 */}
+            {/* Removed image container div */}
             <div className="space-y-8">
               <div className="flex items-start">
                 <Smartphone className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
@@ -110,8 +101,8 @@ export default function HomePage() {
       <section id="veterinarios" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para veterinarias</h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8 md:order-2">
+          <div className="grid md:grid-cols-1 gap-12 items-center"> {/* Changed to md:grid-cols-1 */}
+            <div className="space-y-8"> {/* Removed md:order-2 */}
               <div className="flex items-start">
                 <BarChartBig className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
                 <div>
@@ -134,16 +125,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="md:order-1 flex justify-center items-center min-h-[300px] bg-muted/30 rounded-xl shadow-inner p-8">
-              <Image
-                src="https://placehold.co/600x400.png"
-                alt="Beneficios para veterinarias"
-                width={600}
-                height={400}
-                className="rounded-lg object-cover"
-                data-ai-hint="veterinary clinic"
-              />
-            </div>
+            {/* Removed image container div */}
           </div>
         </div>
       </section>
@@ -201,16 +183,7 @@ export default function HomePage() {
             <p className="mt-4 text-md font-semibold text-foreground">
               Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
             </p>
-            <div className="flex justify-center items-center min-h-[300px] bg-muted/30 rounded-xl shadow-inner p-8 mt-8 mx-auto max-w-xl">
-              <Image
-                src="https://placehold.co/500x300.png"
-                alt="Equipo PetSync o concepto de colaboración"
-                width={500}
-                height={300}
-                className="rounded-lg object-cover"
-                data-ai-hint="team collaboration"
-              />
-            </div>
+            {/* Removed image container div */}
           </div>
         </div>
       </section>
