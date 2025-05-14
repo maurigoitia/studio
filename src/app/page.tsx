@@ -17,19 +17,19 @@ const faqData = [
   },
   {
     question: "¿PetSync tiene costo para los tutores de mascotas?",
-    answer: "Estamos definiendo los detalles finales del plan de precios. Nuestro objetivo es ofrecer un gran valor. La información sobre costos estará disponible cerca del lanzamiento. ¡Regístrate en la waitlist para ser el primero en saberlo!"
+    answer: "La versión básica de PetSync para tutores será gratuita. Ofreceremos funciones premium opcionales en el futuro. ¡Regístrate en la waitlist para conocer los detalles del lanzamiento!"
   },
   {
     question: "¿Para quiénes está pensado PetSync?",
-    answer: "PetSync está diseñado tanto para tutores de mascotas que buscan una forma más fácil y organizada de gestionar la salud de sus compañeros, como para veterinarios y clínicas que desean optimizar su práctica y mejorar la comunicación con sus clientes."
+    answer: "PetSync está diseñado principalmente para tutores de mascotas urbanos (25-40 años) y veterinarias en Buenos Aires que buscan optimizar la gestión de la salud de las mascotas y mejorar la conexión entre ellos."
   },
   {
-    question: "¿Soy veterinario independiente, ¿PetSync me sirve?",
-    answer: "¡Absolutamente! PetSync ofrece herramientas valiosas tanto para veterinarios independientes como para clínicas más grandes, ayudando a gestionar la agenda, acceder a historiales (con permiso del tutor) y optimizar la comunicación."
+    question: "Soy veterinario independiente, ¿PetSync me sirve?",
+    answer: "¡Absolutamente! PetSync está diseñado para ser útil tanto para veterinarios independientes como para clínicas, ofreciendo herramientas para optimizar la agenda, la comunicación y el acceso a la información del paciente (con permiso del tutor)."
   },
   {
-    question: "¿Soy una clínica grande, ¿cómo se integra PetSync con lo que ya tengo?",
-    answer: "PetSync está diseñado para ser flexible. Estamos trabajando en opciones de integración con software de gestión veterinaria. Contáctanos o regístrate en la waitlist para discutir tus necesidades específicas."
+    question: "Soy una clínica grande, ¿cómo se integra PetSync con lo que ya tengo?",
+    answer: "PetSync está diseñado con una interfaz amigable y buscamos facilitar su adopción. Evaluaremos opciones de integración con sistemas de gestión veterinaria existentes en el futuro. ¡Contáctanos para conversar sobre tus necesidades!"
   },
   {
     question: "¿Cómo puedo contactar a PetSync si tengo más preguntas?",
@@ -63,7 +63,7 @@ export default function HomePage() {
       {/* Benefits for Tutors Section */}
       <section id="tutores" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para Tutores</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para tutores</h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <Image 
@@ -79,8 +79,8 @@ export default function HomePage() {
               <div className="flex items-start">
                 <Smartphone className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">Tu Mascota, Siempre Contigo</h3>
-                  <p className="text-muted-foreground">Accedé y gestioná el historial médico completo de tu mascota desde cualquier lugar. Escaneá recetas y documentos para tener toda la información centralizada y al alcance de tu mano.</p>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Información de tu Mascota, Siempre Accesible</h3>
+                  <p className="text-muted-foreground">Accedé y gestioná el historial médico completo de tu mascota desde cualquier lugar. Escaneá recetas y documentos para tener toda la información centralizada y al alcance de tu mano, especialmente útil cuando vas al veterinario.</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -105,7 +105,7 @@ export default function HomePage() {
       {/* Benefits for Veterinarians Section */}
       <section id="veterinarios" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para Veterinarias</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para veterinarias</h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-8 md:order-2">
               <div className="flex items-start">
@@ -159,7 +159,7 @@ export default function HomePage() {
               <CardContent className="space-y-3 text-muted-foreground">
                 <p>1. Descargá la app PetSync.</p>
                 <p>2. Creá un perfil detallado para tu mascota.</p>
-                <p>3. Conectate fácilmente con tu veterinaria de confianza.</p>
+                <p>3. Conectate आसानी से con tu veterinaria de confianza.</p>
                 <p>4. Gestioná citas y recibí recordatorios importantes.</p>
                 <p className="font-semibold text-foreground">¡Así de fácil!</p>
               </CardContent>
@@ -190,6 +190,9 @@ export default function HomePage() {
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-lg text-muted-foreground">
               En PetSync, desarrollamos una plataforma móvil pensada para tutores y clínicas veterinarias, convencidos de que el cuidado de las mascotas puede ser más simple y eficiente para todos. Organizamos turnos, centralizamos historiales clínicos y facilitamos el acceso a productos esenciales, todo desde tu celular. Conectamos ambos lados del mostrador, una patita a la vez.
+            </p>
+            <p className="mt-4 text-md font-semibold text-foreground">
+              Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
             </p>
             <Image 
                 src="https://placehold.co/700x400.png" 
@@ -240,5 +243,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-    
