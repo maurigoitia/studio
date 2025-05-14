@@ -2,8 +2,11 @@
 
 import { medicalHistoryAssistant } from "@/ai/flows/medical-history-assistant";
 import type { MedicalHistoryAssistantInput, MedicalHistoryAssistantOutput } from "@/ai/flows/medical-history-assistant";
-import { WaitlistFormSchema, MedicalAssistantFormSchema } from "@/lib/schemas";
-import type { WaitlistFormValues, MedicalAssistantFormValues } from "@/lib/schemas";
+import { WaitlistFormSchema, MedicalAssistantFormSchema, GenericQueryFormSchema } from "@/lib/schemas";
+import type { WaitlistFormValues, MedicalAssistantFormValues, GenericQueryFormValues } from "@/lib/schemas";
+import { genericQuery } from "@/ai/flows/generic-query-flow";
+import type { GenericQueryInput, GenericQueryOutput } from "@/ai/flows/generic-query-flow";
+
 
 interface WaitlistResponse {
   success: boolean;
@@ -59,5 +62,33 @@ export async function getMedicalAdviceAction(data: MedicalAssistantFormValues): 
   } catch (error) {
     console.error("Error getting medical advice:", error);
     return { success: false, message: "Hubo un error al procesar tu solicitud. Inténtalo de nuevo." };
+  }
+}
+
+interface GenericQueryResponse {
+  success: boolean;
+  message?: string;
+  data?: GenericQueryOutput;
+}
+
+export async function askGenericQuestionAction(data: GenericQueryFormValues): Promise<GenericQueryResponse> {
+  const validatedFields = GenericQueryFormSchema.safeParse(data);
+
+  if (!validatedFields.success) {
+    return {
+      success: false,
+      message: "Datos inválidos. Por favor, revisa el formulario.",
+    };
+  }
+  
+  const { question } = validatedFields.data;
+
+  try {
+    const input: GenericQueryInput = { question };
+    const result = await genericQuery(input);
+    return { success: true, data: result };
+  } catch (error) {
+    console.error("Error asking generic question:", error);
+    return { success: false, message: "Hubo un error al procesar tu pregunta. Inténtalo de nuevo." };
   }
 }

@@ -13,3 +13,9 @@ export const MedicalAssistantFormSchema = z.object({
 });
 
 export type MedicalAssistantFormValues = z.infer<typeof MedicalAssistantFormSchema>;
+
+export const GenericQueryFormSchema = z.object({
+  question: z.string().min(5, { message: "La pregunta debe tener al menos 5 caracteres." }).max(1000, { message: "La pregunta no puede exceder los 1000 caracteres." }),
+});
+
+export type GenericQueryFormValues = z.infer<typeof GenericQueryFormSchema>;
