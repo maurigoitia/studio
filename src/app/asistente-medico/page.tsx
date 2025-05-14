@@ -3,11 +3,11 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Lightbulb, TriangleAlert, Info, Loader2 } from "lucide-react";
+import { Lightbulb, TriangleAlert, Info, Loader2, TimerOff } from "lucide-react"; // Added TimerOff
 import MedicalAssistantClient from "@/components/asistente-medico-client";
 import { useState, useEffect } from "react";
 
-export type LocationStatus = 'idle' | 'requesting' | 'granted' | 'denied' | 'unsupported';
+export type LocationStatus = 'idle' | 'requesting' | 'granted' | 'denied' | 'unsupported' | 'timeout'; // Added 'timeout'
 
 export default function MedicalAssistantPage() {
   const [locationStatus, setLocationStatus] = useState<LocationStatus>('idle');
@@ -25,30 +25,35 @@ export default function MedicalAssistantPage() {
           setLocationStatus('granted');
         },
         (error) => {
-          let errorMessage = "Error getting location.";
-          if (error && error.message) {
-            errorMessage += ` Message: ${error.message}`;
-          }
+          let newStatus: LocationStatus = 'denied';
+          let logMessage = "Error getting location.";
+
           if (error && error.code) {
-            errorMessage += ` Code: ${error.code}`;
-            // Optionally, handle specific error codes
-            // switch (error.code) {
-            //   case error.PERMISSION_DENIED:
-            //     errorMessage += " (User denied the request for Geolocation.)";
-            //     break;
-            //   case error.POSITION_UNAVAILABLE:
-            //     errorMessage += " (Location information is unavailable.)";
-            //     break;
-            //   case error.TIMEOUT:
-            //     errorMessage += " (The request to get user location timed out.)";
-            //     break;
-            //   default:
-            //     errorMessage += " (An unknown error occurred.)";
-            //     break;
-            // }
+            logMessage += ` Code: ${error.code}`;
+            switch (error.code) {
+              case error.PERMISSION_DENIED: // 1
+                logMessage += " (User denied the request for Geolocation.)";
+                newStatus = 'denied';
+                break;
+              case error.POSITION_UNAVAILABLE: // 2
+                logMessage += " (Location information is unavailable.)";
+                newStatus = 'denied'; // Or a more specific status if needed later
+                break;
+              case error.TIMEOUT: // 3
+                logMessage += " (The request to get user location timed out.)";
+                newStatus = 'timeout';
+                break;
+              default:
+                logMessage += ` (Unknown error code: ${error.code})`;
+                newStatus = 'denied';
+                break;
+            }
           }
-          console.error(errorMessage, error); // Keep original error object for full details if needed
-          setLocationStatus('denied');
+          if (error && error.message) {
+            logMessage += ` Message: ${error.message}`;
+          }
+          console.error(logMessage, error); // Log more detailed message and original error
+          setLocationStatus(newStatus);
         },
         { timeout: 10000 } // Optional: add a timeout
       );
@@ -95,6 +100,15 @@ export default function MedicalAssistantPage() {
                 <AlertTitle>Información de Ubicación</AlertTitle>
                 <AlertDescription>
                   Solicitando acceso a tu ubicación para sugerir veterinarios cercanos...
+                </AlertDescription>
+              </Alert>
+            )}
+            {locationStatus === 'timeout' && (
+              <Alert variant="destructive" className="mb-4">
+                <TimerOff className="h-5 w-5" />
+                <AlertTitle>Tiempo de Espera Agotado para Ubicación</AlertTitle>
+                <AlertDescription>
+                  No pudimos obtener tu ubicación a tiempo. Por favor, verifica tu conexión de red o GPS e inténtalo de nuevo si deseas recomendaciones de veterinarios.
                 </AlertDescription>
               </Alert>
             )}
