@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Lightbulb } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Lightbulb, TriangleAlert } from "lucide-react";
 import MedicalAssistantClient from "@/components/asistente-medico-client";
 
 export default function MedicalAssistantPage() {
@@ -14,11 +15,16 @@ export default function MedicalAssistantPage() {
             <CardTitle className="text-3xl md:text-4xl font-bold">Asistente de Historial Médico IA</CardTitle>
             <CardDescription className="text-lg mt-2">
               Haz preguntas sobre el historial médico de tu mascota y obtén respuestas basadas en la información proporcionada.
-              <br />
-              <strong className="text-destructive-foreground bg-destructive/80 px-1 rounded">Importante:</strong> Esta herramienta es solo para fines informativos y no reemplaza el consejo veterinario profesional.
             </CardDescription>
           </CardHeader>
           <CardContent>
+            <Alert variant="destructive" className="mb-6 shadow-md">
+              <TriangleAlert className="h-5 w-5" />
+              <AlertTitle className="font-semibold">Aviso Importante</AlertTitle>
+              <AlertDescription>
+                Esta herramienta de IA es solo para fines informativos y de orientación básica. <strong>No reemplaza el diagnóstico ni el consejo de un veterinario profesional.</strong> Para cualquier problema de salud de tu mascota, consulta siempre a tu veterinario de confianza.
+              </AlertDescription>
+            </Alert>
             <MedicalAssistantClient />
           </CardContent>
         </Card>

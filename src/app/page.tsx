@@ -51,7 +51,7 @@ export default function HomePage() {
             PetSync: Conectando el Bienestar Animal
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Simplificamos la gestión de la salud de tu mascota, uniendo a tutores y veterinarios en una plataforma inteligente y amigable.
+            Simplificamos la gestión de la salud de tu mascota. Realiza consultas básicas sobre el bienestar de tu compañero con nuestra IA y conecta con veterinarios, todo en una plataforma inteligente y amigable.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
