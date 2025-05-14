@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Lightbulb, TriangleAlert, MapPin } from "lucide-react";
+import { Lightbulb, TriangleAlert } from "lucide-react";
 import MedicalAssistantClient from "@/components/asistente-medico-client";
 
 export default function MedicalAssistantPage() {
@@ -12,7 +12,7 @@ export default function MedicalAssistantPage() {
             <div className="flex justify-center mb-4">
               <Lightbulb className="h-16 w-16 text-primary" />
             </div>
-            <CardTitle className="text-3xl md:text-4xl font-bold">Guía IA de PetIntel</CardTitle>
+            <CardTitle className="text-3xl md:text-4xl font-bold">Guía IA PetIntel</CardTitle>
             <CardDescription className="text-lg mt-2">
               Obtén sugerencias e información general basada en IA sobre el historial médico de tu mascota.
               Recuerda que esta es una guía y <strong>no reemplaza</strong> la consulta veterinaria profesional.
@@ -36,25 +36,6 @@ export default function MedicalAssistantPage() {
               </AlertDescription>
             </Alert>
             <MedicalAssistantClient />
-
-            <Card className="mt-10 shadow-lg border-dashed border-primary/50">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl text-primary">
-                  <MapPin className="mr-2 h-6 w-6" />
-                  Próximamente: Veterinarios Cerca de Ti
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Estamos trabajando para ayudarte a encontrar centros veterinarios cercanos directamente desde PetSync. 
-                  ¡Pronto podrás visualizar opciones en un mapa interactivo y obtener indicaciones!
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Esta función requerirá acceso a tu ubicación para ofrecerte los resultados más relevantes.
-                </p>
-              </CardContent>
-            </Card>
-
           </CardContent>
         </Card>
       </div>
