@@ -16,7 +16,7 @@ const GoogleMapDisplay: React.FC<GoogleMapDisplayProps> = ({ latitude, longitude
   useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     if (!apiKey) {
-      console.error("Google Maps API key is missing. Please set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in your .env file.");
+      // console.error("Google Maps API key is missing. Please set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in your .env file."); // Removed this line
       return;
     }
 
