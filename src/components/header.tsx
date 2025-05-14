@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
-import { Lightbulb } from 'lucide-react'; // Changed from Stethoscope
+import { Lightbulb } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -20,7 +20,7 @@ export default function Header() {
           </Button>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
             <Link href="/asistente-medico">
-              Firu AI
+              Probar IA (Demo)
               <Lightbulb className="ml-2 h-4 w-4" />
             </Link>
           </Button>

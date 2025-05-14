@@ -15,41 +15,40 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { MedicalAssistantFormSchema, type MedicalAssistantFormValues } from "@/lib/schemas";
-import { getMedicalAdviceAction } from "@/app/actions";
+// Changed schema import to GenericQueryFormSchema and its type
+import { GenericQueryFormSchema, type GenericQueryFormValues } from "@/lib/schemas"; 
+// Changed action import to askGenericQuestionAction
+import { askGenericQuestionAction } from "@/app/actions"; 
 import { useState, useTransition } from "react";
-import { Loader2, Sparkles, MapPin, Lightbulb } from "lucide-react";
+import { Loader2, Sparkles, Lightbulb } from "lucide-react"; // Removed MapPin
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { LocationStatus } from "@/app/asistente-medico/page";
-import GoogleMapDisplay from "./google-map-display"; // Import the map component
+// Removed LocationStatus type import and GoogleMapDisplay import
 
-interface MedicalAssistantClientProps {
-  locationStatus: LocationStatus;
-  location: { latitude: number; longitude: number } | null; // Add location prop
-}
+// Removed MedicalAssistantClientProps interface as location props are no longer needed
 
-export default function MedicalAssistantClient({ locationStatus, location }: MedicalAssistantClientProps) {
+export default function MedicalAssistantClient() { // Removed props
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   const [aiResponse, setAiResponse] = useState<string | null>(null);
 
-  const form = useForm<MedicalAssistantFormValues>({
-    resolver: zodResolver(MedicalAssistantFormSchema),
+  // Updated form to use GenericQueryFormValues and GenericQueryFormSchema
+  const form = useForm<GenericQueryFormValues>({
+    resolver: zodResolver(GenericQueryFormSchema),
     defaultValues: {
-      medicalHistory: "",
-      question: "",
+      question: "", // Only question field now
     },
   });
 
-  async function onSubmit(data: MedicalAssistantFormValues) {
+  // Updated onSubmit to use GenericQueryFormValues and askGenericQuestionAction
+  async function onSubmit(data: GenericQueryFormValues) {
     setAiResponse(null); 
     startTransition(async () => {
-      const response = await getMedicalAdviceAction(data);
+      const response = await askGenericQuestionAction(data); // Call generic action
       if (response.success && response.data) {
         setAiResponse(response.data.answer);
         toast({
-          title: "Respuesta de Firu AI",
-          description: "Firu AI ha generado información basada en tu consulta.",
+          title: "Respuesta del Asistente IA",
+          description: "El Asistente IA ha generado información basada en tu consulta.",
         });
       } else {
         toast({
@@ -65,39 +64,23 @@ export default function MedicalAssistantClient({ locationStatus, location }: Med
     <div className="space-y-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="medicalHistory"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg">Historial Médico de tu Mascota</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Describe aquí el historial médico relevante de tu mascota: diagnósticos previos, tratamientos, medicaciones, alergias, etc."
-                    className="min-h-[150px] bg-background"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Proporciona la mayor cantidad de detalles posible para una mejor respuesta informativa.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {/* Removed medicalHistory FormField */}
           <FormField
             control={form.control}
             name="question"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Tu Pregunta para Firu AI</FormLabel>
+                <FormLabel className="text-lg">Tu Pregunta para el Asistente IA</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Escribe aquí tu pregunta específica sobre el historial médico."
+                    placeholder="Escribe aquí tu pregunta general. Por ejemplo: '¿Cómo funciona la inteligencia artificial?' o 'Ideas para nombres de perros'."
                     className="min-h-[100px] bg-background"
                     {...field}
                   />
                 </FormControl>
+                 <FormDescription>
+                  Esta es una IA de propósito general para demostración.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -108,7 +91,7 @@ export default function MedicalAssistantClient({ locationStatus, location }: Med
             ) : (
               <Lightbulb className="mr-2 h-5 w-5" />
             )}
-            Consultar a Firu AI
+            Consultar al Asistente IA
           </Button>
         </form>
       </Form>
@@ -116,7 +99,7 @@ export default function MedicalAssistantClient({ locationStatus, location }: Med
       {isPending && (
         <div className="text-center py-6">
           <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
-          <p className="mt-2 text-muted-foreground">Firu AI está pensando...</p>
+          <p className="mt-2 text-muted-foreground">El Asistente IA está pensando...</p>
         </div>
       )}
 
@@ -124,8 +107,8 @@ export default function MedicalAssistantClient({ locationStatus, location }: Med
         <Card className="mt-8 bg-secondary/30 border-primary/50">
           <CardHeader>
             <CardTitle className="flex items-center text-xl text-primary">
-              <Lightbulb className="mr-2 h-6 w-6" />
-              Respuesta de Firu AI
+              <Sparkles className="mr-2 h-6 w-6" /> {/* Changed icon to Sparkles */}
+              Respuesta del Asistente IA
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -134,36 +117,7 @@ export default function MedicalAssistantClient({ locationStatus, location }: Med
         </Card>
       )}
 
-      {/* Display map if location is granted and AI response is available */}
-      {aiResponse && !isPending && locationStatus === 'granted' && location && (
-        <>
-          <GoogleMapDisplay latitude={location.latitude} longitude={location.longitude} />
-          
-          <Card className="mt-4 bg-accent/10 border-accent/50"> {/* Reduced top margin for this card */}
-            <CardHeader>
-              <CardTitle className="flex items-center text-xl text-accent-foreground">
-                <MapPin className="mr-2 h-6 w-6 text-accent" />
-                <span className="text-primary">Posibles Veterinarios Cercanos (Ejemplo Ilustrativo)</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-3">
-                Arriba puedes ver tu ubicación actual en el mapa. En el futuro, PetSync podrá usar esta información para ayudarte a encontrar veterinarios cercanos.
-                Por ahora, aquí hay algunos ejemplos de centros veterinarios que podrías considerar (estos son solo ilustrativos). 
-                Recuerda siempre verificar sus servicios, horarios y contactarlos directamente.
-              </p>
-              <ul className="list-disc pl-5 space-y-1 text-foreground">
-                <li>Clínica Veterinaria "Amigos Peludos" - Calle Falsa 123, Palermo</li>
-                <li>Hospital Veterinario "Salud Animal Integral" - Av. Corrientes 4500, Almagro</li>
-                <li>Consultorio Dr. Gato Feliz - Gurruchaga 789, Villa Crespo</li>
-              </ul>
-              <p className="mt-4 text-sm text-muted-foreground font-semibold">
-                Importante: La lista de veterinarios es un ejemplo. La integración real con listados de veterinarios y búsqueda avanzada estará disponible próximamente en PetSync.
-              </p>
-            </CardContent>
-          </Card>
-        </>
-      )}
+      {/* Removed GoogleMapDisplay and the veterinarian examples card */}
     </div>
   );
 }
