@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { PawPrint, Smartphone, BrainCircuit, CalendarClock, BarChartBig, Users, Network, HelpCircle, ListChecks, UsersRound, Mail } from 'lucide-react';
+import { PawPrint, Smartphone, BrainCircuit, CalendarClock, BarChartBig, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -87,7 +87,7 @@ export default function HomePage() {
                 <BrainCircuit className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-2">Inteligencia Artificial a tu Servicio <span className="text-sm text-primary">(Próximamente)</span></h3>
-                  <p className="text-muted-foreground">Consultá dudas sobre tratamientos pasados o próximos cuidados. Preguntale a PetSync: "¿Cuándo fue la última vacuna de Thor?" o "¿Qué medicación le dimos para su otitis?".</p>
+                  <p className="text-muted-foreground">Consultá dudas sobre tratamientos pasados o próximos cuidados. Preguntale a PetSync: "¿Cuándo fue la última vacuna de Thor?" o "¿Qué medicación le dimos para su otitis?". Recuerda que esto es una guía y siempre debes consultar a tu veterinario.</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -157,9 +157,12 @@ export default function HomePage() {
                 <CardTitle className="text-2xl">Para Tutores: El Cuidado de tu Mascota, Simplificado</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-muted-foreground">
-                <p>1. Descargá la app PetSync.</p>
+                <div className="flex items-center">
+                    <DownloadCloud className="h-5 w-5 mr-2 text-primary shrink-0"/>
+                    <p>1. Descargá la app PetSync, disponible para iOS y Android.</p>
+                </div>
                 <p>2. Creá un perfil detallado para tu mascota.</p>
-                <p>3. Conectate आसानी से con tu veterinaria de confianza.</p>
+                <p>3. Conectate fácilmente con tu veterinaria de confianza.</p>
                 <p>4. Gestioná citas y recibí recordatorios importantes.</p>
                 <p className="font-semibold text-foreground">¡Así de fácil!</p>
               </CardContent>
@@ -169,7 +172,7 @@ export default function HomePage() {
                 <CardTitle className="text-2xl">Para Veterinarias: Potenciá tu Clínica, Conectá con Pacientes</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-muted-foreground">
-                <p>1. Registrate en PetSync.</p>
+                <p>1. Registrate en la plataforma web de PetSync.</p>
                 <p>2. Creá un perfil completo para tu clínica.</p>
                 <p>3. Invitá a tus pacientes a unirse a la comunidad PetSync.</p>
                 <p>4. Gestioná turnos y enviá comunicados importantes a tus clientes.</p>
