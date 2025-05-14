@@ -1,5 +1,6 @@
 
 import Link from 'next/link';
+import { Instagram, Linkedin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -18,20 +19,14 @@ export default function Footer() {
           </Link>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">Síguenos:</p>
-        {/* Placeholder for social media icons - can be added later */}
-        {/* Example:
-        <div className="flex justify-center space-x-3 mt-2">
-          <Link href="#" passHref>
-            <Facebook className="h-5 w-5 text-muted-foreground hover:text-primary" />
-          </Link>
-          <Link href="#" passHref>
+        <div className="flex justify-center space-x-4 mt-2">
+          <Link href="#" passHref aria-label="Instagram">
             <Instagram className="h-5 w-5 text-muted-foreground hover:text-primary" />
           </Link>
-          <Link href="#" passHref>
-            <Twitter className="h-5 w-5 text-muted-foreground hover:text-primary" />
+          <Link href="#" passHref aria-label="LinkedIn">
+            <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary" />
           </Link>
         </div>
-        */}
       </div>
     </footer>
   );
