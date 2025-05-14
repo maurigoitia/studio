@@ -1,8 +1,7 @@
 
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PawPrint, Smartphone, BrainCircuit, CalendarClock, BarChartBig, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
@@ -48,7 +47,7 @@ export default function HomePage() {
       <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 to-background">
         <div className="container mx-auto text-center px-4">
           <div className="flex justify-center mb-6">
-            <PawPrint className="h-16 w-16 text-primary" /> {/* Icon size adjusted */}
+            <PawPrint className="h-12 w-12 text-primary" /> {/* Icon size adjusted */}
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
             PetSync: El cuidado de tu mascota, simple y conectado.
@@ -69,15 +68,9 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para tutores</h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <Image 
-                src="https://placehold.co/600x400.png" 
-                alt="Tutor usando PetSync en su celular con su mascota" 
-                width={600} 
-                height={400} 
-                className="rounded-xl shadow-2xl object-cover"
-                data-ai-hint="owner pet phone" 
-              />
+            <div className="flex justify-center items-center min-h-[300px] bg-muted/30 rounded-xl shadow-inner p-8">
+              {/* Placeholder for image - You can add an illustration or a relevant icon here later */}
+              <p className="text-muted-foreground text-center">Visual para beneficios de tutores</p>
             </div>
             <div className="space-y-8">
               <div className="flex items-start">
@@ -134,15 +127,9 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="md:order-1 flex justify-center">
-              <Image 
-                src="https://placehold.co/600x400.png" 
-                alt="Veterinaria usando PetSync en una tablet en su clínica" 
-                width={600} 
-                height={400} 
-                className="rounded-xl shadow-2xl object-cover"
-                data-ai-hint="veterinarian tablet clinic"
-              />
+            <div className="md:order-1 flex justify-center items-center min-h-[300px] bg-muted/30 rounded-xl shadow-inner p-8">
+              {/* Placeholder for image - You can add an illustration or a relevant icon here later */}
+               <p className="text-muted-foreground text-center">Visual para beneficios de veterinarias</p>
             </div>
           </div>
         </div>
@@ -201,14 +188,10 @@ export default function HomePage() {
             <p className="mt-4 text-md font-semibold text-foreground">
               Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
             </p>
-            <Image 
-                src="https://placehold.co/700x400.png" 
-                alt="Equipo de PetSync trabajando" 
-                width={700} 
-                height={400} 
-                className="rounded-xl shadow-xl object-cover mt-8 mx-auto"
-                data-ai-hint="team diversity collaboration"
-              />
+            <div className="flex justify-center items-center min-h-[300px] bg-muted/30 rounded-xl shadow-inner p-8 mt-8 mx-auto max-w-xl">
+              {/* Placeholder for image - You can add an illustration or a relevant icon here later */}
+              <p className="text-muted-foreground text-center">Visual para sección Quiénes Somos</p>
+            </div>
           </div>
         </div>
       </section>
