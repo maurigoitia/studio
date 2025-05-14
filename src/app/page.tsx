@@ -1,4 +1,5 @@
 
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -47,7 +48,7 @@ export default function HomePage() {
       <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 to-background">
         <div className="container mx-auto text-center px-4">
           <div className="flex justify-center mb-6">
-            <PawPrint className="h-12 w-12 text-primary" /> {/* Icon size adjusted */}
+            <PawPrint className="h-10 w-10 text-primary" /> {/* Icon size adjusted */}
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
             PetSync: El cuidado de tu mascota, simple y conectado.
@@ -69,8 +70,14 @@ export default function HomePage() {
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para tutores</h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="flex justify-center items-center min-h-[300px] bg-muted/30 rounded-xl shadow-inner p-8">
-              {/* Placeholder for image - You can add an illustration or a relevant icon here later */}
-              <p className="text-muted-foreground text-center">Visual para beneficios de tutores</p>
+              <Image
+                src="https://placehold.co/600x400.png"
+                alt="Beneficios para tutores de mascotas"
+                width={600}
+                height={400}
+                className="rounded-lg object-cover"
+                data-ai-hint="pet owner"
+              />
             </div>
             <div className="space-y-8">
               <div className="flex items-start">
@@ -128,8 +135,14 @@ export default function HomePage() {
               </div>
             </div>
             <div className="md:order-1 flex justify-center items-center min-h-[300px] bg-muted/30 rounded-xl shadow-inner p-8">
-              {/* Placeholder for image - You can add an illustration or a relevant icon here later */}
-               <p className="text-muted-foreground text-center">Visual para beneficios de veterinarias</p>
+              <Image
+                src="https://placehold.co/600x400.png"
+                alt="Beneficios para veterinarias"
+                width={600}
+                height={400}
+                className="rounded-lg object-cover"
+                data-ai-hint="veterinary clinic"
+              />
             </div>
           </div>
         </div>
@@ -143,7 +156,7 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona?</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8 md:gap-16">
-            <Card className="shadow-lg border"> {/* Added border */}
+            <Card className="shadow-lg border">
               <CardHeader>
                 <CardTitle className="text-2xl">Para Tutores: El Cuidado de tu Mascota, Simplificado</CardTitle>
               </CardHeader>
@@ -158,7 +171,7 @@ export default function HomePage() {
                 <p className="font-semibold text-foreground">¡Así de fácil!</p>
               </CardContent>
             </Card>
-            <Card className="shadow-lg border"> {/* Added border */}
+            <Card className="shadow-lg border">
               <CardHeader>
                 <CardTitle className="text-2xl">Para Veterinarias: Potenciá tu Clínica, Conectá con Pacientes</CardTitle>
               </CardHeader>
@@ -189,8 +202,14 @@ export default function HomePage() {
               Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
             </p>
             <div className="flex justify-center items-center min-h-[300px] bg-muted/30 rounded-xl shadow-inner p-8 mt-8 mx-auto max-w-xl">
-              {/* Placeholder for image - You can add an illustration or a relevant icon here later */}
-              <p className="text-muted-foreground text-center">Visual para sección Quiénes Somos</p>
+              <Image
+                src="https://placehold.co/500x300.png"
+                alt="Equipo PetSync o concepto de colaboración"
+                width={500}
+                height={300}
+                className="rounded-lg object-cover"
+                data-ai-hint="team collaboration"
+              />
             </div>
           </div>
         </div>
@@ -219,9 +238,9 @@ export default function HomePage() {
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
               <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-background rounded-lg shadow mb-2">
-                <AccordionTrigger className="px-4 py-3 text-left hover:no-underline flex items-center"> {/* Ensure icon and text are aligned */}
+                <AccordionTrigger className="px-4 py-3 text-left hover:no-underline flex items-center">
                   {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-5 w-5 mr-2 text-primary shrink-0" /> }
-                  <span className="flex-1">{faq.question}</span> {/* Span to allow flex alignment */}
+                  <span className="flex-1">{faq.question}</span>
                 </AccordionTrigger>
                 <AccordionContent className="px-4 pb-3 text-muted-foreground">
                   {faq.answer}
