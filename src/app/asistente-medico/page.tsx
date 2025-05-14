@@ -1,9 +1,40 @@
+
+"use client"; // Required for useEffect and useState
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Lightbulb, TriangleAlert } from "lucide-react";
+import { Lightbulb, TriangleAlert, Info, Loader2 } from "lucide-react";
 import MedicalAssistantClient from "@/components/asistente-medico-client";
+import { useState, useEffect } from "react";
+
+export type LocationStatus = 'idle' | 'requesting' | 'granted' | 'denied' | 'unsupported';
 
 export default function MedicalAssistantPage() {
+  const [locationStatus, setLocationStatus] = useState<LocationStatus>('idle');
+  const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && navigator.geolocation) {
+      setLocationStatus('requesting');
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          setLocationStatus('granted');
+        },
+        (error) => {
+          console.error("Error getting location", error);
+          setLocationStatus('denied');
+        },
+        { timeout: 10000 } // Optional: add a timeout
+      );
+    } else {
+      setLocationStatus('unsupported');
+    }
+  }, []); // Empty dependency array ensures this runs once on mount
+
   return (
     <div className="container mx-auto py-12 px-4">
       <div className="max-w-3xl mx-auto">
@@ -35,7 +66,45 @@ export default function MedicalAssistantPage() {
                 de ninguna decisión tomada basada en la información aquí presentada.
               </AlertDescription>
             </Alert>
-            <MedicalAssistantClient />
+
+            {locationStatus === 'requesting' && (
+              <Alert className="mb-4 border-blue-500 text-blue-700 bg-blue-50">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                <AlertTitle>Información de Ubicación</AlertTitle>
+                <AlertDescription>
+                  Solicitando acceso a tu ubicación para sugerir veterinarios cercanos...
+                </AlertDescription>
+              </Alert>
+            )}
+            {locationStatus === 'denied' && (
+              <Alert variant="destructive" className="mb-4">
+                <Info className="h-5 w-5" />
+                <AlertTitle>Acceso a Ubicación Denegado</AlertTitle>
+                <AlertDescription>
+                  No se pudo acceder a tu ubicación. Las recomendaciones de veterinarios cercanos no estarán disponibles. Puedes intentar cambiar los permisos en la configuración de tu navegador.
+                </AlertDescription>
+              </Alert>
+            )}
+             {locationStatus === 'unsupported' && (
+              <Alert variant="destructive" className="mb-4">
+                <Info className="h-5 w-5" />
+                <AlertTitle>Geolocalización no Soportada</AlertTitle>
+                <AlertDescription>
+                  Tu navegador no soporta la geolocalización o está desactivada. Las recomendaciones de veterinarios cercanos no estarán disponibles.
+                </AlertDescription>
+              </Alert>
+            )}
+            {locationStatus === 'granted' && (
+              <Alert className="mb-4 border-green-500 text-green-700 bg-green-50">
+                <Info className="h-5 w-5" />
+                <AlertTitle>Acceso a Ubicación Concedido</AlertTitle>
+                <AlertDescription>
+                  Podremos sugerirte veterinarios cercanos si es necesario.
+                </AlertDescription>
+              </Alert>
+            )}
+
+            <MedicalAssistantClient locationStatus={locationStatus} />
           </CardContent>
         </Card>
       </div>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,10 +18,15 @@ import { useToast } from "@/hooks/use-toast";
 import { MedicalAssistantFormSchema, type MedicalAssistantFormValues } from "@/lib/schemas";
 import { getMedicalAdviceAction } from "@/app/actions";
 import { useState, useTransition } from "react";
-import { Loader2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles, MapPin, Lightbulb } from "lucide-react"; // Added MapPin
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { LocationStatus } from "@/app/asistente-medico/page";
 
-export default function MedicalAssistantClient() {
+interface MedicalAssistantClientProps {
+  locationStatus: LocationStatus;
+}
+
+export default function MedicalAssistantClient({ locationStatus }: MedicalAssistantClientProps) {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   const [aiResponse, setAiResponse] = useState<string | null>(null);
@@ -82,7 +88,7 @@ export default function MedicalAssistantClient() {
             name="question"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Tu Pregunta</FormLabel>
+                <FormLabel className="text-lg">Tu Pregunta para Firu AI</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Escribe aquí tu pregunta específica sobre el historial médico."
@@ -98,7 +104,7 @@ export default function MedicalAssistantClient() {
             {isPending ? (
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
             ) : (
-              <Sparkles className="mr-2 h-5 w-5" />
+              <Lightbulb className="mr-2 h-5 w-5" /> // Changed from Sparkles to Lightbulb
             )}
             Consultar a Firu AI
           </Button>
@@ -108,7 +114,7 @@ export default function MedicalAssistantClient() {
       {isPending && (
         <div className="text-center py-6">
           <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
-          <p className="mt-2 text-muted-foreground">Procesando tu consulta...</p>
+          <p className="mt-2 text-muted-foreground">Firu AI está pensando...</p>
         </div>
       )}
 
@@ -116,12 +122,37 @@ export default function MedicalAssistantClient() {
         <Card className="mt-8 bg-secondary/30 border-primary/50">
           <CardHeader>
             <CardTitle className="flex items-center text-xl text-primary">
-              <Sparkles className="mr-2 h-6 w-6" />
+              <Lightbulb className="mr-2 h-6 w-6" /> {/* Changed from Sparkles */}
               Respuesta de Firu AI
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-foreground whitespace-pre-wrap">{aiResponse}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {aiResponse && !isPending && locationStatus === 'granted' && (
+        <Card className="mt-8 bg-accent/10 border-accent/50">
+          <CardHeader>
+            <CardTitle className="flex items-center text-xl text-accent-foreground">
+              <MapPin className="mr-2 h-6 w-6 text-accent" />
+              <span className="text-primary">Posibles Veterinarios Cercanos (Ejemplo Ilustrativo)</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground mb-3">
+              Basado en tu ubicación (uso ilustrativo), aquí hay algunos ejemplos de centros veterinarios que podrías considerar. 
+              Recuerda siempre verificar sus servicios, horarios y contactarlos directamente.
+            </p>
+            <ul className="list-disc pl-5 space-y-1 text-foreground">
+              <li>Clínica Veterinaria "Amigos Peludos" - Calle Falsa 123, Palermo</li>
+              <li>Hospital Veterinario "Salud Animal Integral" - Av. Corrientes 4500, Almagro</li>
+              <li>Consultorio Dr. Gato Feliz - Gurruchaga 789, Villa Crespo</li>
+            </ul>
+            <p className="mt-4 text-sm text-muted-foreground font-semibold">
+              Importante: Esta es una función de ejemplo. La integración real con mapas y listados de veterinarios estará disponible próximamente en PetSync.
+            </p>
           </CardContent>
         </Card>
       )}
