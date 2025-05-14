@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
-import { Stethoscope, Users, Brain } from 'lucide-react';
+import { Stethoscope } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -17,12 +17,6 @@ export default function Header() {
           </Button>
           <Button variant="ghost" asChild>
             <Link href="/#faq">Preguntas Frecuentes</Link>
-          </Button>
-          <Button variant="outline" asChild className="border-primary/50 hover:bg-primary/10">
-            <Link href="/generic-ai-query">
-              Consultar IA
-              <Brain className="ml-2 h-4 w-4" />
-            </Link>
           </Button>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
             <Link href="/asistente-medico">

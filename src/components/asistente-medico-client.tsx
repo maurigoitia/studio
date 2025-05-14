@@ -41,7 +41,7 @@ export default function MedicalAssistantClient() {
         setAiResponse(response.data.answer);
         toast({
           title: "Respuesta del Asistente IA",
-          description: "Se ha generado una respuesta a tu consulta.",
+          description: "El asistente IA ha generado información basada en tu consulta.",
         });
       } else {
         toast({
@@ -71,7 +71,7 @@ export default function MedicalAssistantClient() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Proporciona la mayor cantidad de detalles posible para una mejor respuesta.
+                  Proporciona la mayor cantidad de detalles posible para una mejor respuesta informativa.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -100,7 +100,7 @@ export default function MedicalAssistantClient() {
             ) : (
               <Sparkles className="mr-2 h-5 w-5" />
             )}
-            Obtener Consejo IA
+            Consultar al Asistente IA
           </Button>
         </form>
       </Form>
@@ -117,7 +117,7 @@ export default function MedicalAssistantClient() {
           <CardHeader>
             <CardTitle className="flex items-center text-xl text-primary">
               <Sparkles className="mr-2 h-6 w-6" />
-              Respuesta del Asistente IA
+              Información del Asistente IA
             </CardTitle>
           </CardHeader>
           <CardContent>

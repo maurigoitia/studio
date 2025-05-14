@@ -12,17 +12,27 @@ export default function MedicalAssistantPage() {
             <div className="flex justify-center mb-4">
               <Lightbulb className="h-16 w-16 text-primary" />
             </div>
-            <CardTitle className="text-3xl md:text-4xl font-bold">Asistente de Historial Médico IA</CardTitle>
+            <CardTitle className="text-3xl md:text-4xl font-bold">Asistente IA de Información para Mascotas</CardTitle>
             <CardDescription className="text-lg mt-2">
-              Haz preguntas sobre el historial médico de tu mascota y obtén respuestas basadas en la información proporcionada.
+              Obtén sugerencias e información general basada en IA sobre el historial médico de tu mascota.
+              Recuerda que esta es una guía y <strong>no reemplaza</strong> la consulta veterinaria profesional.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Alert variant="destructive" className="mb-6 shadow-md">
               <TriangleAlert className="h-5 w-5" />
-              <AlertTitle className="font-semibold">Aviso Importante</AlertTitle>
+              <AlertTitle className="font-semibold">Aviso Importante y Descargo de Responsabilidad</AlertTitle>
               <AlertDescription>
-                Esta herramienta de IA es solo para fines informativos y de orientación básica. <strong>No reemplaza el diagnóstico ni el consejo de un veterinario profesional.</strong> Para cualquier problema de salud de tu mascota, consulta siempre a tu veterinario de confianza.
+                Esta herramienta de IA te ofrece <strong>sugerencias e información general</strong> y está diseñada 
+                únicamente para fines informativos. <strong>NO reemplaza el diagnóstico, tratamiento, 
+                ni el consejo de un veterinario profesional calificado.</strong>
+                <br /><br />
+                La información proporcionada aquí no debe ser utilizada para diagnosticar o tratar problemas de salud
+                o enfermedades en tu mascota. <strong>Para cualquier problema de salud o preocupación sobre tu mascota, 
+                consulta siempre y sin demora a tu veterinario de confianza.</strong>
+                <br /><br />
+                El uso de esta herramienta es bajo tu propia responsabilidad. PetSync no se hace responsable
+                de ninguna decisión tomada basada en la información aquí presentada.
               </AlertDescription>
             </Alert>
             <MedicalAssistantClient />
