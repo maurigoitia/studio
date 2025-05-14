@@ -8,7 +8,7 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 94.1%; /* Light Gray #F0F0F0 */
+    --background: 45 50% 96%; /* Light Creamy Beige */
     --foreground: 240 5% 20%;  /* Darker gray for text */
 
     --card: 0 0% 100%; /* White */
@@ -55,10 +55,10 @@ body {
   }
 
   .dark {
-    --background: 240 5% 10%; /* Dark Blue/Gray */
+    --background: 30 5% 12%; /* Warm Dark Gray */
     --foreground: 0 0% 95%; /* Light Gray/White */
 
-    --card: 240 5% 12%; /* Slightly lighter than background */
+    --card: 240 5% 15%; /* Slightly lighter than dark background, cooler */
     --card-foreground: 0 0% 95%;
 
     --popover: 240 5% 10%;
@@ -67,10 +67,10 @@ body {
     --primary: 180 70% 55%; /* Lighter Teal for dark mode */
     --primary-foreground: 180 100% 10%; /* Dark Teal text */
 
-    --secondary: 240 5% 15%;
+    --secondary: 240 5% 18%; /* Slightly lighter than card for secondary elements */
     --secondary-foreground: 0 0% 95%;
 
-    --muted: 240 5% 20%;
+    --muted: 240 5% 22%; /* Slightly lighter than secondary for muted elements */
     --muted-foreground: 0 0% 60%;
 
     --accent: 195 70% 70%; /* Lighter Blue for dark mode accent */
@@ -79,8 +79,8 @@ body {
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5% 25%;
-    --input: 240 5% 25%;
+    --border: 240 5% 28%; /* Slightly lighter than muted for borders */
+    --input: 240 5% 28%; /* Same as border */
     --ring: 180 70% 55%; /* Lighter Teal */
     
     /* chart colors for dark mode */
@@ -91,13 +91,13 @@ body {
     --chart-5: 27 90% 70%;
 
     /* Sidebar variables for dark mode */
-    --sidebar-background: 240 5% 8%;
+    --sidebar-background: 30 5% 10%; /* Slightly darker than main dark background */
     --sidebar-foreground: 0 0% 90%;
     --sidebar-primary: 180 70% 55%; /* Lighter Teal */
     --sidebar-primary-foreground: 180 100% 10%; /* Dark Teal text */
     --sidebar-accent: 195 70% 75%; /* Adjusted Lighter Blue for sidebar accent */
     --sidebar-accent-foreground: 0 0% 10%; /* Dark text */
-    --sidebar-border: 240 5% 20%;
+    --sidebar-border: 30 5% 20%; /* Warmer dark border for sidebar */
     --sidebar-ring: 180 70% 55%; /* Lighter Teal */
   }
 }
