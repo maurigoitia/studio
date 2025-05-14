@@ -3,11 +3,11 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Lightbulb, TriangleAlert, Info, Loader2, TimerOff } from "lucide-react"; // Added TimerOff
+import { Lightbulb, TriangleAlert, Info, Loader2, TimerOff } from "lucide-react";
 import MedicalAssistantClient from "@/components/asistente-medico-client";
 import { useState, useEffect } from "react";
 
-export type LocationStatus = 'idle' | 'requesting' | 'granted' | 'denied' | 'unsupported' | 'timeout'; // Added 'timeout'
+export type LocationStatus = 'idle' | 'requesting' | 'granted' | 'denied' | 'unsupported' | 'timeout';
 
 export default function MedicalAssistantPage() {
   const [locationStatus, setLocationStatus] = useState<LocationStatus>('idle');
@@ -37,7 +37,7 @@ export default function MedicalAssistantPage() {
                 break;
               case error.POSITION_UNAVAILABLE: // 2
                 logMessage += " (Location information is unavailable.)";
-                newStatus = 'denied'; // Or a more specific status if needed later
+                newStatus = 'denied'; 
                 break;
               case error.TIMEOUT: // 3
                 logMessage += " (The request to get user location timed out.)";
@@ -52,15 +52,15 @@ export default function MedicalAssistantPage() {
           if (error && error.message) {
             logMessage += ` Message: ${error.message}`;
           }
-          console.error(logMessage, error); // Log more detailed message and original error
+          console.error(logMessage, error); 
           setLocationStatus(newStatus);
         },
-        { timeout: 10000 } // Optional: add a timeout
+        { timeout: 10000 } 
       );
     } else {
       setLocationStatus('unsupported');
     }
-  }, []); // Empty dependency array ensures this runs once on mount
+  }, []); 
 
   return (
     <div className="container mx-auto py-12 px-4">
@@ -99,7 +99,7 @@ export default function MedicalAssistantPage() {
                 <Loader2 className="h-5 w-5 animate-spin" />
                 <AlertTitle>Información de Ubicación</AlertTitle>
                 <AlertDescription>
-                  Solicitando acceso a tu ubicación para sugerir veterinarios cercanos...
+                  Solicitando acceso a tu ubicación para mejorar las recomendaciones...
                 </AlertDescription>
               </Alert>
             )}
@@ -108,7 +108,7 @@ export default function MedicalAssistantPage() {
                 <TimerOff className="h-5 w-5" />
                 <AlertTitle>Tiempo de Espera Agotado para Ubicación</AlertTitle>
                 <AlertDescription>
-                  No pudimos obtener tu ubicación a tiempo. Por favor, verifica tu conexión de red o GPS e inténtalo de nuevo si deseas recomendaciones de veterinarios.
+                  No pudimos obtener tu ubicación a tiempo. Verifica tu conexión o GPS. El mapa y las sugerencias basadas en ubicación no estarán disponibles.
                 </AlertDescription>
               </Alert>
             )}
@@ -117,7 +117,7 @@ export default function MedicalAssistantPage() {
                 <Info className="h-5 w-5" />
                 <AlertTitle>Acceso a Ubicación Denegado</AlertTitle>
                 <AlertDescription>
-                  No se pudo acceder a tu ubicación. Las recomendaciones de veterinarios cercanos no estarán disponibles. Puedes intentar cambiar los permisos en la configuración de tu navegador.
+                  No se pudo acceder a tu ubicación. El mapa y las recomendaciones de veterinarios cercanos no estarán disponibles. Puedes cambiar los permisos en la configuración de tu navegador.
                 </AlertDescription>
               </Alert>
             )}
@@ -126,21 +126,21 @@ export default function MedicalAssistantPage() {
                 <Info className="h-5 w-5" />
                 <AlertTitle>Geolocalización no Soportada</AlertTitle>
                 <AlertDescription>
-                  Tu navegador no soporta la geolocalización o está desactivada. Las recomendaciones de veterinarios cercanos no estarán disponibles.
+                  Tu navegador no soporta la geolocalización. El mapa y las recomendaciones de veterinarios cercanos no estarán disponibles.
                 </AlertDescription>
               </Alert>
             )}
-            {locationStatus === 'granted' && (
+            {locationStatus === 'granted' && location && (
               <Alert className="mb-4 border-green-500 text-green-700 bg-green-50">
                 <Info className="h-5 w-5" />
                 <AlertTitle>Acceso a Ubicación Concedido</AlertTitle>
                 <AlertDescription>
-                  Podremos sugerirte veterinarios cercanos si es necesario.
+                  Podremos mostrarte tu ubicación en un mapa y, en el futuro, sugerirte veterinarios cercanos.
                 </AlertDescription>
               </Alert>
             )}
 
-            <MedicalAssistantClient locationStatus={locationStatus} />
+            <MedicalAssistantClient locationStatus={locationStatus} location={location} />
           </CardContent>
         </Card>
       </div>
