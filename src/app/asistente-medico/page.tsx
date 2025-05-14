@@ -25,7 +25,29 @@ export default function MedicalAssistantPage() {
           setLocationStatus('granted');
         },
         (error) => {
-          console.error("Error getting location", error);
+          let errorMessage = "Error getting location.";
+          if (error && error.message) {
+            errorMessage += ` Message: ${error.message}`;
+          }
+          if (error && error.code) {
+            errorMessage += ` Code: ${error.code}`;
+            // Optionally, handle specific error codes
+            // switch (error.code) {
+            //   case error.PERMISSION_DENIED:
+            //     errorMessage += " (User denied the request for Geolocation.)";
+            //     break;
+            //   case error.POSITION_UNAVAILABLE:
+            //     errorMessage += " (Location information is unavailable.)";
+            //     break;
+            //   case error.TIMEOUT:
+            //     errorMessage += " (The request to get user location timed out.)";
+            //     break;
+            //   default:
+            //     errorMessage += " (An unknown error occurred.)";
+            //     break;
+            // }
+          }
+          console.error(errorMessage, error); // Keep original error object for full details if needed
           setLocationStatus('denied');
         },
         { timeout: 10000 } // Optional: add a timeout
