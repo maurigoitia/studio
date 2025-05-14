@@ -48,7 +48,7 @@ export default function HomePage() {
       <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 to-background">
         <div className="container mx-auto text-center px-4">
           <div className="flex justify-center mb-6">
-            <PawPrint className="h-24 w-24 text-primary" />
+            <PawPrint className="h-16 w-16 text-primary" /> {/* Icon size adjusted */}
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
             PetSync: El cuidado de tu mascota, simple y conectado.
@@ -156,7 +156,7 @@ export default function HomePage() {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona?</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8 md:gap-16">
-            <Card className="shadow-lg">
+            <Card className="shadow-lg border"> {/* Added border */}
               <CardHeader>
                 <CardTitle className="text-2xl">Para Tutores: El Cuidado de tu Mascota, Simplificado</CardTitle>
               </CardHeader>
@@ -166,12 +166,12 @@ export default function HomePage() {
                     <p>1. Descargá la app PetSync, disponible para iOS y Android.</p>
                 </div>
                 <p>2. Creá un perfil detallado para tu mascota.</p>
-                <p>3. Conectate आसानी से (fácilmente) con tu veterinaria de confianza.</p>
+                <p>3. Conectate fácilmente con tu veterinaria de confianza.</p>
                 <p>4. Gestioná citas y recibí recordatorios importantes.</p>
                 <p className="font-semibold text-foreground">¡Así de fácil!</p>
               </CardContent>
             </Card>
-            <Card className="shadow-lg">
+            <Card className="shadow-lg border"> {/* Added border */}
               <CardHeader>
                 <CardTitle className="text-2xl">Para Veterinarias: Potenciá tu Clínica, Conectá con Pacientes</CardTitle>
               </CardHeader>
@@ -236,9 +236,9 @@ export default function HomePage() {
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
               <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-background rounded-lg shadow mb-2">
-                <AccordionTrigger className="px-4 py-3 text-left hover:no-underline">
+                <AccordionTrigger className="px-4 py-3 text-left hover:no-underline flex items-center"> {/* Ensure icon and text are aligned */}
                   {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-5 w-5 mr-2 text-primary shrink-0" /> }
-                  {faq.question}
+                  <span className="flex-1">{faq.question}</span> {/* Span to allow flex alignment */}
                 </AccordionTrigger>
                 <AccordionContent className="px-4 pb-3 text-muted-foreground">
                   {faq.answer}
