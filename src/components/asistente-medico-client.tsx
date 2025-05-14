@@ -40,8 +40,8 @@ export default function MedicalAssistantClient() {
       if (response.success && response.data) {
         setAiResponse(response.data.answer);
         toast({
-          title: "Respuesta de la Guía IA PetIntel",
-          description: "La Guía IA ha generado información basada en tu consulta.",
+          title: "Respuesta del Asistente GuaGua",
+          description: "El Asistente GuaGua ha generado información basada en tu consulta.",
         });
       } else {
         toast({
@@ -100,7 +100,7 @@ export default function MedicalAssistantClient() {
             ) : (
               <Sparkles className="mr-2 h-5 w-5" />
             )}
-            Consultar a la Guía IA PetIntel
+            Consultar al Asistente GuaGua
           </Button>
         </form>
       </Form>
@@ -117,7 +117,7 @@ export default function MedicalAssistantClient() {
           <CardHeader>
             <CardTitle className="flex items-center text-xl text-primary">
               <Sparkles className="mr-2 h-6 w-6" />
-              Respuesta de la Guía IA PetIntel
+              Respuesta del Asistente GuaGua
             </CardTitle>
           </CardHeader>
           <CardContent>

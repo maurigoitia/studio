@@ -12,9 +12,9 @@ export default function MedicalAssistantPage() {
             <div className="flex justify-center mb-4">
               <Lightbulb className="h-16 w-16 text-primary" />
             </div>
-            <CardTitle className="text-3xl md:text-4xl font-bold">Guía IA PetIntel</CardTitle>
+            <CardTitle className="text-3xl md:text-4xl font-bold">Asistente GuaGua</CardTitle>
             <CardDescription className="text-lg mt-2">
-              Obtén sugerencias e información general basada en IA sobre el historial médico de tu mascota.
+              Consulta al Asistente GuaGua para obtener sugerencias e información general basada en IA sobre el historial médico de tu mascota.
               Recuerda que esta es una guía y <strong>no reemplaza</strong> la consulta veterinaria profesional.
             </CardDescription>
           </CardHeader>
