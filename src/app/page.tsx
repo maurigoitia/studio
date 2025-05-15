@@ -51,7 +51,7 @@ export default function HomePage() {
             <PawPrint className="h-10 w-10 text-primary" /> {/* Icon size adjusted */}
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-            PetSync: El cuidado de tu mascota, simple y conectado.
+            PetSync: Cuidado Animal Simplificado, Conectando Tutores y Veterinarios.
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Conectando a tutores y veterinarios para una gestión de salud animal más simple y eficiente. Accede a historiales, agenda citas y optimiza el cuidado de tu compañero peludo.
@@ -68,7 +68,7 @@ export default function HomePage() {
       <section id="tutores" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para tutores</h2>
-          <div className="grid md:grid-cols-1 gap-12 items-center"> {/* Changed to md:grid-cols-1 */}
+          <div className="grid md:grid-cols-1 gap-12 items-center"> 
             <div className="space-y-8">
               <div className="flex items-start">
                 <Smartphone className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
@@ -100,7 +100,7 @@ export default function HomePage() {
       <section id="veterinarios" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para veterinarias</h2>
-          <div className="grid md:grid-cols-1 gap-12 items-center"> {/* Changed to md:grid-cols-1 */}
+          <div className="grid md:grid-cols-1 gap-12 items-center"> 
             <div className="space-y-8"> 
               <div className="flex items-start">
                 <BarChartBig className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
