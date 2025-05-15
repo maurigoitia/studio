@@ -54,7 +54,7 @@ export default function HomePage() {
             PetSync: El cuidado de tu mascota, simple y conectado.
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            La plataforma todo-en-uno para la salud y bienestar de tu mascota. Registra su historial, agenda citas, recibe recordatorios y conecta con tu veterinario, fácil y rápido.
+            Conectando a tutores y veterinarios para una gestión de salud animal más simple y eficiente. Accede a historiales, agenda citas y optimiza el cuidado de tu compañero peludo.
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
@@ -69,7 +69,6 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para tutores</h2>
           <div className="grid md:grid-cols-1 gap-12 items-center"> {/* Changed to md:grid-cols-1 */}
-            {/* Removed image container div */}
             <div className="space-y-8">
               <div className="flex items-start">
                 <Smartphone className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
@@ -102,7 +101,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para veterinarias</h2>
           <div className="grid md:grid-cols-1 gap-12 items-center"> {/* Changed to md:grid-cols-1 */}
-            <div className="space-y-8"> {/* Removed md:order-2 */}
+            <div className="space-y-8"> 
               <div className="flex items-start">
                 <BarChartBig className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
                 <div>
@@ -125,7 +124,6 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            {/* Removed image container div */}
           </div>
         </div>
       </section>
@@ -183,7 +181,6 @@ export default function HomePage() {
             <p className="mt-4 text-md font-semibold text-foreground">
               Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
             </p>
-            {/* Removed image container div */}
           </div>
         </div>
       </section>
