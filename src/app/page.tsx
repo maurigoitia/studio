@@ -48,10 +48,10 @@ export default function HomePage() {
       <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 to-background">
         <div className="container mx-auto text-center px-4">
           <div className="flex justify-center mb-6">
-            <PawPrint className="h-10 w-10 text-primary" /> {/* Icon size adjusted */}
+            <PawPrint className="h-10 w-10 text-primary" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-            PetSync: Cuidado Animal Simplificado, Conectando Tutores y Veterinarios.
+            PetSync: Gestión y Conexión para el Bienestar de tu Mascota.
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Conectando a tutores y veterinarios para una gestión de salud animal más simple y eficiente. Accede a historiales, agenda citas y optimiza el cuidado de tu compañero peludo.
