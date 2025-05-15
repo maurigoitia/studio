@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { PawPrint, Smartphone, BrainCircuit, CalendarClock, BarChartBig, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck } from 'lucide-react';
+import { Smartphone, BrainCircuit, CalendarClock, BarChartBig, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -47,11 +47,9 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 to-background">
         <div className="container mx-auto text-center px-4">
-          <div className="flex justify-center mb-6">
-            <PawPrint className="h-10 w-10 text-primary" />
-          </div>
+          {/* Icono PawPrint eliminado */}
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-            PetSync: Gestión y Conexión para el Bienestar de tu Mascota.
+            PetSync: Simplificando el Cuidado y la Conexión de tu Mascota.
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Conectando a tutores y veterinarios para una gestión de salud animal más simple y eficiente. Accede a historiales, agenda citas y optimiza el cuidado de tu compañero peludo.
@@ -207,7 +205,7 @@ export default function HomePage() {
           
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
-              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-background rounded-lg shadow mb-2">
+              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow mb-2">
                 <AccordionTrigger className="px-4 py-3 text-left hover:no-underline flex items-center">
                   {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-5 w-5 mr-2 text-primary shrink-0" /> }
                   <span className="flex-1">{faq.question}</span>
