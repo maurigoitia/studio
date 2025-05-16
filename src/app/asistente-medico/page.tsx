@@ -3,12 +3,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Lightbulb, TriangleAlert } from "lucide-react";
+import { Brain, TriangleAlert } from "lucide-react"; // Changed Lightbulb to Brain
 import MedicalAssistantClient from "@/components/asistente-medico-client";
-// Removed location-related imports and types
 
 export default function MedicalAssistantPage() {
-  // Removed all location-related state and useEffect
 
   return (
     <div className="container mx-auto py-12 px-4">
@@ -16,9 +14,9 @@ export default function MedicalAssistantPage() {
         <Card className="shadow-xl">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <Lightbulb className="h-16 w-16 text-primary" />
+              <Brain className="h-16 w-16 text-primary" /> {/* Changed Lightbulb to Brain */}
             </div>
-            <CardTitle className="text-3xl md:text-4xl font-bold">Prueba Nuestro Asistente IA (Versión General)</CardTitle>
+            <CardTitle className="text-3xl md:text-4xl font-bold">Demo de Inteligencia Artificial</CardTitle> {/* Changed title */}
             <CardDescription className="text-lg mt-2">
               Esta es una versión de demostración de nuestra IA para consultas generales. 
               La función 'Firu AI' especializada en el historial médico de tu mascota estará disponible próximamente en nuestra app móvil.
@@ -43,9 +41,7 @@ export default function MedicalAssistantPage() {
               </AlertDescription>
             </Alert>
 
-            {/* Removed all location-related Alert components */}
-
-            <MedicalAssistantClient /> {/* Removed location props */}
+            <MedicalAssistantClient />
           </CardContent>
         </Card>
       </div>
