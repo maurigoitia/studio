@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Smartphone, BrainCircuit, CalendarClock, BarChartBig, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck } from 'lucide-react';
+import { Smartphone, BrainCircuit, CalendarClock, BarChartBig, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Share2, Search } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -48,9 +48,10 @@ export default function HomePage() {
       <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 to-background">
         <div className="container mx-auto text-center px-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-            PetSync conecta a tutores y veterinarias en tiempo real.
+            PetSync: Simplificando el Cuidado y la Conexión de tu Mascota.
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+            PetSync conecta a tutores y veterinarias en tiempo real.
             Historial médico compartido, gestión de turnos, recordatorios y pedidos.
             Todo sincronizado, sin llamadas ni planillas.
           </p>
@@ -66,24 +67,24 @@ export default function HomePage() {
       <section id="tutores" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para tutores</h2>
-          <div className="grid md:grid-cols-1 gap-12 items-center"> 
+          <div className="grid md:grid-cols-1 gap-8">
             <div className="space-y-8">
               <div className="flex items-start">
-                <Smartphone className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
+                <Smartphone className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-2">Información de tu Mascota, Siempre Accesible</h3>
                   <p className="text-muted-foreground">Toda la información de tus mascotas en un único lugar, digital y siempre disponible. Registra vacunas, desparasitaciones, estudios, medicación, alergias y escaneá recetas o documentos importantes. Perfecto para tener todo a mano en cada visita al veterinario.</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <BrainCircuit className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
+                <BrainCircuit className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">Firu AI a tu Servicio <span className="text-sm text-primary">(Próximamente)</span></h3>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Firu AI a tu Servicio <span className="text-xs bg-primary/20 text-primary font-semibold px-2 py-0.5 rounded-full ml-1">Próximamente</span></h3>
                   <p className="text-muted-foreground">Consultá dudas sobre tratamientos pasados o próximos cuidados. Preguntale a Firu AI: "¿Cuándo fue la última vacuna de Thor?" o "¿Qué medicación le dimos para su otitis?". Recuerda que esto es una guía y siempre debes consultar a tu veterinario.</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <CalendarClock className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
+                <CalendarClock className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-2">Agenda Inteligente, Cero Estrés</h3>
                   <p className="text-muted-foreground">Organizá turnos, vacunas y desparasitaciones sin esfuerzo. Recibí recordatorios inteligentes para que nunca más olvides una cita importante.</p>
@@ -98,24 +99,24 @@ export default function HomePage() {
       <section id="veterinarios" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para veterinarias</h2>
-          <div className="grid md:grid-cols-1 gap-12 items-center"> 
+          <div className="grid md:grid-cols-1 gap-8">
             <div className="space-y-8"> 
               <div className="flex items-start">
-                <BarChartBig className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
+                <BarChartBig className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-2">Optimizá tu Tiempo, Maximizá tu Impacto</h3>
                   <p className="text-muted-foreground">Gestioná tu agenda de forma eficiente, reducí la carga administrativa y dedicá más tiempo a lo que realmente importa: el cuidado de tus pacientes.</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <Users className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
+                <Users className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-2">Conexión Directa, Pacientes Felices</h3>
                   <p className="text-muted-foreground">Fortalecé la relación con tus clientes centralizando la información y facilitando una comunicación fluida y proactiva. Un servicio que fideliza.</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <Network className="h-10 w-10 text-accent mr-4 mt-1 shrink-0" />
+                <Network className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-2">Ampliá tu Comunidad y Servicios</h3>
                   <p className="text-muted-foreground">Unite a una red creciente de tutores y profesionales. PetSync es el punto de encuentro para veterinarias, pet shops y proveedores que buscan conectar y ofrecer lo mejor.</p>
@@ -126,8 +127,77 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Intelligent Search Section */}
+      <section id="intelligent-search" className="w-full py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Search className="h-12 w-12 text-primary mx-auto mb-4" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">🐾 Tu Aliado Inteligente para el Cuidado de tu Mascota 🐾</h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+              ¿Cansado de navegar por un mar de información o no saber dónde encontrar al instante lo que tu mascota necesita? ¡PetSync evoluciona! Presentamos nuestro Buscador Inteligente con IA, diseñado para entenderte a ti y a las necesidades únicas de tu compañero.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <h3 className="text-2xl font-semibold text-foreground text-center mb-8">Más que una Búsqueda, una Conversación Inteligente:</h3>
+            <p className="text-muted-foreground text-center mb-12">
+              Nuestro nuevo buscador no solo encuentra información, ¡la entiende y la personaliza para ti! Impulsado por Inteligencia Artificial, te ofrece respuestas rápidas, relevantes y adaptadas, convirtiendo la gestión del cuidado de tu mascota en una experiencia más simple e intuitiva.
+            </p>
+
+            <h3 className="text-2xl font-semibold text-foreground text-center mb-10">Descubre lo que el Buscador IA de PetSync puede hacer por ti:</h3>
+            <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
+              <div className="flex items-start space-x-4">
+                <HeartPulse className="h-8 w-8 text-accent mt-1 shrink-0" />
+                <div>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">🩺 Consultas de Salud al Instante:</h4>
+                  <p className="text-muted-foreground text-sm">Busca síntomas, pregunta sobre enfermedades, dietas o vacunas. Nuestra IA te ofrece información veterinaria confiable y consejos personalizados basados en el perfil de tu mascota. (Ej: "Mi perro tiene tos seca, ¿qué podría ser?")</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <MapPin className="h-8 w-8 text-accent mt-1 shrink-0" />
+                <div>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">🗺️ Servicios Cercanos, ¡Más Inteligente!:</h4>
+                  <p className="text-muted-foreground text-sm">Encuentra veterinarias (¡incluyendo urgencias!), peluquerías o paseadores cerca de ti. La IA refina los resultados según tus preferencias y te ayuda a contactar o incluso solicitar turnos. (Ej: "Necesito un veterinario de urgencia para gatos cerca de mi ubicación")</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <ShoppingBag className="h-8 w-8 text-accent mt-1 shrink-0" />
+                <div>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">🛍️ Guía de Productos Esencial:</h4>
+                  <p className="text-muted-foreground text-sm">Obtén información clara sobre alimentos, accesorios y más. Te orientamos sobre qué es lo mejor para tu mascota y dónde encontrarlo. (Ej: "¿Cuál es el mejor alimento balanceado para un cachorro bulldog francés?")</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <ClipboardList className="h-8 w-8 text-accent mt-1 shrink-0" />
+                <div>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">📜 Tu Historial Médico, al Alcance de tu Voz:</h4>
+                  <p className="text-muted-foreground text-sm">Accede y comprende fácilmente el historial médico de tu mascota, recordatorios y tratamientos. Pregúntale a nuestra IA y obtén resúmenes claros. (Ej: "¿Cuándo fue la última vacuna de Luna?" o "Resúmeme su última visita al veterinario.")</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <Bot className="h-8 w-8 text-accent mt-1 shrink-0" />
+                <div>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">💬 Chatea con tu Asistente Personalizado:</h4>
+                  <p className="text-muted-foreground text-sm">Interactúa con un chatbot inteligente que entiende tus preguntas en lenguaje natural, por más complejas que sean. Obtén atención y respuestas personalizadas al instante.</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-4">
+                <Users className="h-8 w-8 text-accent mt-1 shrink-0" /> {/* Using Users icon instead of Share2 as it's more common for community */}
+                <div>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">🎉 Conecta con tu Comunidad:</h4>
+                  <p className="text-muted-foreground text-sm">Encuentra foros, grupos de dueños con intereses similares o eventos para mascotas cerca tuyo, con sugerencias inteligentes de nuestra IA.</p>
+                </div>
+              </div>
+            </div>
+            <p className="mt-12 text-center text-md text-muted-foreground">
+              Prepárate para una forma revolucionaria de cuidar a tu mascota. ¡Regístrate en nuestra <a href="#waitlist" className="text-primary hover:underline">waitlist</a> y sé el primero en experimentar el poder de la IA en PetSync!
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* How it Works Section */}
-      <section id="como-funciona" className="w-full py-16 md:py-24">
+      <section id="como-funciona" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <ListChecks className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -166,7 +236,7 @@ export default function HomePage() {
       </section>
 
       {/* About Us Section */}
-      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-secondary/50">
+      <section id="quienes-somos" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <UsersRound className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -184,7 +254,7 @@ export default function HomePage() {
       </section>
       
       {/* Waitlist Section */}
-      <section id="waitlist" className="w-full py-16 md:py-24">
+      <section id="waitlist" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¡Estamos en versión beta!</h2>
@@ -196,7 +266,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="w-full py-16 md:py-24 bg-secondary/50">
+      <section id="faq" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
             <HelpCircle className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -205,8 +275,8 @@ export default function HomePage() {
           
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
-              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow mb-2">
-                <AccordionTrigger className="px-4 py-3 text-left hover:no-underline flex items-center">
+              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow mb-2 border">
+                <AccordionTrigger className="px-4 py-3 text-left hover:no-underline flex items-center text-foreground">
                   {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-5 w-5 mr-2 text-primary shrink-0" /> }
                   <span className="flex-1">{faq.question}</span>
                 </AccordionTrigger>
