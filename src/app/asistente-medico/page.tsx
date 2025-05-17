@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Brain, TriangleAlert } from "lucide-react"; // Changed Lightbulb to Brain
+import { Brain, TriangleAlert } from "lucide-react";
 import MedicalAssistantClient from "@/components/asistente-medico-client";
 
 export default function MedicalAssistantPage() {
@@ -14,11 +14,12 @@ export default function MedicalAssistantPage() {
         <Card className="shadow-xl">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <Brain className="h-16 w-16 text-primary" /> {/* Changed Lightbulb to Brain */}
+              <Brain className="h-16 w-16 text-primary" />
             </div>
-            <CardTitle className="text-3xl md:text-4xl font-bold">Demo de Inteligencia Artificial</CardTitle> {/* Changed title */}
+            <CardTitle className="text-3xl md:text-4xl font-bold">Demo de Inteligencia Artificial</CardTitle>
             <CardDescription className="text-lg mt-2">
-              Esta es una versión de demostración de nuestra IA para consultas generales. 
+              Para esta demostración, por favor proporciona tu correo y algunos detalles de tu mascota.
+              Esto nos ayuda a simular una experiencia más completa.
               La función 'Firu AI' especializada en el historial médico de tu mascota estará disponible próximamente en nuestra app móvil.
               Recuerda que esta es una guía y <strong>no reemplaza</strong> la consulta veterinaria profesional.
             </CardDescription>

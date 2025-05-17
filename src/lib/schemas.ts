@@ -15,6 +15,9 @@ export const MedicalAssistantFormSchema = z.object({
 export type MedicalAssistantFormValues = z.infer<typeof MedicalAssistantFormSchema>;
 
 export const GenericQueryFormSchema = z.object({
+  email: z.string().email({ message: "Por favor, introduce un correo electrónico válido." }),
+  petName: z.string().min(2, { message: "El nombre de la mascota debe tener al menos 2 caracteres." }).max(50, { message: "El nombre de la mascota no puede exceder los 50 caracteres." }),
+  petAge: z.coerce.number().int().positive({ message: "La edad de la mascota debe ser un número positivo." }).min(0, { message: "La edad no puede ser negativa."}).max(100, { message: "La edad parece demasiado alta."}),
   question: z.string().min(5, { message: "La pregunta debe tener al menos 5 caracteres." }).max(1000, { message: "La pregunta no puede exceder los 1000 caracteres." }),
 });
 

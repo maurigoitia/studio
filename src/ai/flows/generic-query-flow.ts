@@ -11,6 +11,9 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GenericQueryInputSchema = z.object({
+  email: z.string().email().describe('The email of the user asking the question.'),
+  petName: z.string().describe("The name of the user's pet."),
+  petAge: z.number().int().positive().describe("The age of the user's pet in years."),
   question: z.string().describe('The question to ask the AI model.'),
 });
 export type GenericQueryInput = z.infer<typeof GenericQueryInputSchema>;
@@ -28,8 +31,13 @@ const prompt = ai.definePrompt({
   name: 'genericQueryPrompt',
   input: {schema: GenericQueryInputSchema},
   output: {schema: GenericQueryOutputSchema},
-  prompt: `Answer the following question comprehensively:
+  prompt: `You are a helpful AI assistant.
+The user's email is {{email}}.
+They have a pet named {{petName}} who is {{petAge}} year(s) old.
+Please answer the following question:
 Question: {{{question}}}
+
+Provide a helpful and general answer. If the question seems to seek specific medical advice, gently remind the user that you are an AI assistant and cannot provide medical diagnoses, and that they should consult a qualified veterinarian for any health concerns.
 
 Answer:`,
 });

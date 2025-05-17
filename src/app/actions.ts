@@ -81,10 +81,10 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
     };
   }
   
-  const { question } = validatedFields.data;
+  const { email, petName, petAge, question } = validatedFields.data;
 
   try {
-    const input: GenericQueryInput = { question };
+    const input: GenericQueryInput = { email, petName, petAge, question };
     const result = await genericQuery(input);
     return { success: true, data: result };
   } catch (error) {

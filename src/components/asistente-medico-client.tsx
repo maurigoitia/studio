@@ -13,37 +13,34 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-// Changed schema import to GenericQueryFormSchema and its type
 import { GenericQueryFormSchema, type GenericQueryFormValues } from "@/lib/schemas"; 
-// Changed action import to askGenericQuestionAction
 import { askGenericQuestionAction } from "@/app/actions"; 
 import { useState, useTransition } from "react";
-import { Loader2, Sparkles, Lightbulb } from "lucide-react"; // Removed MapPin
+import { Loader2, Sparkles, Brain } from "lucide-react"; 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// Removed LocationStatus type import and GoogleMapDisplay import
 
-// Removed MedicalAssistantClientProps interface as location props are no longer needed
-
-export default function MedicalAssistantClient() { // Removed props
+export default function MedicalAssistantClient() {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   const [aiResponse, setAiResponse] = useState<string | null>(null);
 
-  // Updated form to use GenericQueryFormValues and GenericQueryFormSchema
   const form = useForm<GenericQueryFormValues>({
     resolver: zodResolver(GenericQueryFormSchema),
     defaultValues: {
-      question: "", // Only question field now
+      email: "",
+      petName: "",
+      petAge: undefined, // Use undefined for number inputs that can be empty initially
+      question: "",
     },
   });
 
-  // Updated onSubmit to use GenericQueryFormValues and askGenericQuestionAction
   async function onSubmit(data: GenericQueryFormValues) {
     setAiResponse(null); 
     startTransition(async () => {
-      const response = await askGenericQuestionAction(data); // Call generic action
+      const response = await askGenericQuestionAction(data);
       if (response.success && response.data) {
         setAiResponse(response.data.answer);
         toast({
@@ -64,7 +61,45 @@ export default function MedicalAssistantClient() { // Removed props
     <div className="space-y-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Removed medicalHistory FormField */}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg">Tu Correo Electrónico</FormLabel>
+                <FormControl>
+                  <Input type="email" placeholder="tu@correo.com" className="bg-background" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="petName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg">Nombre de tu Mascota</FormLabel>
+                <FormControl>
+                  <Input placeholder="Ej: Firulais, Mishi" className="bg-background" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="petAge"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg">Edad de tu Mascota (años)</FormLabel>
+                <FormControl>
+                  <Input type="number" placeholder="Ej: 3" className="bg-background" {...field} onChange={event => field.onChange(+event.target.value)} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="question"
@@ -73,13 +108,13 @@ export default function MedicalAssistantClient() { // Removed props
                 <FormLabel className="text-lg">Tu Pregunta para el Asistente IA</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Escribe aquí tu pregunta general. Por ejemplo: '¿Cómo funciona la inteligencia artificial?' o 'Ideas para nombres de perros'."
+                    placeholder="Escribe aquí tu pregunta general. Por ejemplo: '¿Cuáles son los síntomas comunes de alergia en perros?' o '¿Cómo puedo ayudar a mi gato a adaptarse a un nuevo hogar?'"
                     className="min-h-[100px] bg-background"
                     {...field}
                   />
                 </FormControl>
                  <FormDescription>
-                  Esta es una IA de propósito general para demostración.
+                  Esta IA de demostración puede usar los detalles de tu mascota para contextualizar la respuesta.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -89,7 +124,7 @@ export default function MedicalAssistantClient() { // Removed props
             {isPending ? (
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
             ) : (
-              <Lightbulb className="mr-2 h-5 w-5" />
+              <Brain className="mr-2 h-5 w-5" />
             )}
             Consultar al Asistente IA
           </Button>
@@ -107,7 +142,7 @@ export default function MedicalAssistantClient() { // Removed props
         <Card className="mt-8 bg-secondary/30 border-primary/50">
           <CardHeader>
             <CardTitle className="flex items-center text-xl text-primary">
-              <Sparkles className="mr-2 h-6 w-6" /> {/* Changed icon to Sparkles */}
+              <Sparkles className="mr-2 h-6 w-6" />
               Respuesta del Asistente IA
             </CardTitle>
           </CardHeader>
@@ -116,8 +151,6 @@ export default function MedicalAssistantClient() { // Removed props
           </CardContent>
         </Card>
       )}
-
-      {/* Removed GoogleMapDisplay and the veterinarian examples card */}
     </div>
   );
 }
