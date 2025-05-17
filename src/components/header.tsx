@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
-import { Lightbulb } from 'lucide-react';
+import { Brain } from 'lucide-react'; // Changed from Lightbulb for consistency with GIA page
 
 export default function Header() {
   return (
@@ -20,8 +20,8 @@ export default function Header() {
           </Button>
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
             <Link href="/asistente-medico">
-              Demo IA
-              <Lightbulb className="ml-2 h-4 w-4" />
+              Chatea con GIA
+              <Brain className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </nav>

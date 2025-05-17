@@ -19,35 +19,38 @@ import { useToast } from "@/hooks/use-toast";
 import { GenericQueryFormSchema, type GenericQueryFormValues } from "@/lib/schemas"; 
 import { askGenericQuestionAction } from "@/app/actions"; 
 import { useState, useTransition } from "react";
-import { Loader2, Sparkles, Brain } from "lucide-react"; 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, Brain, Bot, UserCircle } from "lucide-react"; 
 
-export default function MedicalAssistantClient() {
+export default function GIAClient() { 
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   const [aiResponse, setAiResponse] = useState<string | null>(null);
+  const [userQuestionForDisplay, setUserQuestionForDisplay] = useState<string | null>(null);
+
 
   const form = useForm<GenericQueryFormValues>({
     resolver: zodResolver(GenericQueryFormSchema),
     defaultValues: {
       email: "",
       petName: "",
-      petAge: undefined, // Use undefined for number inputs that can be empty initially
+      petAge: undefined, 
       question: "",
     },
   });
 
   async function onSubmit(data: GenericQueryFormValues) {
     setAiResponse(null); 
+    setUserQuestionForDisplay(data.question); 
     startTransition(async () => {
       const response = await askGenericQuestionAction(data);
       if (response.success && response.data) {
         setAiResponse(response.data.answer);
-        toast({
-          title: "Respuesta del Asistente IA",
-          description: "El Asistente IA ha generado información basada en tu consulta.",
-        });
+        // toast({ // Toast can be a bit much for a chat interface, optionally remove
+        //   title: "Respuesta de GIA",
+        //   description: "GIA ha generado información basada en tu consulta.",
+        // });
       } else {
+        setAiResponse(response.message || "Hubo un error al obtener una respuesta de GIA. Por favor, inténtalo de nuevo.");
         toast({
           title: "Error",
           description: response.message || "No se pudo obtener una respuesta.",
@@ -66,7 +69,7 @@ export default function MedicalAssistantClient() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Tu Correo Electrónico</FormLabel>
+                <FormLabel className="text-lg">Tu Email</FormLabel>
                 <FormControl>
                   <Input type="email" placeholder="tu@correo.com" className="bg-background" {...field} />
                 </FormControl>
@@ -92,7 +95,7 @@ export default function MedicalAssistantClient() {
             name="petAge"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Edad de tu Mascota (años)</FormLabel>
+                <FormLabel className="text-lg">Edad (años)</FormLabel>
                 <FormControl>
                   <Input type="number" placeholder="Ej: 3" className="bg-background" {...field} onChange={event => field.onChange(+event.target.value)} />
                 </FormControl>
@@ -105,52 +108,73 @@ export default function MedicalAssistantClient() {
             name="question"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Tu Pregunta para el Asistente IA</FormLabel>
+                <FormLabel className="text-lg">Tu Pregunta para GIA</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Escribe aquí tu pregunta general. Por ejemplo: '¿Cuáles son los síntomas comunes de alergia en perros?' o '¿Cómo puedo ayudar a mi gato a adaptarse a un nuevo hogar?'"
+                    placeholder="Escribe aquí tu pregunta general..."
                     className="min-h-[100px] bg-background"
                     {...field}
                   />
                 </FormControl>
                  <FormDescription>
-                  Esta IA de demostración puede usar los detalles de tu mascota para contextualizar la respuesta.
+                  Ej: ¿Cada cuánto debo desparasitar a mi cachorro?
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6" disabled={isPending}>
-            {isPending ? (
+            {isPending && aiResponse === null ? ( // Show spinner only on initial load or if aiResponse is cleared
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
             ) : (
               <Brain className="mr-2 h-5 w-5" />
             )}
-            Consultar al Asistente IA
+            {isPending && aiResponse === null ? "GIA está pensando..." : "Pregunta a GIA"}
           </Button>
         </form>
       </Form>
 
-      {isPending && (
-        <div className="text-center py-6">
-          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
-          <p className="mt-2 text-muted-foreground">El Asistente IA está pensando...</p>
-        </div>
-      )}
+      {userQuestionForDisplay && ( // Only show chat interface if a question has been submitted
+        <div className="mt-8 space-y-6 p-4 bg-secondary/30 rounded-lg shadow-inner">
+            {/* User's Question Bubble */}
+            <div className="flex justify-end items-start space-x-2">
+                <div className="bg-primary text-primary-foreground p-3 rounded-lg max-w-[80%] shadow">
+                    <p className="font-semibold text-sm">Tú</p>
+                    <p className="text-sm">{userQuestionForDisplay}</p>
+                </div>
+                 <span className="flex-shrink-0 inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary text-primary-foreground shadow">
+                    <UserCircle className="h-5 w-5" />
+                </span>
+            </div>
 
-      {aiResponse && !isPending && (
-        <Card className="mt-8 bg-secondary/30 border-primary/50">
-          <CardHeader>
-            <CardTitle className="flex items-center text-xl text-primary">
-              <Sparkles className="mr-2 h-6 w-6" />
-              Respuesta del Asistente IA
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-foreground whitespace-pre-wrap">{aiResponse}</p>
-          </CardContent>
-        </Card>
-      )}
+            {/* GIA's Response Bubble or Loading Bubble */}
+            {isPending && !aiResponse && (
+                 <div className="flex items-start space-x-2">
+                    <span className="flex-shrink-0 inline-flex items-center justify-center h-9 w-9 rounded-full bg-accent text-accent-foreground shadow">
+                        <Bot className="h-5 w-5" />
+                    </span>
+                    <div className="bg-card border p-3 rounded-lg max-w-[80%] shadow">
+                        <p className="font-semibold text-sm text-accent">GIA</p>
+                        <div className="flex items-center space-x-2 text-muted-foreground text-sm">
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <span>Pensando...</span>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {aiResponse && ( // Show GIA's response once available
+                 <div className="flex items-start space-x-2">
+                    <span className="flex-shrink-0 inline-flex items-center justify-center h-9 w-9 rounded-full bg-accent text-accent-foreground shadow">
+                        <Bot className="h-5 w-5" />
+                    </span>
+                    <div className="bg-card border p-3 rounded-lg max-w-[80%] shadow">
+                        <p className="font-semibold text-sm text-accent">GIA</p>
+                        <p className="text-foreground text-sm whitespace-pre-wrap">{aiResponse}</p>
+                    </div>
+                </div>
+            )}
+        </div>
+    )}
     </div>
   );
 }
