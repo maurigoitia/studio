@@ -47,16 +47,16 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 to-background">
         <div className="container mx-auto text-center px-4">
-          {/* Icono PawPrint eliminado */}
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-            PetSync: Simplificando el Cuidado y la Conexión de tu Mascota.
+            PetSync conecta a tutores y veterinarias en tiempo real.
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Conectando a tutores y veterinarios para una gestión de salud animal más simple y eficiente. Accede a historiales, agenda citas y optimiza el cuidado de tu compañero peludo.
+            Historial médico compartido, gestión de turnos, recordatorios y pedidos.
+            Todo sincronizado, sin llamadas ni planillas.
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-              <a href="#waitlist">Sumate a la Waitlist</a>
+              <a href="#waitlist">Unite a la waitlist</a>
             </Button>
           </div>
         </div>
