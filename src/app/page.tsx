@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Smartphone, BrainCircuit, CalendarClock, BarChartBig, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Share2, Search } from 'lucide-react';
+import { Smartphone, BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Search, MessagesSquare } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -102,24 +102,24 @@ export default function HomePage() {
           <div className="grid md:grid-cols-1 gap-8">
             <div className="space-y-8"> 
               <div className="flex items-start">
-                <BarChartBig className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
+                <CalendarClock className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">Optimizá tu Tiempo, Maximizá tu Impacto</h3>
-                  <p className="text-muted-foreground">Gestioná tu agenda de forma eficiente, reducí la carga administrativa y dedicá más tiempo a lo que realmente importa: el cuidado de tus pacientes.</p>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">🗓️ Agenda inteligente, menos fricción</h3>
+                  <p className="text-muted-foreground">Gestioná turnos en tiempo real con disponibilidad clara, sin llamados ni idas y vueltas. Menos tareas administrativas, más foco en tus pacientes.</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <Users className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
+                <ClipboardList className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">Conexión Directa, Pacientes Felices</h3>
-                  <p className="text-muted-foreground">Fortalecé la relación con tus clientes centralizando la información y facilitando una comunicación fluida y proactiva. Un servicio que fideliza.</p>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">📁 Historiales médicos centralizados y siempre accesibles</h3>
+                  <p className="text-muted-foreground">Cada mascota tiene su ficha clínica completa, organizada y actualizada. Vos cargás la info, el tutor accede. Información compartida, sin errores ni duplicados.</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <Network className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
+                <MessagesSquare className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">Ampliá tu Comunidad y Servicios</h3>
-                  <p className="text-muted-foreground">Unite a una red creciente de tutores y profesionales. PetSync es el punto de encuentro para veterinarias, pet shops y proveedores que buscan conectar y ofrecer lo mejor.</p>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">💬 Comunicación directa con cada tutor</h3>
+                  <p className="text-muted-foreground">Mensajes, recordatorios automáticos y seguimientos en un solo canal. Nada se pierde, todo queda registrado. Sin depender de WhatsApp ni llamados de último momento.</p>
                 </div>
               </div>
             </div>
@@ -171,7 +171,7 @@ export default function HomePage() {
                 <ClipboardList className="h-8 w-8 text-accent mt-1 shrink-0" />
                 <div>
                   <h4 className="text-xl font-semibold text-foreground mb-1">📜 Tu Historial Médico, al Alcance de tu Voz:</h4>
-                  <p className="text-muted-foreground text-sm">Accede y comprende fácilmente el historial médico de tu mascota, recordatorios y tratamientos. Pregúntale a nuestra IA y obtén resúmenes claros. (Ej: "¿Cuándo fue la última vacuna de Luna?" o "Resúmeme su última visita al veterinario.")</p>
+                  <p className="text-muted-foreground text-sm">Accede y comprende आसानी से el historial médico de tu mascota, recordatorios y tratamientos. Pregúntale a nuestra IA y obtén resúmenes claros. (Ej: "¿Cuándo fue la última vacuna de Luna?" o "Resúmeme su última visita al veterinario.")</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -182,7 +182,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="flex items-start space-x-4">
-                <Users className="h-8 w-8 text-accent mt-1 shrink-0" /> {/* Using Users icon instead of Share2 as it's more common for community */}
+                <Users className="h-8 w-8 text-accent mt-1 shrink-0" /> 
                 <div>
                   <h4 className="text-xl font-semibold text-foreground mb-1">🎉 Conecta con tu Comunidad:</h4>
                   <p className="text-muted-foreground text-sm">Encuentra foros, grupos de dueños con intereses similares o eventos para mascotas cerca tuyo, con sugerencias inteligentes de nuestra IA.</p>
