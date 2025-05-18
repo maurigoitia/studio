@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, Smartphone, TriangleAlert, Brain, MessagesSquare, CheckCircle, UserCheck, PawPrint } from 'lucide-react';
+import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, Smartphone, TriangleAlert, Brain, MessagesSquare, CheckCircle, UserCheck, BellRing, Cloud, FolderKanban, MailCheck, BarChart3 } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -142,34 +142,45 @@ export default function HomePage() {
       <section id="como-funciona" className="w-full py-12 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona PetSync?</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8 md:gap-16">
-            <Card className="shadow-lg border">
-              <CardHeader>
-                <CardTitle className="text-2xl">Para Tutores: El Cuidado de tu Mascota, Simplificado</CardTitle>
+            <Card className="shadow-lg border p-6">
+              <CardHeader className="p-0 mb-4">
+                <CardTitle className="text-2xl">Para Tutores: Organiza y Accede a la Información de tu Mascota</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 text-muted-foreground">
-                <div className="flex items-center">
-                    <DownloadCloud className="h-5 w-5 mr-2 text-primary shrink-0"/>
-                    <p>1. Cuando la app PetSync esté lista, descárgala para iOS y Android.</p>
+              <CardContent className="p-0 space-y-3 text-muted-foreground">
+                <div className="flex items-start">
+                    <ClipboardList className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
+                    <p>Centralizá el historial de salud de tu mascota: vacunas, tratamientos, alergias y más, todo en un solo lugar.</p>
                 </div>
-                <p>2. Creá un perfil detallado para tu mascota.</p>
-                <p>3. Conectate fácilmente con tu veterinaria de confianza.</p>
-                <p>4. Gestioná citas y recibí recordatorios importantes.</p>
-                <p className="font-semibold text-foreground">¡Así de fácil!</p>
+                <div className="flex items-start">
+                    <BellRing className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
+                    <p>Recibí recordatorios personalizados sobre medicación, controles de salud y fechas importantes.</p>
+                </div>
+                <div className="flex items-start">
+                    <Cloud className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
+                    <p>Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
+                </div>
               </CardContent>
             </Card>
-            <Card className="shadow-lg border">
-              <CardHeader>
-                <CardTitle className="text-2xl">Para Veterinarias: Potenciá tu Clínica, Conectá con Pacientes</CardTitle>
+            <Card className="shadow-lg border p-6">
+              <CardHeader className="p-0 mb-4">
+                <CardTitle className="text-2xl">Para Clínicas Veterinarias: Digitalizá y Potenciá tu Práctica</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 text-muted-foreground">
-                <p>1. Registrate en la plataforma web de PetSync.</p>
-                <p>2. Creá un perfil completo para tu clínica.</p>
-                <p>3. Optimiza la comunicación con tus pacientes a través de la plataforma.</p>
-                <p>4. Gestioná turnos y enviá comunicados importantes a tus clientes.</p>
-                <p className="font-semibold text-foreground">¡Así de fácil!</p>
+              <CardContent className="p-0 space-y-3 text-muted-foreground">
+                 <div className="flex items-start">
+                    <FolderKanban className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
+                    <p>Gestioná historias clínicas electrónicas de tus pacientes de manera eficiente y segura.</p>
+                </div>
+                <div className="flex items-start">
+                    <MailCheck className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
+                    <p>Automatizá comunicaciones con los tutores: enviá recordatorios y notificaciones relevantes.</p>
+                </div>
+                <div className="flex items-start">
+                    <BarChart3 className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
+                    <p>Accedé a métricas clave para analizar la evolución de tus pacientes y optimizar tus servicios.</p>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -189,10 +200,8 @@ export default function HomePage() {
       
        {/* Quiénes Somos Section */}
       <section id="quienes-somos" className="w-full py-12 md:py-20 bg-secondary/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Quiénes Somos</h2>
-          </div>
+        <div className="container mx-auto px-4 max-w-3xl text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">Quiénes Somos</h2>
           <Card className="p-6 md:p-8 shadow-xl bg-card">
             <CardContent className="p-0 text-left">
               <div className="max-w-3xl mx-auto space-y-6 text-muted-foreground">
@@ -218,7 +227,7 @@ export default function HomePage() {
           
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
-              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-background rounded-lg shadow mb-2 border">
+              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow mb-2 border">
                 <AccordionTrigger className="px-4 py-3 text-left hover:no-underline flex items-center text-foreground">
                   {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-5 w-5 mr-2 text-primary shrink-0" /> }
                   <span className="flex-1">{faq.question}</span>
@@ -235,3 +244,6 @@ export default function HomePage() {
     </div>
   );
 }
+
+
+    
