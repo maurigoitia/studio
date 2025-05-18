@@ -78,7 +78,7 @@ export default function HomePage() {
                     <Smartphone className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                     <div>
                       <h3 className="text-xl font-semibold text-foreground mb-2">Información de tu Mascota, Siempre Accesible</h3>
-                      <p className="text-muted-foreground">Toda la información de tus mascotas en un único lugar, digital y siempre disponible. Registra vacunas, desparasitaciones, estudios, medicación, alergias y escaneá recetas o documentos importantes. Perfecto para tener todo a mano en cada visita al veterinario.</p>
+                      <p className="text-muted-foreground">Mantén el historial médico completo de tu mascota en un solo lugar seguro en la nube: vacunas, tratamientos, cirugías, alergias y enfermedades crónicas. Accede desde cualquier dispositivo y comparte fácilmente la información con tu veterinario o cuidadores.</p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -92,7 +92,7 @@ export default function HomePage() {
                     <CalendarClock className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                     <div>
                       <h3 className="text-xl font-semibold text-foreground mb-2">Agenda Inteligente, Cero Estrés</h3>
-                      <p className="text-muted-foreground">Organizá turnos, vacunas y desparasitaciones sin esfuerzo. Recibí recordatorios inteligentes para que nunca más olvides una cita importante.</p>
+                      <p className="text-muted-foreground">Organiza citas, vacunas y desparasitaciones sin esfuerzo. Programa y recibe recordatorios para medicamentos, y recibe alertas de salud sobre citas próximas o chequeos necesarios para que nunca olvides nada importante.</p>
                     </div>
                   </div>
                 </div>
@@ -187,7 +187,7 @@ export default function HomePage() {
         </div>
       </section>
       
-      {/* Quiénes Somos Section */}
+       {/* Quiénes Somos Section */}
       <section id="quienes-somos" className="w-full py-12 md:py-20 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
