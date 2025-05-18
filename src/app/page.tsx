@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, MessagesSquare, Smartphone } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, MessagesSquare, Smartphone, TriangleAlert } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -128,8 +129,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* GIA Chat Demo Introduction Section */}
+      
+      {/* Chatea con GIA - Introduction to Demo on Landing Page */}
       <section id="gia-chat-demo" className="w-full py-16 md:py-24 bg-card/50">
         <div className="container mx-auto px-4 text-center">
           <Bot className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -170,7 +171,7 @@ export default function HomePage() {
             <Card className="shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center text-xl">
-                  <HeartPulse className="h-6 w-6 mr-2 text-primary" /> {/* Changed icon for variety */}
+                  <HeartPulse className="h-6 w-6 mr-2 text-primary" />
                   Entiende Mejor a tu Mascota
                 </CardTitle>
               </CardHeader>
@@ -242,14 +243,14 @@ export default function HomePage() {
       </section>
 
       {/* About Us Section */}
-      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-secondary/50">
+      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-card/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <UsersRound className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">PetSync: Nacido de la Pasión y la Necesidad</h2>
           </div>
           <div className="max-w-3xl mx-auto text-left md:text-center space-y-6 text-muted-foreground">
-            <p>En PetSync, no solo desarrollamos software; vivimos el mundo del cuidado animal día a día. Somos un equipo de [desarrolladores apasionados por las mascotas y tutores que hemos vivido el caos de la información dispersa].</p>
+            <p>En PetSync, no solo desarrollamos software; vivimos el mundo del cuidado animal día a día. Somos un equipo de desarrolladores apasionados por las mascotas y tutores que hemos vivido el caos de la información dispersa.</p>
             <h3 className="text-xl font-semibold text-foreground pt-4">El Origen de PetSync: Del Desorden a la Claridad</h3>
             <p>Conocemos de primera mano ese "vaivén": la frustración de las planillas interminables, los historiales médicos en papeles que se pierden, la información vital de nuestros pacientes o nuestras propias mascotas distribuida en mil plataformas diferentes, las llamadas que no terminan más para coordinar un turno... ¡Un verdadero dolor de cabeza que nos quitaba tiempo valioso que preferíamos dedicar al cuidado animal o a disfrutar de nuestros compañeros!</p>
             <p>Nos preguntamos: ¿Y si pudiéramos simplificar todo esto? ¿Y si existiera una forma de conectar a tutores y veterinarias de manera fluida, con toda la información organizada y accesible en un solo lugar?</p>
@@ -303,4 +304,5 @@ export default function HomePage() {
   );
 }
 
+    
     
