@@ -58,7 +58,7 @@ export default function HomePage() {
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-              <a href="#waitlist">DESCUBRIR MÁS</a>
+              <a href="#gia-ai">DESCUBRIR MÁS</a>
             </Button>
           </div>
         </div>
@@ -80,8 +80,8 @@ export default function HomePage() {
               <div className="flex items-start">
                 <BrainCircuit className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">Firu AI a tu Servicio <span className="text-xs bg-primary/20 text-primary font-semibold px-2 py-0.5 rounded-full ml-1">Próximamente</span></h3>
-                  <p className="text-muted-foreground">Consultá dudas sobre tratamientos pasados o próximos cuidados. Preguntale a Firu AI: "¿Cuándo fue la última vacuna de Thor?" o "¿Qué medicación le dimos para su otitis?". Recuerda que esto es una guía y siempre debes consultar a tu veterinario.</p>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">GIA: Tu Copiloto Inteligente (Versión Beta)</h3>
+                  <p className="text-muted-foreground">Experimenta cómo GIA puede ayudarte con dudas generales sobre tu mascota y, próximamente en la app, accederá a su historial médico de forma inteligente. Recuerda: GIA es una guía en desarrollo y no sustituye la consulta profesional.</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -105,21 +105,21 @@ export default function HomePage() {
               <div className="flex items-start">
                 <CalendarClock className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">🗓️ Agenda inteligente, menos fricción</h3>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Agenda inteligente, menos fricción</h3>
                   <p className="text-muted-foreground">Gestioná turnos en tiempo real con disponibilidad clara, sin llamados ni idas y vueltas. Menos tareas administrativas, más foco en tus pacientes.</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <ClipboardList className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">📁 Historiales médicos centralizados y siempre accesibles</h3>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Historiales médicos centralizados y siempre accesibles</h3>
                   <p className="text-muted-foreground">Cada mascota tiene su ficha clínica completa, organizada y actualizada. Vos cargás la info, el tutor accede. Información compartida, sin errores ni duplicados.</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <MessagesSquare className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">💬 Comunicación directa con cada tutor</h3>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">Comunicación directa con cada tutor</h3>
                   <p className="text-muted-foreground">Mensajes, recordatorios automáticos y seguimientos en un solo canal. Nada se pierde, todo queda registrado. Sin depender de WhatsApp ni llamados de último momento.</p>
                 </div>
               </div>
@@ -206,10 +206,10 @@ export default function HomePage() {
               <CardContent className="space-y-3 text-muted-foreground">
                 <div className="flex items-center">
                     <DownloadCloud className="h-5 w-5 mr-2 text-primary shrink-0"/>
-                    <p>1. Descargá la app PetSync, disponible para iOS y Android.</p>
+                    <p>1. Cuando la app PetSync esté lista, descárgala para iOS y Android.</p>
                 </div>
                 <p>2. Creá un perfil detallado para tu mascota.</p>
-                <p>3. Conectate आसानी से con tu veterinaria de confianza.</p>
+                <p>3. Conectate fácilmente con tu veterinaria de confianza.</p>
                 <p>4. Gestioná citas y recibí recordatorios importantes.</p>
                 <p className="font-semibold text-foreground">¡Así de fácil!</p>
               </CardContent>
@@ -221,7 +221,7 @@ export default function HomePage() {
               <CardContent className="space-y-3 text-muted-foreground">
                 <p>1. Registrate en la plataforma web de PetSync.</p>
                 <p>2. Creá un perfil completo para tu clínica.</p>
-                <p>3. Invitá a tus pacientes a unirse a la comunidad PetSync.</p>
+                <p>3. Optimiza la comunicación con tus pacientes a través de la plataforma.</p>
                 <p>4. Gestioná turnos y enviá comunicados importantes a tus clientes.</p>
                 <p className="font-semibold text-foreground">¡Así de fácil!</p>
               </CardContent>
@@ -235,13 +235,18 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <UsersRound className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Quiénes somos</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">PetSync: Nacido de la Pasión y la Necesidad</h2>
           </div>
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-lg text-muted-foreground">
-              En PetSync, desarrollamos una plataforma móvil pensada para tutores y clínicas veterinarias, convencidos de que el cuidado de las mascotas puede ser más simple y eficiente para todos. Organizamos turnos, centralizamos historiales clínicos y facilitamos el acceso a productos esenciales, todo desde tu celular. Conectamos ambos lados del mostrador, una patita a la vez.
-            </p>
-            <p className="mt-4 text-md font-semibold text-foreground">
+          <div className="max-w-3xl mx-auto text-left md:text-center space-y-6 text-muted-foreground">
+            <p>En PetSync, no solo desarrollamos software; vivimos el mundo del cuidado animal día a día. Somos un equipo de [desarrolladores apasionados por las mascotas y tutores que hemos vivido el caos de la información dispersa].</p>
+            <h3 className="text-xl font-semibold text-foreground pt-4">El Origen de PetSync: Del Desorden a la Claridad</h3>
+            <p>Conocemos de primera mano ese "vaivén": la frustración de las planillas interminables, los historiales médicos en papeles que se pierden, la información vital de nuestros pacientes o nuestras propias mascotas distribuida en mil plataformas diferentes, las llamadas que no terminan más para coordinar un turno... ¡Un verdadero dolor de cabeza que nos quitaba tiempo valioso que preferíamos dedicar al cuidado animal o a disfrutar de nuestros compañeros!</p>
+            <p>Nos preguntamos: ¿Y si pudiéramos simplificar todo esto? ¿Y si existiera una forma de conectar a tutores y veterinarias de manera fluida, con toda la información organizada y accesible en un solo lugar?</p>
+            <p>Así nació PetSync.</p>
+            <p>Nuestra misión es transformar ese caos en calma, esa fricción en conexión. Desarrollamos una plataforma pensada para que los tutores tengan la tranquilidad de un cuidado coordinado y para que las clínicas veterinarias puedan optimizar su gestión, dedicando más tiempo a lo que realmente importa: la salud y el bienestar animal.</p>
+            <p>Estamos convencidos de que la tecnología puede ser una gran aliada. Por eso, estamos construyendo PetSync con herramientas como la inteligencia artificial de GIA, nuestro copiloto en beta, para ofrecerte una experiencia cada vez más inteligente y personalizada.</p>
+            <p>Conectamos ambos lados del mostrador, una patita a la vez, porque entendemos tus necesidades y compartimos tu amor por los animales.</p>
+            <p className="mt-6 text-center text-md font-semibold text-foreground">
               Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
             </p>
           </div>
@@ -286,3 +291,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+    
