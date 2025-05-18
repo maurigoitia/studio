@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Smartphone, BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Search, MessagesSquare } from 'lucide-react';
+import { Smartphone, BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, MessagesSquare } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -207,9 +207,6 @@ export default function HomePage() {
             </div>
             <p className="mt-12 text-center text-md text-muted-foreground">
              Importante: GIA es una IA en desarrollo. La información que proporciona es para fines orientativos y educativos, y nunca debe sustituir el consejo de un veterinario profesional.
-            </p>
-            <p className="mt-4 text-center text-md text-muted-foreground">
-              ¡Regístrate en nuestra <Link href="#waitlist" className="text-primary hover:underline">waitlist</Link> y sé el primero en experimentar el poder de la IA en PetSync!
             </p>
           </div>
         </div>
