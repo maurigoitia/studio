@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, Smartphone, TriangleAlert, Brain, MessagesSquare } from 'lucide-react';
+import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, Smartphone, TriangleAlert, Brain, MessagesSquare, CheckCircle, UserCheck, PawPrint } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -47,7 +47,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center">
       {/* Hero Section */}
-      <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 to-background">
+      <section className="w-full py-16 md:py-28 bg-gradient-to-br from-primary/10 to-background">
         <div className="container mx-auto text-center px-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
             PetSync: el cuidado veterinario, sin el desorden de siempre.
@@ -67,7 +67,7 @@ export default function HomePage() {
       </section>
 
       {/* Benefits for Tutors Section */}
-      <section id="tutores" className="w-full py-16 md:py-24 bg-background">
+      <section id="tutores" className="w-full py-12 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para tutores</h2>
           <Card className="p-6 md:p-8 shadow-xl">
@@ -103,7 +103,7 @@ export default function HomePage() {
       </section>
 
       {/* Benefits for Veterinarians Section */}
-      <section id="veterinarios" className="w-full py-16 md:py-24 bg-secondary/50">
+      <section id="veterinarios" className="w-full py-12 md:py-20 bg-secondary/50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para veterinarias</h2>
           <Card className="p-6 md:p-8 shadow-xl">
@@ -139,7 +139,7 @@ export default function HomePage() {
       </section>
       
       {/* How it Works Section */}
-      <section id="como-funciona" className="w-full py-16 md:py-24 bg-card/50">
+      <section id="como-funciona" className="w-full py-12 md:py-20 bg-background"> {/* Adjusted background for consistency */}
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <ListChecks className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -178,7 +178,7 @@ export default function HomePage() {
       </section>
 
       {/* Waitlist Section */}
-      <section id="waitlist" className="w-full py-16 md:py-24">
+      <section id="waitlist" className="w-full py-12 md:py-20">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¡Estamos en versión beta!</h2>
@@ -190,14 +190,13 @@ export default function HomePage() {
       </section>
       
       {/* Quiénes Somos Section */}
-      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-secondary/50">
+      <section id="quienes-somos" className="w-full py-12 md:py-20 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            {/* Icon removed as per request */}
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Quiénes Somos</h2>
           </div>
           <Card className="p-6 md:p-8 shadow-xl bg-card">
-            <CardContent className="p-0 text-left"> {/* Added text-left here */}
+            <CardContent className="p-0 text-left">
               <div className="max-w-3xl mx-auto space-y-6 text-muted-foreground">
                 <p>En PetSync, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
                 <p>Por eso creamos PetSync: para transformar ese caos en calma.</p>
@@ -213,7 +212,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="w-full py-16 md:py-24 bg-card/50">
+      <section id="faq" className="w-full py-12 md:py-20 bg-background"> {/* Adjusted background for consistency */}
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
             <HelpCircle className="h-12 w-12 text-primary mx-auto mb-4" />
