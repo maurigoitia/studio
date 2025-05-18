@@ -186,7 +186,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <UsersRound className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">PetSync: Nacido de la Pasión y la Necesidad</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Quiénes Somos</h2>
           </div>
           <div className="max-w-3xl mx-auto text-left md:text-center space-y-6 text-muted-foreground">
             <p>En PetSync, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
