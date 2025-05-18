@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Smartphone, BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, MessagesSquare } from 'lucide-react';
+import { Smartphone, BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, MessagesSquare } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -59,7 +59,7 @@ export default function HomePage() {
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-              <Link href="#gia-ai">DESCUBRIR MÁS</Link>
+              <Link href="#gia-ai-chat-demo">DESCUBRIR MÁS</Link>
             </Button>
           </div>
         </div>
@@ -130,7 +130,7 @@ export default function HomePage() {
       </section>
 
       {/* New Chatea con GIA Section */}
-      <section id="chatea-con-gia" className="w-full py-16 md:py-24">
+      <section id="gia-ai-chat-demo" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4">
           <Card className="shadow-lg border bg-card">
             <CardHeader className="items-center text-center">
@@ -152,68 +152,8 @@ export default function HomePage() {
         </div>
       </section>
       
-      {/* GIA Section (Detailed) */}
-      <section id="gia-ai" className="w-full py-16 md:py-24 bg-secondary/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <Bot className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">✨ Te Presentamos a GIA: Tu Sabia Inteligencia Amiga en PetSync ✨</h2>
-            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-              ¿Buscas respuestas claras para el cuidado de tu mascota? ¡GIA está aquí para ayudarte! Como tu copiloto inteligente en PetSync (actualmente en beta), GIA está aprendiendo a ser la mejor asistente para ti y tu compañero peludo.
-            </p>
-             <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-              GIA no es solo un buscador; es una conversación. Ella entiende tus preguntas y te ofrece información útil y personalizada al instante, haciendo el día a día con tu mascota un poco más fácil.
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <h3 className="text-2xl font-semibold text-foreground text-center mb-10">Descubre cómo GIA, tu copiloto en beta, puede asistirte:</h3>
-            <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
-              <div className="flex items-start space-x-4">
-                <HeartPulse className="h-8 w-8 text-accent mt-1 shrink-0" />
-                <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">🩺 GIA, Tu Asesora de Salud (Beta):</h4>
-                  <p className="text-muted-foreground text-sm">¿Dudas sobre síntomas, dietas o cuidados preventivos? Pregúntale a GIA. Te brindará información general y consejos basados en conocimiento veterinario. (Recuerda: GIA es una ayuda, no reemplaza a tu veterinario). (Ej: "GIA, mi perro no quiere comer, ¿qué podría ser?")</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <MapPin className="h-8 w-8 text-accent mt-1 shrink-0" />
-                <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">🗺️ GIA te Ayuda a Encontrar Servicios:</h4>
-                  <p className="text-muted-foreground text-sm">¿Necesitas una veterinaria o una peluquería? Dile a GIA qué buscas y dónde. Te ayudará a identificar opciones cercanas. (La reserva directa vendrá más adelante). (Ej: "GIA, veterinarias en Palermo con buenas reseñas")</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <ShoppingBag className="h-8 w-8 text-accent mt-1 shrink-0" />
-                <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">🛍️ GIA te Orienta sobre Productos:</h4>
-                  <p className="text-muted-foreground text-sm">¿El mejor alimento? ¿Accesorios útiles? Consulta con GIA. Te ofrecerá información para que tomes mejores decisiones de compra. (Ej: "GIA, ¿qué tipo de arena sanitaria es mejor para gatos?")</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <ClipboardList className="h-8 w-8 text-accent mt-1 shrink-0" />
-                <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">📜 GIA y el Historial de tu Mascota (Próximamente en la App):</h4>
-                  <p className="text-muted-foreground text-sm">Imagina acceder al historial médico de tu mascota con una simple pregunta. GIA se está preparando para esto y será una función clave en la app móvil de PetSync. (Ej: "GIA, ¿cuándo es la próxima vacuna de Luna?")</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <Bot className="h-8 w-8 text-accent mt-1 shrink-0" />
-                <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">💬 Conversa con GIA:</h4>
-                  <p className="text-muted-foreground text-sm">Chatea con GIA en un lenguaje natural. Aunque está en beta, se esfuerza por entenderte y darte la mejor asistencia posible.</p>
-                </div>
-              </div>
-            </div>
-            <p className="mt-12 text-center text-md text-muted-foreground">
-             Importante: GIA es una IA en desarrollo. La información que proporciona es para fines orientativos y educativos, y nunca debe sustituir el consejo de un veterinario profesional.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* How it Works Section */}
-      <section id="como-funciona" className="w-full py-16 md:py-24">
+      <section id="como-funciona" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <ListChecks className="h-12 w-12 text-primary mx-auto mb-4" />
