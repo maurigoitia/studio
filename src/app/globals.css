@@ -9,97 +9,97 @@ body {
 @layer base {
   :root {
     --background: 0 0% 100%; /* White */
-    --foreground: 25 20% 25%; /* Dark Warm Gray/Brown */
+    --foreground: 240 10% 3.9%; /* Near Black for text */
 
     --card: 0 0% 100%; /* White */
-    --card-foreground: 25 20% 25%; /* Dark Warm Gray/Brown */
+    --card-foreground: 240 10% 3.9%; /* Near Black */
 
     --popover: 0 0% 100%; /* White */
-    --popover-foreground: 25 20% 25%; /* Dark Warm Gray/Brown */
+    --popover-foreground: 240 10% 3.9%; /* Near Black */
 
-    --primary: 33 92% 55%; /* Vibrant, Friendly Orange */
+    --primary: 180 100% 25%; /* Teal (#008080) */
     --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 40 60% 96%; /* Very Light Warm Beige */
-    --secondary-foreground: 30 20% 30%; /* Darker Brown/Gray for text on secondary */
+    --secondary: 0 0% 96%; /* Very Light Gray */
+    --secondary-foreground: 240 10% 20%; /* Darker Gray for text on secondary */
 
-    --muted: 30 30% 94%; /* Light Warm Gray */
-    --muted-foreground: 30 15% 50%; /* Medium Warm Gray text */
+    --muted: 0 0% 94%; /* Light Gray */
+    --muted-foreground: 240 5% 50%; /* Medium Gray text */
 
-    --accent: 205 75% 45%; /* Calm, Trustworthy Blue */
-    --accent-foreground: 0 0% 100%; /* White */
+    --accent: 40 80% 55%; /* Soft Gold/Yellow */
+    --accent-foreground: 25 20% 15%; /* Dark Gray/Brown for text on accent */
 
-    --destructive: 0 84% 60%; /* Red - unchanged */
-    --destructive-foreground: 0 0% 98%; /* Light text on red - unchanged */
+    --destructive: 0 84% 60%; /* Red */
+    --destructive-foreground: 0 0% 98%; /* Light text on red */
 
-    --border: 30 20% 90%; /* Light Warm Gray border */
-    --input: 40 50% 95%; /* Very Light Warm Gray/Beige input background */
-    --ring: 33 92% 55%; /* Primary Orange for focus states */
+    --border: 0 0% 90%; /* Light Gray border */
+    --input: 0 0% 92%; /* Light Gray input background */
+    --ring: 180 100% 25%; /* Teal for focus states */
 
-    /* Chart colors - Warm palette with blue and a touch of green */
-    --chart-1: 33 92% 55%; /* Primary Orange */
-    --chart-2: 45 95% 60%; /* Yellow-Orange */
-    --chart-3: 205 75% 50%; /* Accent Blue */
+    /* Chart colors - Teal, Gold, Blue, Soft Green, Warm Neutral */
+    --chart-1: 180 100% 25%; /* Teal - Primary */
+    --chart-2: 40 80% 55%;  /* Gold - Accent */
+    --chart-3: 205 75% 50%; /* A nice Blue */
     --chart-4: 90 45% 60%;  /* Soft Green */
     --chart-5: 35 40% 70%;  /* Light Brown/Tan */
     --radius: 0.5rem;
 
     /* Sidebar variables */
-    --sidebar-background: 40 50% 97%; /* Slightly darker Light Warm Beige */
-    --sidebar-foreground: 25 20% 20%; /* Darker Warm Gray/Brown for sidebar text */
-    --sidebar-primary: 33 92% 50%; /* Slightly darker Primary Orange for sidebar */
+    --sidebar-background: 0 0% 97%; /* Slightly darker Light Gray for sidebar */
+    --sidebar-foreground: 240 10% 15%; /* Darker Gray for sidebar text */
+    --sidebar-primary: 180 100% 23%; /* Slightly darker Teal for sidebar */
     --sidebar-primary-foreground: 0 0% 100%; /* White */
-    --sidebar-accent: 205 70% 40%; /* Slightly darker Accent Blue for sidebar */
-    --sidebar-accent-foreground: 0 0% 100%; /* White */
-    --sidebar-border: 30 20% 92%; /* Light Warm Gray border for sidebar */
-    --sidebar-ring: 33 92% 55%; /* Primary Orange */
+    --sidebar-accent: 40 80% 50%; /* Slightly darker Gold for sidebar */
+    --sidebar-accent-foreground: 25 20% 10%; /* Darker text on sidebar accent */
+    --sidebar-border: 0 0% 92%; /* Light Gray border for sidebar */
+    --sidebar-ring: 180 100% 25%; /* Teal */
   }
 
   .dark {
-    --background: 30 10% 12%; /* Very Dark Warm Charcoal */
-    --foreground: 30 20% 92%; /* Light Warm Off-White */
+    --background: 220 15% 10%; /* Very Dark Blue/Gray */
+    --foreground: 220 10% 90%; /* Light Gray */
 
-    --card: 30 10% 17%; /* Darker Warm Gray/Brown */
-    --card-foreground: 30 20% 92%; /* Light Warm Off-White */
+    --card: 220 15% 15%; /* Darker Blue/Gray */
+    --card-foreground: 220 10% 90%; /* Light Gray */
 
-    --popover: 30 10% 17%; /* Darker Warm Gray/Brown */
-    --popover-foreground: 30 20% 92%; /* Light Warm Off-White */
+    --popover: 220 15% 15%; /* Darker Blue/Gray */
+    --popover-foreground: 220 10% 90%; /* Light Gray */
 
-    --primary: 33 90% 63%; /* Brighter Orange for dark mode */
-    --primary-foreground: 33 30% 10%; /* Very Dark Brown/Charcoal for contrast */
+    --primary: 180 70% 45%; /* Brighter Teal */
+    --primary-foreground: 220 15% 5%; /* Near Black for contrast */
 
-    --secondary: 30 8% 20%; /* Dark Warm Gray for elements */
-    --secondary-foreground: 30 15% 88%; /* Light Warm Gray */
+    --secondary: 220 15% 20%; /* Dark Blue/Gray for elements */
+    --secondary-foreground: 220 10% 88%; /* Light Gray */
 
-    --muted: 30 8% 25%; /* Lighter muted elements in dark */
-    --muted-foreground: 30 10% 65%; /* Medium-light Warm Gray */
+    --muted: 220 15% 25%; /* Lighter muted elements in dark */
+    --muted-foreground: 220 10% 65%; /* Medium-light Gray */
 
-    --accent: 205 65% 58%; /* Lighter, slightly desaturated Blue for dark mode accent */
-    --accent-foreground: 0 0% 100%; /* White, good contrast for this blue */
+    --accent: 40 75% 65%; /* Brighter Gold/Yellow */
+    --accent-foreground: 25 20% 10%; /* Very Dark Gray/Brown */
 
-    --destructive: 0 70% 50%; /* Red - unchanged for dark */
-    --destructive-foreground: 0 0% 98%; /* Light text on red - unchanged for dark */
+    --destructive: 0 70% 50%; /* Red */
+    --destructive-foreground: 0 0% 98%; /* Light text on red */
 
-    --border: 30 10% 28%; /* Darker Warm Gray border */
-    --input: 30 8% 22%; /* Darker Warm Gray input background */
-    --ring: 33 90% 63%; /* Brighter Orange */
+    --border: 220 15% 28%; /* Darker Blue/Gray border */
+    --input: 220 15% 22%; /* Darker Blue/Gray input background */
+    --ring: 180 70% 45%; /* Brighter Teal */
     
     /* chart colors for dark mode */
-    --chart-1: 33 90% 63%; /* Brighter Orange */
-    --chart-2: 45 90% 68%; /* Brighter Yellow-Orange */
-    --chart-3: 205 65% 62%; /* Lighter Accent Blue */
+    --chart-1: 180 70% 45%; /* Brighter Teal */
+    --chart-2: 40 75% 65%; /* Brighter Gold */
+    --chart-3: 205 65% 62%; /* Lighter Blue */
     --chart-4: 90 40% 65%;  /* Brighter Soft Green */
     --chart-5: 35 35% 72%;  /* Lighter Brown/Tan */
 
     /* Sidebar variables for dark mode */
-    --sidebar-background: 30 10% 10%; /* Even darker Warm Charcoal for sidebar */
-    --sidebar-foreground: 30 18% 90%; /* Light Warm Off-White */
-    --sidebar-primary: 33 90% 60%; /* Brighter Orange */
-    --sidebar-primary-foreground: 33 30% 8%; /* Very Dark Brown/Charcoal */
-    --sidebar-accent: 205 60% 55%; /* Lighter Accent Blue */
-    --sidebar-accent-foreground: 0 0% 100%; /* White */
-    --sidebar-border: 30 10% 25%; /* Dark Warm Gray border for sidebar */
-    --sidebar-ring: 33 90% 63%; /* Brighter Orange */
+    --sidebar-background: 220 15% 8%; /* Even darker Blue/Gray for sidebar */
+    --sidebar-foreground: 220 10% 88%; /* Light Gray */
+    --sidebar-primary: 180 65% 42%; /* Slightly adjusted Brighter Teal */
+    --sidebar-primary-foreground: 220 15% 3%; /* Near Black */
+    --sidebar-accent: 40 70% 62%; /* Slightly adjusted Brighter Gold */
+    --sidebar-accent-foreground: 25 20% 8%; /* Very Dark Brown */
+    --sidebar-border: 220 15% 25%; /* Dark Blue/Gray border for sidebar */
+    --sidebar-ring: 180 70% 45%; /* Brighter Teal */
   }
 }
 
