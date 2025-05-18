@@ -139,10 +139,9 @@ export default function HomePage() {
       </section>
       
       {/* How it Works Section */}
-      <section id="como-funciona" className="w-full py-12 md:py-20 bg-background"> {/* Adjusted background for consistency */}
+      <section id="como-funciona" className="w-full py-12 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <ListChecks className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona?</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8 md:gap-16">
@@ -180,7 +179,6 @@ export default function HomePage() {
       {/* Waitlist Section */}
       <section id="waitlist" className="w-full py-12 md:py-20">
         <div className="container mx-auto px-4 max-w-2xl text-center">
-          <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¡Estamos en versión beta!</h2>
           <p className="text-muted-foreground mb-8">
             Sumate a la waitlist para ser de los primeros en probarla y ayudarnos a construir la mejor herramienta para el cuidado de nuestras mascotas.
@@ -212,10 +210,9 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="w-full py-12 md:py-20 bg-background"> {/* Adjusted background for consistency */}
+      <section id="faq" className="w-full py-12 md:py-20 bg-background">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
-            <HelpCircle className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Preguntas Frecuentes</h2>
           </div>
           
