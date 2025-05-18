@@ -18,7 +18,7 @@ body {
     --popover-foreground: 240 10% 3.9%; /* Near Black */
 
     --primary: 180 100% 25%; /* Teal (#008080) */
-    --primary-foreground: 0 0% 100%; /* White */
+    --primary-foreground: 240 10% 3.9%; /* Dark Gray for better contrast on Teal */
 
     --secondary: 0 0% 96%; /* Very Light Gray */
     --secondary-foreground: 240 10% 20%; /* Darker Gray for text on secondary */

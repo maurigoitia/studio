@@ -1,12 +1,12 @@
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, MessagesSquare, Smartphone, TriangleAlert, Brain } from 'lucide-react';
+import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, Smartphone, TriangleAlert, Brain, MessagesSquare } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
 
 const faqData = [
   {
@@ -59,7 +59,7 @@ export default function HomePage() {
             Una plataforma para clínicas. Una app para tutores.
           </p>
           <div className="mt-10">
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
               <Link href="#tutores">DESCUBRIR MÁS</Link>
             </Button>
           </div>
@@ -181,7 +181,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About Us Section */}
+      {/* Quiénes Somos Section */}
       <section id="quienes-somos" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
