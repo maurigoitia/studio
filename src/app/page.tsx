@@ -48,16 +48,17 @@ export default function HomePage() {
       <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 to-background">
         <div className="container mx-auto text-center px-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-            PetSync: Simplificando el Cuidado y la Conexión de tu Mascota.
+            PetSync: el cuidado veterinario, sin el desorden de siempre.
           </h1>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            PetSync conecta a tutores y veterinarias en tiempo real.
-            Historial médico compartido, gestión de turnos, recordatorios y pedidos.
-            Todo sincronizado, sin llamadas ni planillas.
+            Turnos, historiales y seguimientos organizados.
+          </p>
+          <p className="mt-4 text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            Una plataforma para clínicas. Una app para tutores.
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-              <a href="#waitlist">Unite a la waitlist</a>
+              <a href="#waitlist">DESCUBRIR MÁS</a>
             </Button>
           </div>
         </div>
@@ -126,71 +127,65 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Intelligent Search Section */}
-      <section id="intelligent-search" className="w-full py-16 md:py-24">
+      
+      {/* GIA Section */}
+      <section id="gia-ai" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <Search className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">🐾 Tu Aliado Inteligente para el Cuidado de tu Mascota 🐾</h2>
+            <Bot className="h-12 w-12 text-primary mx-auto mb-4" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2">✨ Te Presentamos a GIA: Tu Sabia Inteligencia Amiga en PetSync ✨</h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-              ¿Cansado de navegar por un mar de información o no saber dónde encontrar al instante lo que tu mascota necesita? ¡PetSync evoluciona! Presentamos nuestro Buscador Inteligente con IA, diseñado para entenderte a ti y a las necesidades únicas de tu compañero.
+              ¿Buscas respuestas claras para el cuidado de tu mascota? ¡GIA está aquí para ayudarte! Como tu copiloto inteligente en PetSync (actualmente en beta), GIA está aprendiendo a ser la mejor asistente para ti y tu compañero peludo.
+            </p>
+             <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+              GIA no es solo un buscador; es una conversación. Ella entiende tus preguntas y te ofrece información útil y personalizada al instante, haciendo el día a día con tu mascota un poco más fácil.
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <h3 className="text-2xl font-semibold text-foreground text-center mb-8">Más que una Búsqueda, una Conversación Inteligente:</h3>
-            <p className="text-muted-foreground text-center mb-12">
-              Nuestro nuevo buscador no solo encuentra información, ¡la entiende y la personaliza para ti! Impulsado por Inteligencia Artificial, te ofrece respuestas rápidas, relevantes y adaptadas, convirtiendo la gestión del cuidado de tu mascota en una experiencia más simple e intuitiva.
-            </p>
-
-            <h3 className="text-2xl font-semibold text-foreground text-center mb-10">Descubre lo que el Buscador IA de PetSync puede hacer por ti:</h3>
+            <h3 className="text-2xl font-semibold text-foreground text-center mb-10">Descubre cómo GIA, tu copiloto en beta, puede asistirte:</h3>
             <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
               <div className="flex items-start space-x-4">
                 <HeartPulse className="h-8 w-8 text-accent mt-1 shrink-0" />
                 <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">🩺 Consultas de Salud al Instante:</h4>
-                  <p className="text-muted-foreground text-sm">Busca síntomas, pregunta sobre enfermedades, dietas o vacunas. Nuestra IA te ofrece información veterinaria confiable y consejos personalizados basados en el perfil de tu mascota. (Ej: "Mi perro tiene tos seca, ¿qué podría ser?")</p>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">🩺 GIA, Tu Asesora de Salud (Beta):</h4>
+                  <p className="text-muted-foreground text-sm">¿Dudas sobre síntomas, dietas o cuidados preventivos? Pregúntale a GIA. Te brindará información general y consejos basados en conocimiento veterinario. (Recuerda: GIA es una ayuda, no reemplaza a tu veterinario). (Ej: "GIA, mi perro no quiere comer, ¿qué podría ser?")</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
                 <MapPin className="h-8 w-8 text-accent mt-1 shrink-0" />
                 <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">🗺️ Servicios Cercanos, ¡Más Inteligente!:</h4>
-                  <p className="text-muted-foreground text-sm">Encuentra veterinarias (¡incluyendo urgencias!), peluquerías o paseadores cerca de ti. La IA refina los resultados según tus preferencias y te ayuda a contactar o incluso solicitar turnos. (Ej: "Necesito un veterinario de urgencia para gatos cerca de mi ubicación")</p>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">🗺️ GIA te Ayuda a Encontrar Servicios:</h4>
+                  <p className="text-muted-foreground text-sm">¿Necesitas una veterinaria o una peluquería? Dile a GIA qué buscas y dónde. Te ayudará a identificar opciones cercanas. (La reserva directa vendrá más adelante). (Ej: "GIA, veterinarias en Palermo con buenas reseñas")</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
                 <ShoppingBag className="h-8 w-8 text-accent mt-1 shrink-0" />
                 <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">🛍️ Guía de Productos Esencial:</h4>
-                  <p className="text-muted-foreground text-sm">Obtén información clara sobre alimentos, accesorios y más. Te orientamos sobre qué es lo mejor para tu mascota y dónde encontrarlo. (Ej: "¿Cuál es el mejor alimento balanceado para un cachorro bulldog francés?")</p>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">🛍️ GIA te Orienta sobre Productos:</h4>
+                  <p className="text-muted-foreground text-sm">¿El mejor alimento? ¿Accesorios útiles? Consulta con GIA. Te ofrecerá información para que tomes mejores decisiones de compra. (Ej: "GIA, ¿qué tipo de arena sanitaria es mejor para gatos?")</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
                 <ClipboardList className="h-8 w-8 text-accent mt-1 shrink-0" />
                 <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">📜 Tu Historial Médico, al Alcance de tu Voz:</h4>
-                  <p className="text-muted-foreground text-sm">Accede y comprende आसानी से el historial médico de tu mascota, recordatorios y tratamientos. Pregúntale a nuestra IA y obtén resúmenes claros. (Ej: "¿Cuándo fue la última vacuna de Luna?" o "Resúmeme su última visita al veterinario.")</p>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">📜 GIA y el Historial de tu Mascota (Próximamente en la App):</h4>
+                  <p className="text-muted-foreground text-sm">Imagina acceder al historial médico de tu mascota con una simple pregunta. GIA se está preparando para esto y será una función clave en la app móvil de PetSync. (Ej: "GIA, ¿cuándo es la próxima vacuna de Luna?")</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
                 <Bot className="h-8 w-8 text-accent mt-1 shrink-0" />
                 <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">💬 Chatea con tu Asistente Personalizado:</h4>
-                  <p className="text-muted-foreground text-sm">Interactúa con un chatbot inteligente que entiende tus preguntas en lenguaje natural, por más complejas que sean. Obtén atención y respuestas personalizadas al instante.</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <Users className="h-8 w-8 text-accent mt-1 shrink-0" /> 
-                <div>
-                  <h4 className="text-xl font-semibold text-foreground mb-1">🎉 Conecta con tu Comunidad:</h4>
-                  <p className="text-muted-foreground text-sm">Encuentra foros, grupos de dueños con intereses similares o eventos para mascotas cerca tuyo, con sugerencias inteligentes de nuestra IA.</p>
+                  <h4 className="text-xl font-semibold text-foreground mb-1">💬 Conversa con GIA:</h4>
+                  <p className="text-muted-foreground text-sm">Chatea con GIA en un lenguaje natural. Aunque está en beta, se esfuerza por entenderte y darte la mejor asistencia posible.</p>
                 </div>
               </div>
             </div>
             <p className="mt-12 text-center text-md text-muted-foreground">
-              Prepárate para una forma revolucionaria de cuidar a tu mascota. ¡Regístrate en nuestra <a href="#waitlist" className="text-primary hover:underline">waitlist</a> y sé el primero en experimentar el poder de la IA en PetSync!
+             Importante: GIA es una IA en desarrollo. La información que proporciona es para fines orientativos y educativos, y nunca debe sustituir el consejo de un veterinario profesional.
+            </p>
+            <p className="mt-4 text-center text-md text-muted-foreground">
+              ¡Regístrate en nuestra <a href="#waitlist" className="text-primary hover:underline">waitlist</a> y sé el primero en experimentar el poder de la IA en PetSync!
             </p>
           </div>
         </div>
@@ -214,7 +209,7 @@ export default function HomePage() {
                     <p>1. Descargá la app PetSync, disponible para iOS y Android.</p>
                 </div>
                 <p>2. Creá un perfil detallado para tu mascota.</p>
-                <p>3. Conectate fácilmente con tu veterinaria de confianza.</p>
+                <p>3. Conectate आसानी से con tu veterinaria de confianza.</p>
                 <p>4. Gestioná citas y recibí recordatorios importantes.</p>
                 <p className="font-semibold text-foreground">¡Así de fácil!</p>
               </CardContent>
