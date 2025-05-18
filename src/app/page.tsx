@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, MessagesSquare, Smartphone, TriangleAlert } from 'lucide-react';
+import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, MessagesSquare, Smartphone, TriangleAlert, Brain } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -131,7 +131,7 @@ export default function HomePage() {
       </section>
       
       {/* How it Works Section */}
-      <section id="como-funciona" className="w-full py-16 md:py-24 bg-secondary/50">
+      <section id="como-funciona" className="w-full py-16 md:py-24 bg-card/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <ListChecks className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -182,21 +182,17 @@ export default function HomePage() {
       </section>
 
       {/* About Us Section */}
-      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-card/50">
+      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <UsersRound className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">PetSync: Nacido de la Pasión y la Necesidad</h2>
           </div>
           <div className="max-w-3xl mx-auto text-left md:text-center space-y-6 text-muted-foreground">
-            <p>En PetSync, no solo desarrollamos software; vivimos el mundo del cuidado animal día a día. Somos un equipo de desarrolladores apasionados por las mascotas y tutores que hemos vivido el caos de la información dispersa.</p>
-            <h3 className="text-xl font-semibold text-foreground pt-4">El Origen de PetSync: Del Desorden a la Claridad</h3>
-            <p>Conocemos de primera mano ese "vaivén": la frustración de las planillas interminables, los historiales médicos en papeles que se pierden, la información vital de nuestros pacientes o nuestras propias mascotas distribuida en mil plataformas diferentes, las llamadas que no terminan más para coordinar un turno... ¡Un verdadero dolor de cabeza que nos quitaba tiempo valioso que preferíamos dedicar al cuidado animal o a disfrutar de nuestros compañeros!</p>
-            <p>Nos preguntamos: ¿Y si pudiéramos simplificar todo esto? ¿Y si existiera una forma de conectar a tutores y veterinarias de manera fluida, con toda la información organizada y accesible en un solo lugar?</p>
-            <p>Así nació PetSync.</p>
-            <p>Nuestra misión es transformar ese caos en calma, esa fricción en conexión. Desarrollamos una plataforma pensada para que los tutores tengan la tranquilidad de un cuidado coordinado y para que las clínicas veterinarias puedan optimizar su gestión, dedicando más tiempo a lo que realmente importa: la salud y el bienestar animal.</p>
-            <p>Estamos convencidos de que la tecnología puede ser una gran aliada. Por eso, estamos construyendo PetSync con herramientas como la inteligencia artificial de GIA, nuestro copiloto en beta, para ofrecerte una experiencia cada vez más inteligente y personalizada.</p>
-            <p>Conectamos ambos lados del mostrador, una patita a la vez, porque entendemos tus necesidades y compartimos tu amor por los animales.</p>
+            <p>En PetSync, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
+            <p>Por eso creamos PetSync: para transformar ese caos en calma.</p>
+            <p>Nuestra misión es simple: conectar a tutores y veterinarias con una plataforma intuitiva que organiza historiales, simplifica la gestión y optimiza el tiempo, para que todos podamos dedicarnos a lo que realmente importa: el bienestar de nuestras mascotas.</p>
+            <p>Estamos construyendo PetSync con herramientas inteligentes como GIA, nuestra IA en desarrollo, porque creemos que la tecnología puede ser una gran aliada en el cuidado animal.</p>
             <p className="mt-6 text-center text-md font-semibold text-foreground">
               Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
             </p>
@@ -205,7 +201,7 @@ export default function HomePage() {
       </section>
       
       {/* FAQ Section */}
-      <section id="faq" className="w-full py-16 md:py-24 bg-secondary/50">
+      <section id="faq" className="w-full py-16 md:py-24 bg-card/50">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
             <HelpCircle className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -214,7 +210,7 @@ export default function HomePage() {
           
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
-              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow mb-2 border">
+              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-background rounded-lg shadow mb-2 border">
                 <AccordionTrigger className="px-4 py-3 text-left hover:no-underline flex items-center text-foreground">
                   {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-5 w-5 mr-2 text-primary shrink-0" /> }
                   <span className="flex-1">{faq.question}</span>
