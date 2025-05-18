@@ -1,5 +1,6 @@
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -58,7 +59,7 @@ export default function HomePage() {
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-              <a href="#gia-ai">DESCUBRIR MÁS</a>
+              <Link href="#gia-ai">DESCUBRIR MÁS</Link>
             </Button>
           </div>
         </div>
@@ -127,9 +128,32 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* New Chatea con GIA Section */}
+      <section id="chatea-con-gia" className="w-full py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <Card className="shadow-lg border bg-card">
+            <CardHeader className="items-center text-center">
+              <Bot className="h-12 w-12 text-primary mb-4" />
+              <CardTitle className="text-3xl md:text-4xl font-bold text-foreground">Chatea con GIA: Tu Asistente IA en PetSync</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center space-y-4">
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Experimenta una demostración de nuestro asistente IA. Haz preguntas generales sobre el cuidado de mascotas y obtén respuestas al instante. GIA está aquí para ayudarte a navegar el mundo del bienestar animal.
+              </p>
+              <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+                <em>Recuerda, esta es una demo y no reemplaza el consejo veterinario profesional.</em>
+              </p>
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md transform hover:scale-105 transition-transform" asChild>
+                <Link href="/gia">Probar Demo de GIA</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
       
-      {/* GIA Section */}
-      <section id="gia-ai" className="w-full py-16 md:py-24">
+      {/* GIA Section (Detailed) */}
+      <section id="gia-ai" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Bot className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -185,14 +209,14 @@ export default function HomePage() {
              Importante: GIA es una IA en desarrollo. La información que proporciona es para fines orientativos y educativos, y nunca debe sustituir el consejo de un veterinario profesional.
             </p>
             <p className="mt-4 text-center text-md text-muted-foreground">
-              ¡Regístrate en nuestra <a href="#waitlist" className="text-primary hover:underline">waitlist</a> y sé el primero en experimentar el poder de la IA en PetSync!
+              ¡Regístrate en nuestra <Link href="#waitlist" className="text-primary hover:underline">waitlist</Link> y sé el primero en experimentar el poder de la IA en PetSync!
             </p>
           </div>
         </div>
       </section>
 
       {/* How it Works Section */}
-      <section id="como-funciona" className="w-full py-16 md:py-24 bg-secondary/50">
+      <section id="como-funciona" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <ListChecks className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -231,7 +255,7 @@ export default function HomePage() {
       </section>
 
       {/* About Us Section */}
-      <section id="quienes-somos" className="w-full py-16 md:py-24">
+      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <UsersRound className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -254,7 +278,7 @@ export default function HomePage() {
       </section>
       
       {/* Waitlist Section */}
-      <section id="waitlist" className="w-full py-16 md:py-24 bg-secondary/50">
+      <section id="waitlist" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¡Estamos en versión beta!</h2>
@@ -266,7 +290,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="w-full py-16 md:py-24">
+      <section id="faq" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
             <HelpCircle className="h-12 w-12 text-primary mx-auto mb-4" />
