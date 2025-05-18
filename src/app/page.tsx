@@ -196,15 +196,19 @@ export default function HomePage() {
             <UsersRound className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Quiénes Somos</h2>
           </div>
-          <div className="max-w-3xl mx-auto text-left md:text-center space-y-6 text-muted-foreground">
-            <p>En PetSync, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
-            <p>Por eso creamos PetSync: para transformar ese caos en calma.</p>
-            <p>Nuestra misión es simple: conectar a tutores y veterinarias con una plataforma intuitiva que organiza historiales, simplifica la gestión y optimiza el tiempo, para que todos podamos dedicarnos a lo que realmente importa: el bienestar de nuestras mascotas.</p>
-            <p>Estamos construyendo PetSync con herramientas inteligentes como GIA, nuestra IA en desarrollo, porque creemos que la tecnología puede ser una gran aliada en el cuidado animal.</p>
-            <p className="mt-6 text-center text-md font-semibold text-foreground">
-              Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
-            </p>
-          </div>
+          <Card className="p-6 md:p-8 shadow-xl bg-card">
+            <CardContent className="p-0">
+              <div className="max-w-3xl mx-auto text-left md:text-center space-y-6 text-muted-foreground">
+                <p>En PetSync, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
+                <p>Por eso creamos PetSync: para transformar ese caos en calma.</p>
+                <p>Nuestra misión es simple: conectar a tutores y veterinarias con una plataforma intuitiva que organiza historiales, simplifica la gestión y optimiza el tiempo, para que todos podamos dedicarnos a lo que realmente importa: el bienestar de nuestras mascotas.</p>
+                <p>Estamos construyendo PetSync con herramientas inteligentes como GIA, nuestra IA en desarrollo, porque creemos que la tecnología puede ser una gran aliada en el cuidado animal.</p>
+                <p className="mt-6 text-center text-md font-semibold text-foreground">
+                  Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
@@ -235,4 +239,3 @@ export default function HomePage() {
     </div>
   );
 }
-
