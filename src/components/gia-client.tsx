@@ -21,7 +21,7 @@ import { askGenericQuestionAction } from "@/app/actions";
 import { useState, useTransition } from "react";
 import { Loader2, Brain, Bot, UserCircle } from "lucide-react"; 
 
-export default function GIAClient() { // Renamed component
+export default function GIAClient() { 
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   const [aiResponse, setAiResponse] = useState<string | null>(null);
@@ -32,8 +32,8 @@ export default function GIAClient() { // Renamed component
     resolver: zodResolver(GenericQueryFormSchema),
     defaultValues: {
       email: "",
-      petName: "",
-      petAge: undefined, 
+      petName: "", // Optional, can be empty
+      species: "", 
       question: "",
     },
   });
@@ -78,7 +78,7 @@ export default function GIAClient() { // Renamed component
             name="petName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Nombre de tu Mascota</FormLabel>
+                <FormLabel className="text-lg">Nombre de tu Mascota (Opcional)</FormLabel>
                 <FormControl>
                   <Input placeholder="Ej: Firulais, Mishi" className="bg-background" {...field} />
                 </FormControl>
@@ -88,12 +88,12 @@ export default function GIAClient() { // Renamed component
           />
           <FormField
             control={form.control}
-            name="petAge"
+            name="species"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Edad (años)</FormLabel>
+                <FormLabel className="text-lg">Especie (Perro, Gato, etc.)</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="Ej: 3" className="bg-background" {...field} onChange={event => field.onChange(+event.target.value)} />
+                  <Input placeholder="Ej: Perro, Gato" className="bg-background" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

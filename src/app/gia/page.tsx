@@ -4,9 +4,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Brain, TriangleAlert } from "lucide-react"; 
-import GIAClient from "@/components/gia-client"; // Renamed component import
+import GIAClient from "@/components/gia-client"; 
 
-export default function GIAPage() { // Renamed page function
+export default function GIAPage() { 
   return (
     <div className="container mx-auto py-12 px-4">
       <div className="max-w-3xl mx-auto">

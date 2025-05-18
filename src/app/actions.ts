@@ -1,3 +1,4 @@
+
 "use server";
 
 import { medicalHistoryAssistant } from "@/ai/flows/medical-history-assistant";
@@ -80,11 +81,11 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
       message: "Datos inválidos. Por favor, revisa el formulario.",
     };
   }
-  
-  const { email, petName, petAge, question } = validatedFields.data;
+  // petAge is removed, species is added, petName is now optional
+  const { email, petName, species, question } = validatedFields.data;
 
   try {
-    const input: GenericQueryInput = { email, petName, petAge, question };
+    const input: GenericQueryInput = { email, petName, species, question };
     const result = await genericQuery(input);
     return { success: true, data: result };
   } catch (error) {

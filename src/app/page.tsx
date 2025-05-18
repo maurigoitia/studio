@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Smartphone, BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, MessagesSquare } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, MessagesSquare, Smartphone } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -59,7 +59,7 @@ export default function HomePage() {
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-              <Link href="#gia-ai-chat-demo">DESCUBRIR MÁS</Link>
+              <Link href="#gia-chat-demo">DESCUBRIR MÁS</Link>
             </Button>
           </div>
         </div>
@@ -129,26 +129,76 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* New Chatea con GIA Section */}
-      <section id="gia-ai-chat-demo" className="w-full py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <Card className="shadow-lg border bg-card">
-            <CardHeader className="items-center text-center">
-              <Bot className="h-12 w-12 text-primary mb-4" />
-              <CardTitle className="text-3xl md:text-4xl font-bold text-foreground">Chatea con GIA: Tu Asistente IA en PetSync</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center space-y-4">
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Experimenta una demostración de nuestro asistente IA. Haz preguntas generales sobre el cuidado de mascotas y obtén respuestas al instante. GIA está aquí para ayudarte a navegar el mundo del bienestar animal.
-              </p>
-              <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-                <em>Recuerda, esta es una demo y no reemplaza el consejo veterinario profesional.</em>
-              </p>
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md transform hover:scale-105 transition-transform" asChild>
-                <Link href="/gia">Probar Demo de GIA</Link>
-              </Button>
-            </CardContent>
-          </Card>
+      {/* GIA Chat Demo Introduction Section */}
+      <section id="gia-chat-demo" className="w-full py-16 md:py-24 bg-card/50">
+        <div className="container mx-auto px-4 text-center">
+          <Bot className="h-12 w-12 text-primary mx-auto mb-4" />
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">✨ Conoce a GIA: La Inteligencia Artificial que Acompaña a tu Mascota ✨</h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+            En PetSync, estamos desarrollando a GIA, una asistente virtual diseñada para ofrecerte respuestas inteligentes y personalizadas sobre el cuidado de tu mascota. Accede a información, resuelve dudas comunes y obtén orientación al instante.
+          </p>
+          
+          {/* Placeholder for image/animation of GIA */}
+          {/* <div className="my-8 h-48 bg-muted rounded-lg flex items-center justify-center">
+            <p className="text-muted-foreground">Visual de GIA aquí</p>
+          </div> */}
+
+          <h3 className="text-2xl font-semibold text-foreground mb-6 mt-10">¿Qué puedes hacer con GIA en esta Demo Beta?</h3>
+          <div className="grid md:grid-cols-3 gap-8 text-left max-w-5xl mx-auto mb-10">
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center text-xl">
+                  <Search className="h-6 w-6 mr-2 text-primary" />
+                  Consultas Rápidas de Cuidado
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">Pregúntale a GIA sobre alimentación, comportamiento, o cuidados generales. <br/>(Ej: "GIA, ¿cuántas veces al día debe comer mi cachorro?")</p>
+              </CardContent>
+            </Card>
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center text-xl">
+                  <Lightbulb className="h-6 w-6 mr-2 text-primary" />
+                  Orientación General de Salud
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">Describe un síntoma o una duda de salud y GIA te ofrecerá información general y posibles pasos a seguir. <br/>(Ej: "GIA, mi gato estornuda mucho últimamente, ¿qué podría indicar?")</p>
+              </CardContent>
+            </Card>
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center text-xl">
+                  <HeartPulse className="h-6 w-6 mr-2 text-primary" /> {/* Changed icon for variety */}
+                  Entiende Mejor a tu Mascota
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">GIA te ayuda a descifrar comportamientos y necesidades de tu compañero peludo.</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+            Interactúa con GIA (Demo): Prueba cómo GIA puede asistirte.
+          </p>
+          <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md transform hover:scale-105 transition-transform mb-10" asChild>
+            <Link href="/gia">Preguntar a GIA</Link>
+          </Button>
+
+          <Alert variant="destructive" className="max-w-2xl mx-auto mb-8 text-left shadow-md">
+            <TriangleAlert className="h-5 w-5" />
+            <AlertTitle className="font-semibold">⚠️ GIA es tu copiloto, no tu veterinario.</AlertTitle>
+            <AlertDescription>
+              La información proporcionada por GIA en esta demo es para fines orientativos y educativos. NUNCA debe reemplazar el diagnóstico, consejo o tratamiento de un veterinario profesional. Para la salud de tu mascota, consulta siempre a tu veterinario de confianza.
+            </AlertDescription>
+          </Alert>
+
+          <p className="text-md text-muted-foreground mb-6">PetSync y GIA están en desarrollo. ¡Estamos construyendo la app que revolucionará el cuidado de tu mascota!</p>
+          <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10 shadow-md transform hover:scale-105 transition-transform" asChild>
+            <Link href="#waitlist">Únete a la Waitlist y sé el primero en probar la app completa!</Link>
+          </Button>
         </div>
       </section>
       

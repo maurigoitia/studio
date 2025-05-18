@@ -13,8 +13,8 @@ import {z} from 'genkit';
 
 const GenericQueryInputSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un correo electrónico válido." }).describe('The email of the user asking the question.'),
-  petName: z.string().min(2, { message: "El nombre de la mascota debe tener al menos 2 caracteres." }).max(50, { message: "El nombre de la mascota no puede exceder los 50 caracteres." }).describe("The name of the user's pet."),
-  petAge: z.coerce.number().int().positive({ message: "La edad de la mascota debe ser un número positivo." }).min(0, { message: "La edad no puede ser negativa."}).max(100, { message: "La edad parece demasiado alta."}).describe("The age of the user's pet in years."),
+  petName: z.string().min(2, { message: "El nombre de la mascota debe tener al menos 2 caracteres." }).max(50, { message: "El nombre de la mascota no puede exceder los 50 caracteres." }).optional().describe("The optional name of the user's pet."),
+  species: z.string().min(3, { message: "La especie debe tener al menos 3 caracteres." }).max(50, { message: "La especie no puede exceder los 50 caracteres." }).describe("Especie de la mascota (ej: Perro, Gato)"),
   question: z.string().min(5, { message: "La pregunta debe tener al menos 5 caracteres." }).max(1000, { message: "La pregunta no puede exceder los 1000 caracteres." }).describe('The question to ask GIA.'),
 });
 export type GenericQueryInput = z.infer<typeof GenericQueryInputSchema>;
@@ -34,7 +34,7 @@ const prompt = ai.definePrompt({
   output: {schema: GenericQueryOutputSchema},
   prompt: `You are GIA, a friendly and helpful AI assistant from PetSync, specializing in providing general information and suggestions about pet health and well-being.
 The user's email is {{email}}.
-They are asking about their pet, {{petName}}, who is {{petAge}} year(s) old.
+{{#if petName}}They are asking about their pet, {{petName}}, a {{species}}.{{else}}They are asking about their pet, a {{species}}.{{/if}}
 Their question is: {{{question}}}
 
 When answering:
