@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
@@ -18,7 +19,12 @@ export default function Header() {
           <Button variant="ghost" asChild>
             <Link href="/#faq">Preguntas Frecuentes</Link>
           </Button>
-          {/* The "Chatea con GIA" button has been removed from here */}
+          <Button variant="outline" asChild className="border-primary text-primary hover:bg-primary/10 hover:text-primary">
+            <Link href="/gia">
+              <Brain className="mr-2 h-5 w-5" />
+              Chatea con GIA
+            </Link>
+          </Button>
         </nav>
       </div>
     </header>

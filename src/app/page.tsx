@@ -60,75 +60,9 @@ export default function HomePage() {
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-              <Link href="#gia-chat-demo">DESCUBRIR MÁS</Link>
+              <Link href="#tutores">DESCUBRIR MÁS</Link>
             </Button>
           </div>
-        </div>
-      </section>
-
-      {/* Chatea con GIA - Introduction to Demo on Landing Page */}
-      <section id="gia-chat-demo" className="w-full py-16 md:py-24 bg-card/50">
-        <div className="container mx-auto px-4 text-center">
-          <Bot className="h-12 w-12 text-primary mx-auto mb-4" />
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">✨ Conoce a GIA: La Inteligencia Artificial que Acompaña a tu Mascota ✨</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-            En PetSync, estamos desarrollando a GIA, una asistente virtual diseñada para ofrecerte respuestas inteligentes y personalizadas sobre el cuidado de tu mascota. Accede a información, resuelve dudas comunes y obtén orientación al instante.
-          </p>
-          
-          <h3 className="text-2xl font-semibold text-foreground mb-6 mt-10">¿Qué puedes hacer con GIA en esta Demo Beta?</h3>
-          <div className="grid md:grid-cols-3 gap-8 text-left max-w-5xl mx-auto mb-10">
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl">
-                  <Search className="h-6 w-6 mr-2 text-primary" />
-                  Consultas Rápidas de Cuidado
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Pregúntale a GIA sobre alimentación, comportamiento, o cuidados generales. <br/>(Ej: "GIA, ¿cuántas veces al día debe comer mi cachorro?")</p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl">
-                  <Lightbulb className="h-6 w-6 mr-2 text-primary" />
-                  Orientación General de Salud
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Describe un síntoma o una duda de salud y GIA te ofrecerá información general y posibles pasos a seguir. <br/>(Ej: "GIA, mi gato estornuda mucho últimamente, ¿qué podría indicar?")</p>
-              </CardContent>
-            </Card>
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl">
-                  <HeartPulse className="h-6 w-6 mr-2 text-primary" />
-                  Entiende Mejor a tu Mascota
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">GIA te ayuda a descifrar comportamientos y necesidades de tu compañero peludo.</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
-            Interactúa con GIA (Demo): Prueba cómo GIA puede asistirte.
-          </p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md transform hover:scale-105 transition-transform mb-10" asChild>
-            <Link href="/gia">Preguntar a GIA</Link>
-          </Button>
-
-          <Alert variant="destructive" className="max-w-2xl mx-auto mb-8 text-left shadow-md">
-            <TriangleAlert className="h-5 w-5" />
-            <AlertTitle className="font-semibold">⚠️ GIA es tu copiloto, no tu veterinario.</AlertTitle>
-            <AlertDescription>
-              La información proporcionada por GIA en esta demo es para fines orientativos y educativos. NUNCA debe reemplazar el diagnóstico, consejo o tratamiento de un veterinario profesional. Para la salud de tu mascota, consulta siempre a tu veterinario de confianza.
-            </AlertDescription>
-          </Alert>
-
-          <p className="text-md text-muted-foreground">PetSync y GIA están en desarrollo. ¡Estamos construyendo la app que revolucionará el cuidado de tu mascota!</p>
-          {/* The waitlist button that was here has been removed to avoid redundancy */}
         </div>
       </section>
 
@@ -247,6 +181,29 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* About Us Section */}
+      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-card/50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <UsersRound className="h-12 w-12 text-primary mx-auto mb-4" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">PetSync: Nacido de la Pasión y la Necesidad</h2>
+          </div>
+          <div className="max-w-3xl mx-auto text-left md:text-center space-y-6 text-muted-foreground">
+            <p>En PetSync, no solo desarrollamos software; vivimos el mundo del cuidado animal día a día. Somos un equipo de desarrolladores apasionados por las mascotas y tutores que hemos vivido el caos de la información dispersa.</p>
+            <h3 className="text-xl font-semibold text-foreground pt-4">El Origen de PetSync: Del Desorden a la Claridad</h3>
+            <p>Conocemos de primera mano ese "vaivén": la frustración de las planillas interminables, los historiales médicos en papeles que se pierden, la información vital de nuestros pacientes o nuestras propias mascotas distribuida en mil plataformas diferentes, las llamadas que no terminan más para coordinar un turno... ¡Un verdadero dolor de cabeza que nos quitaba tiempo valioso que preferíamos dedicar al cuidado animal o a disfrutar de nuestros compañeros!</p>
+            <p>Nos preguntamos: ¿Y si pudiéramos simplificar todo esto? ¿Y si existiera una forma de conectar a tutores y veterinarias de manera fluida, con toda la información organizada y accesible en un solo lugar?</p>
+            <p>Así nació PetSync.</p>
+            <p>Nuestra misión es transformar ese caos en calma, esa fricción en conexión. Desarrollamos una plataforma pensada para que los tutores tengan la tranquilidad de un cuidado coordinado y para que las clínicas veterinarias puedan optimizar su gestión, dedicando más tiempo a lo que realmente importa: la salud y el bienestar animal.</p>
+            <p>Estamos convencidos de que la tecnología puede ser una gran aliada. Por eso, estamos construyendo PetSync con herramientas como la inteligencia artificial de GIA, nuestro copiloto en beta, para ofrecerte una experiencia cada vez más inteligente y personalizada.</p>
+            <p>Conectamos ambos lados del mostrador, una patita a la vez, porque entendemos tus necesidades y compartimos tu amor por los animales.</p>
+            <p className="mt-6 text-center text-md font-semibold text-foreground">
+              Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
+            </p>
+          </div>
+        </div>
+      </section>
+      
       {/* FAQ Section */}
       <section id="faq" className="w-full py-16 md:py-24 bg-secondary/50">
         <div className="container mx-auto px-4 max-w-3xl">
@@ -271,28 +228,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About Us Section */}
-      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-card/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <UsersRound className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">PetSync: Nacido de la Pasión y la Necesidad</h2>
-          </div>
-          <div className="max-w-3xl mx-auto text-left md:text-center space-y-6 text-muted-foreground">
-            <p>En PetSync, no solo desarrollamos software; vivimos el mundo del cuidado animal día a día. Somos un equipo de desarrolladores apasionados por las mascotas y tutores que hemos vivido el caos de la información dispersa.</p>
-            <h3 className="text-xl font-semibold text-foreground pt-4">El Origen de PetSync: Del Desorden a la Claridad</h3>
-            <p>Conocemos de primera mano ese "vaivén": la frustración de las planillas interminables, los historiales médicos en papeles que se pierden, la información vital de nuestros pacientes o nuestras propias mascotas distribuida en mil plataformas diferentes, las llamadas que no terminan más para coordinar un turno... ¡Un verdadero dolor de cabeza que nos quitaba tiempo valioso que preferíamos dedicar al cuidado animal o a disfrutar de nuestros compañeros!</p>
-            <p>Nos preguntamos: ¿Y si pudiéramos simplificar todo esto? ¿Y si existiera una forma de conectar a tutores y veterinarias de manera fluida, con toda la información organizada y accesible en un solo lugar?</p>
-            <p>Así nació PetSync.</p>
-            <p>Nuestra misión es transformar ese caos en calma, esa fricción en conexión. Desarrollamos una plataforma pensada para que los tutores tengan la tranquilidad de un cuidado coordinado y para que las clínicas veterinarias puedan optimizar su gestión, dedicando más tiempo a lo que realmente importa: la salud y el bienestar animal.</p>
-            <p>Estamos convencidos de que la tecnología puede ser una gran aliada. Por eso, estamos construyendo PetSync con herramientas como la inteligencia artificial de GIA, nuestro copiloto en beta, para ofrecerte una experiencia cada vez más inteligente y personalizada.</p>
-            <p>Conectamos ambos lados del mostrador, una patita a la vez, porque entendemos tus necesidades y compartimos tu amor por los animales.</p>
-            <p className="mt-6 text-center text-md font-semibold text-foreground">
-              Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
-            </p>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
