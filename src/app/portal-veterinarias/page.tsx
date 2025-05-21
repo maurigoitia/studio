@@ -17,7 +17,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
-import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, LogIn, Briefcase, Building, DollarSign, ExternalLink, ChevronDown, UserCog, ClipboardEdit, LifeBuoy, CreditCard } from "lucide-react";
+import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, LogIn, Briefcase, Building, DollarSign, ExternalLink, ChevronDown, UserCog, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -185,7 +185,7 @@ export default function PortalVeterinariasDashboardPage() {
                     {upcomingAppointments.length > 0 ? (
                       <div className="space-y-4">
                         {upcomingAppointments.map((appt) => (
-                          <Card key={appt.id} className="bg-secondary/50 p-4 shadow-md hover:shadow-lg transition-shadow">
+                          <Card key={appt.id} className="bg-card p-4 shadow-md hover:shadow-lg transition-shadow border">
                             <div className="flex justify-between items-start">
                                 <div>
                                     <div className="flex items-center mb-1">
@@ -207,7 +207,7 @@ export default function PortalVeterinariasDashboardPage() {
                                             <DropdownMenuItem><UserCheck className="mr-2 h-4 w-4" /> Registrar Visita/Consulta</DropdownMenuItem>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Reprogramar Turno</DropdownMenuItem>
-                                            <DropdownMenuItem className="text-destructive hover:!bg-destructive/10">
+                                            <DropdownMenuItem className="text-destructive hover:!bg-destructive/10 focus:!bg-destructive/10 focus:!text-destructive">
                                                 <Trash2 className="mr-2 h-4 w-4" /> Cancelar Turno
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
@@ -263,7 +263,7 @@ export default function PortalVeterinariasDashboardPage() {
                     </CardTitle>
                     <CardDescription className="text-xs">Maneja el flujo de pacientes sin turno previo y prioriza urgencias. (Urgencias y Espontáneos)</CardDescription>
                   </CardHeader>
-                  <CardContent className="p-4 space-y-4">
+                  <CardContent className="p-4 space-y-3">
                     <div>
                       <h4 className="text-sm font-semibold mb-2 text-foreground">Niveles de Triage (Ejemplo):</h4>
                       <div className="flex flex-wrap gap-2 mb-3">
@@ -388,7 +388,7 @@ export default function PortalVeterinariasDashboardPage() {
                             <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Actualizar Triage/Estado</DropdownMenuItem>
                             <DropdownMenuItem><UserCog className="mr-2 h-4 w-4" /> Asignar a Veterinario</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-destructive hover:!bg-destructive/10">
+                            <DropdownMenuItem className="text-destructive hover:!bg-destructive/10 focus:!bg-destructive/10 focus:!text-destructive">
                               <Trash2 className="mr-2 h-4 w-4" /> Quitar de Lista
                             </DropdownMenuItem>
                           </DropdownMenuContent>
@@ -413,12 +413,12 @@ export default function PortalVeterinariasDashboardPage() {
                  <Dialog>
                       <DialogTrigger asChild>
                         <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground">
-                          <UserPlus className="mr-2 h-5 w-5" /> Nuevo Paciente Animal
+                          <UserPlus className="mr-2 h-5 w-5" /> Registrar Nuevo Paciente / Crear Ficha
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[525px]">
                         <DialogHeader>
-                          <DialogTitle>Registrar Nuevo Paciente</DialogTitle>
+                          <DialogTitle>Registrar Nuevo Paciente / Crear Ficha</DialogTitle>
                           <DialogDescription>
                             Completa los datos del nuevo paciente animal y su tutor.
                           </DialogDescription>
@@ -497,7 +497,7 @@ export default function PortalVeterinariasDashboardPage() {
                                     <DropdownMenuItem><CalendarDays className="mr-2 h-4 w-4" /> Agendar Próximo Turno</DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Editar Datos del Paciente</DropdownMenuItem>
-                                    <DropdownMenuItem className="text-destructive hover:!bg-destructive/10">
+                                    <DropdownMenuItem className="text-destructive hover:!bg-destructive/10 focus:!bg-destructive/10 focus:!text-destructive">
                                         <Trash2 className="mr-2 h-4 w-4" /> Eliminar Paciente (Demo)
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
@@ -661,6 +661,23 @@ export default function PortalVeterinariasDashboardPage() {
                     <Link href="#"> <Mail className="mr-2 h-4 w-4"/>Contactar Soporte</Link>
                 </Button>
             </div>
+        </CardContent>
+      </Card>
+
+      <Card className="mt-12 shadow-lg border-destructive/50">
+        <CardHeader>
+            <CardTitle className="flex items-center text-destructive"><DownloadCloud className="mr-3 h-6 w-6"/>Exportar Información de tu Clínica</CardTitle>
+            <CardDescription>
+                Sabemos lo importante que es tu información. PetSync te ofrecerá opciones para exportar los datos de tus pacientes y tu actividad en la plataforma.
+            </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+            <p className="text-sm text-muted-foreground">
+                Actualmente, para exportar tus datos (ej. en formato XLS, CSV), por favor, comunícate con nuestro equipo de soporte. Estaremos encantados de asistirte en el proceso y asegurar una transición de datos fluida si lo necesitas.
+            </p>
+            <Button variant="destructive" className="w-full sm:w-auto">
+                <Mail className="mr-2 h-4 w-4"/>Contactar Soporte para Exportación
+            </Button>
         </CardContent>
       </Card>
     </div>
