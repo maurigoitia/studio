@@ -10,8 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
 
-import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2 } from "lucide-react";
+import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, LogIn, Briefcase, Building, DollarSign, ExternalLink, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -31,15 +33,28 @@ const recentPatients = [
 ];
 
 const waitingRoomPatients = [
-  { name: "Manchas (Perro)", owner: "Elena Soler", triage: "Amarillo", eta: "15 min" },
-  { name: "Nube (Gato)", owner: "Roberto Diaz", triage: "Rojo", eta: "Urgente" },
-  { name: "Pipo (Perro)", owner: "Sofia Luna", triage: "Azul", eta: "30 min" },
+  { name: "Manchas (Perro)", owner: "Elena Soler", triage: "Amarillo", eta: "15 min", status: "En espera", assignedTo: "Dr. Vet Ejemplo" },
+  { name: "Nube (Gato)", owner: "Roberto Diaz", triage: "Rojo", eta: "Urgente", status: "En consulta", assignedTo: "Dra. Salas (Urgencias)" },
+  { name: "Pipo (Perro)", owner: "Sofia Luna", triage: "Azul", eta: "30 min", status: "Triado", assignedTo: "Asist. Recepción" },
+  { name: "Kira (Perro)", owner: "Luis Paz", triage: "Amarillo", eta: "20 min", status: "Esperando resultados", assignedTo: "Laboratorio" },
+  { name: "Thor (Gato)", owner: "Marta Gómez", triage: "Naranja", eta: "5 min", status: "En espera", assignedTo: "Pendiente Asignación" },
 ];
+
 
 const getServiceIcon = (serviceType?: string) => {
   if (serviceType === "vaccination") return <Syringe className="h-5 w-5 text-blue-500 mr-2" />;
   if (serviceType === "consultation") return <Stethoscope className="h-5 w-5 text-green-500 mr-2" />;
   return <ListChecks className="h-5 w-5 text-gray-500 mr-2" />;
+};
+
+const getTriageBadgeColor = (triageLevel: string) => {
+  switch (triageLevel.toLowerCase()) {
+    case "rojo": return "bg-red-500 text-white hover:bg-red-600";
+    case "naranja": return "bg-orange-400 text-white hover:bg-orange-500";
+    case "amarillo": return "bg-yellow-400 text-black hover:bg-yellow-500";
+    case "azul": return "bg-blue-500 text-white hover:bg-blue-600";
+    default: return "bg-gray-400 text-white hover:bg-gray-500";
+  }
 };
 
 
@@ -60,11 +75,11 @@ export default function PortalVeterinariasDashboardPage() {
             <AvatarFallback>DV</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-semibold text-foreground">Dr. Ejemplo Vet</p>
+            <p className="font-semibold text-foreground">Dr. Vet Ejemplo</p>
             <p className="text-xs text-muted-foreground">Clínica Veterinaria Central</p>
           </div>
           <Button variant="outline" size="icon" asChild>
-            <Link href="#">
+            <Link href="#"> {/* Placeholder for logout */}
               <LogOut className="h-5 w-5" />
               <span className="sr-only">Cerrar Sesión</span>
             </Link>
@@ -176,12 +191,22 @@ export default function PortalVeterinariasDashboardPage() {
                                     <p className="text-sm text-muted-foreground ml-7">Servicio: {appt.service}</p>
                                 </div>
                                 <div className="flex gap-2 mt-1">
-                                     <Button variant="outline" size="sm" className="text-xs">
-                                        <Edit3 className="h-3 w-3 mr-1"/> Modificar
-                                    </Button>
-                                     <Button variant="ghost" size="icon" className="h-8 w-8">
-                                        <MoreHorizontal className="h-4 w-4"/>
-                                    </Button>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                                                <MoreHorizontal className="h-4 w-4"/>
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            <DropdownMenuItem><FileText className="mr-2 h-4 w-4" /> Ver Ficha Paciente</DropdownMenuItem>
+                                            <DropdownMenuItem><UserCheck className="mr-2 h-4 w-4" /> Registrar Visita/Consulta</DropdownMenuItem>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Reprogramar Turno</DropdownMenuItem>
+                                            <DropdownMenuItem className="text-destructive hover:!bg-destructive/10">
+                                                <Trash2 className="mr-2 h-4 w-4" /> Cancelar Turno
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
                                 </div>
                             </div>
                           </Card>
@@ -208,7 +233,7 @@ export default function PortalVeterinariasDashboardPage() {
                   </CardHeader>
                   <CardContent className="p-4 space-y-3">
                       <p className="text-sm text-muted-foreground">
-                          Permite que los tutores soliciten turnos directamente desde la app PetSync. **Las solicitudes se reflejan automáticamente en tu agenda y base de datos.**
+                          Permite que los tutores soliciten turnos directamente desde la app PetSync. Define tus horarios disponibles, servicios y duraciones. **Las solicitudes se reflejan automáticamente en tu agenda y base de datos.**
                       </p>
                       <div>
                         <Label className="text-xs text-muted-foreground">Servicios para reserva online (ejemplo):</Label>
@@ -231,16 +256,16 @@ export default function PortalVeterinariasDashboardPage() {
                     <CardTitle className="text-lg flex items-center">
                       <Clock className="mr-2 h-5 w-5 text-primary" /> Gestión de Sala de Espera y Triage
                     </CardTitle>
-                    <CardDescription className="text-xs">Sistema de priorización para atenciones espontáneas y urgencias (Concepto).</CardDescription>
+                    <CardDescription className="text-xs">Maneja el flujo de pacientes sin turno previo y prioriza urgencias.</CardDescription>
                   </CardHeader>
                   <CardContent className="p-4 space-y-4">
                     <div>
                       <h4 className="text-sm font-semibold mb-1 text-foreground">Niveles de Triage (Ejemplo):</h4>
                       <div className="flex flex-wrap gap-2">
-                        <Badge className="bg-red-500 text-white hover:bg-red-600 text-xs">Rojo (Crítico)</Badge>
-                        <Badge className="bg-orange-400 text-white hover:bg-orange-500 text-xs">Naranja (Urgente)</Badge>
-                        <Badge className="bg-yellow-400 text-black hover:bg-yellow-500 text-xs">Amarillo (Estándar)</Badge>
-                        <Badge className="bg-blue-500 text-white hover:bg-blue-600 text-xs">Azul (Consulta Rápida)</Badge>
+                        <Badge className={`${getTriageBadgeColor("Rojo")} text-xs`}>Rojo (Crítico)</Badge>
+                        <Badge className={`${getTriageBadgeColor("Naranja")} text-xs`}>Naranja (Urgente)</Badge>
+                        <Badge className={`${getTriageBadgeColor("Amarillo")} text-xs`}>Amarillo (Estándar)</Badge>
+                        <Badge className={`${getTriageBadgeColor("Azul")} text-xs`}>Azul (Consulta Rápida)</Badge>
                       </div>
                     </div>
                     <Separator />
@@ -253,25 +278,40 @@ export default function PortalVeterinariasDashboardPage() {
                               <TableHead className="h-8 px-2 text-xs">Mascota</TableHead>
                               <TableHead className="h-8 px-2 text-xs">Triage</TableHead>
                               <TableHead className="h-8 px-2 text-xs">ETA</TableHead>
+                              <TableHead className="h-8 px-2 text-xs">Estado</TableHead>
+                              <TableHead className="h-8 px-2 text-xs">Asignado a</TableHead>
+                              <TableHead className="h-8 px-2 text-xs text-right">Acciones</TableHead>
                             </TableRow>
                           </TableHeader>
                           <TableBody>
                             {waitingRoomPatients.map((patient, index) => (
                               <TableRow key={index}>
-                                <TableCell className="py-1 px-2 text-xs">{patient.name}</TableCell>
+                                <TableCell className="py-1 px-2 text-xs font-medium">{patient.name}</TableCell>
                                 <TableCell className="py-1 px-2 text-xs">
-                                  <Badge
-                                    className={
-                                      `text-xs ${patient.triage === "Rojo" ? "bg-red-500 text-white" :
-                                      patient.triage === "Naranja" ? "bg-orange-400 text-white" :
-                                      patient.triage === "Amarillo" ? "bg-yellow-400 text-black" :
-                                      "bg-blue-500 text-white"}`
-                                    }
-                                  >
+                                  <Badge className={`${getTriageBadgeColor(patient.triage)} text-xs`}>
                                     {patient.triage}
                                   </Badge>
                                 </TableCell>
                                 <TableCell className="py-1 px-2 text-xs">{patient.eta}</TableCell>
+                                <TableCell className="py-1 px-2 text-xs">{patient.status}</TableCell>
+                                <TableCell className="py-1 px-2 text-xs">{patient.assignedTo}</TableCell>
+                                <TableCell className="py-1 px-2 text-xs text-right">
+                                   <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" size="icon" className="h-7 w-7">
+                                                <ChevronDown className="h-3 w-3"/>
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            {patient.triage === "Rojo" && <DropdownMenuItem className="text-red-600 hover:!bg-red-100"><AlertTriangle className="mr-2 h-4 w-4"/> Atender Urgencia</DropdownMenuItem>}
+                                            {(patient.triage === "Naranja" || patient.triage === "Amarillo") && <DropdownMenuItem><Video className="mr-2 h-4 w-4"/> Iniciar Consulta</DropdownMenuItem>}
+                                            {patient.triage === "Azul" && <DropdownMenuItem><Send className="mr-2 h-4 w-4"/> Atención Rápida</DropdownMenuItem>}
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem><FileText className="mr-2 h-4 w-4" /> Ver Ficha Paciente</DropdownMenuItem>
+                                            <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Modificar Triage/Estado</DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </TableCell>
                               </TableRow>
                             ))}
                           </TableBody>
@@ -281,14 +321,16 @@ export default function PortalVeterinariasDashboardPage() {
                       )}
                     </div>
                     <div className="mt-3 text-center">
-                        <Button variant="outline" size="sm" className="text-xs">Gestionar Sala de Espera</Button>
+                        <Button variant="outline" size="sm" className="text-xs">Gestionar Sala de Espera Completa</Button>
                     </div>
                     <Separator/>
                      <div className="space-y-1 text-xs text-muted-foreground">
-                      <p><AlertTriangle className="inline h-3 w-3 mr-1 text-primary"/> Tutores con la app podrán ver estado y ETA.</p>
-                      <p><UsersRound className="inline h-3 w-3 mr-1 text-primary"/> Múltiples perfiles de usuario (recepción, vet, admin) según plan PetSync.</p>
-                      <p><Send className="inline h-3 w-3 mr-1 text-primary"/> Veterinarios acceden al historial y envían resúmenes/recetas a la app/email, **actualizando la base de datos**.</p>
-                      <p><ListChecks className="inline h-3 w-3 mr-1 text-primary"/> Opción de cargar info de pacientes sin app **directo a la base de datos**.</p>
+                      <p><AlertTriangle className="inline h-3 w-3 mr-1 text-primary"/> Sistema de priorización por niveles de urgencia (Crítico, Urgente, Estándar, Consulta Rápida).</p>
+                      <p><UsersRound className="inline h-3 w-3 mr-1 text-primary"/> Los tutores con la app PetSync podrán visualizar el estado y tiempo estimado de espera de su mascota.</p>
+                      <p><Users className="inline h-3 w-3 mr-1 text-primary" /> Múltiples perfiles de usuario para la clínica (recepción, veterinarios, administradores) con acceso diferenciado según el plan PetSync.</p>
+                      <p><FileText className="inline h-3 w-3 mr-1 text-primary" /> Acceso rápido al historial del paciente para veterinarios durante la consulta.</p>
+                      <p><Send className="inline h-3 w-3 mr-1 text-primary"/> Envío de resúmenes de consulta, recetas y recomendaciones al perfil del tutor en la app PetSync o a su email, **actualizando el historial del paciente en la base de datos.**</p>
+                      <p><ListChecks className="inline h-3 w-3 mr-1 text-primary"/> Herramientas para incorporar información de pacientes cuyos tutores no usen la app (ej. carga de documentos escaneados).</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -373,13 +415,29 @@ export default function PortalVeterinariasDashboardPage() {
                   </TableHeader>
                   <TableBody>
                     {recentPatients.map((patient) => (
-                      <TableRow key={patient.id}>
+                       <TableRow key={patient.id}>
                         <TableCell className="font-medium">{patient.id}</TableCell>
                         <TableCell>{patient.name}</TableCell>
                         <TableCell>{patient.owner}</TableCell>
                         <TableCell>{patient.lastVisit}</TableCell>
                         <TableCell className="text-right">
-                          <Button variant="outline" size="sm">Ver Historial</Button>
+                           <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="outline" size="sm">
+                                        Acciones <ChevronDown className="ml-2 h-4 w-4"/>
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuItem><FileText className="mr-2 h-4 w-4" /> Ver Historial Completo</DropdownMenuItem>
+                                    <DropdownMenuItem><Video className="mr-2 h-4 w-4" /> Iniciar Nueva Consulta</DropdownMenuItem>
+                                    <DropdownMenuItem><CalendarDays className="mr-2 h-4 w-4" /> Agendar Próximo Turno</DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Editar Datos del Paciente</DropdownMenuItem>
+                                    <DropdownMenuItem className="text-destructive hover:!bg-destructive/10">
+                                        <Trash2 className="mr-2 h-4 w-4" /> Eliminar Paciente (Demo)
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -408,7 +466,7 @@ export default function PortalVeterinariasDashboardPage() {
                 </CardHeader>
                 <CardContent className="p-0">
                     <p className="text-sm text-muted-foreground mb-3">
-                        Configura plantillas de correo para recordatorios de citas, seguimientos post-consulta o noticias de tu clínica. PetSync te ayudará a automatizar el envío a tus clientes registrados, **utilizando la información de contacto de tu base de datos de pacientes. (Se integra con plataformas de email marketing populares y permite conexión SMTP).**
+                        Configura plantillas de correo para recordatorios de citas, seguimientos post-consulta o noticias de tu clínica. PetSync te ayudará a automatizar el envío a tus clientes registrados, **utilizando la información de contacto de tu base de datos de pacientes.**
                     </p>
                      <p className="text-sm text-muted-foreground mb-3">
                         <BarChart3 className="inline h-4 w-4 mr-1 text-primary"/>
@@ -418,6 +476,9 @@ export default function PortalVeterinariasDashboardPage() {
                         <Button variant="secondary">Configurar Plantillas</Button>
                         <Button variant="secondary">Gestionar Campañas</Button>
                         <Button variant="secondary">Ver Historial de Envíos</Button>
+                        <Button variant="default" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                            <PlusCircle className="mr-2 h-4 w-4"/> Diseñar Nueva Campaña de Email
+                        </Button>
                     </div>
                 </CardContent>
               </Card>
@@ -438,6 +499,10 @@ export default function PortalVeterinariasDashboardPage() {
                         Ejemplo: Si Thor fue vacunado hoy, el sistema puede programar automáticamente un recordatorio para su próxima vacuna en un año y notificar al tutor, **basándose en los datos almacenados de cada paciente y los protocolos de tu clínica.**
                     </p>
                   <form className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                        <Switch id="global-reminders" disabled />
+                        <Label htmlFor="global-reminders" className="text-sm">Activar/Desactivar Recordatorios Globales (Demo)</Label>
+                    </div>
                     <div>
                       <Label htmlFor="notificationType">Tipo de Notificación de Ejemplo</Label>
                       <Input id="notificationType" value="Recordatorio de Próxima Vacuna Anual para [Mascota]" readOnly className="bg-background" />
@@ -460,7 +525,7 @@ export default function PortalVeterinariasDashboardPage() {
               <CardTitle className="text-2xl">Configuración del Portal</CardTitle>
               <CardDescription>Administra los datos de tu clínica y preferencias del portal.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
               <div>
                 <Label htmlFor="clinicName">Nombre de la Clínica</Label>
                 <Input id="clinicName" defaultValue="Clínica Veterinaria Central" className="bg-background" />
@@ -473,7 +538,22 @@ export default function PortalVeterinariasDashboardPage() {
                 <Label htmlFor="clinicPhone">Teléfono</Label>
                 <Input id="clinicPhone" type="tel" defaultValue="+54 11 1234-5678" className="bg-background" />
               </div>
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground" disabled>Guardar Cambios (Deshabilitado en Demo)</Button>
+              <div className="space-y-3 pt-4">
+                <Label className="text-base font-medium">Preferencias Generales (Ejemplos):</Label>
+                <div className="flex items-center space-x-3">
+                    <Switch id="enable-portal" defaultChecked disabled />
+                    <Label htmlFor="enable-portal">Habilitar Portal de Tutores (Reservas Online)</Label>
+                </div>
+                 <div className="flex items-center space-x-3">
+                    <Switch id="auto-email-reminders" defaultChecked disabled />
+                    <Label htmlFor="auto-email-reminders">Enviar Recordatorios Automáticos por Email</Label>
+                </div>
+                 <div className="flex items-center space-x-3">
+                    <Switch id="auto-app-reminders" disabled />
+                    <Label htmlFor="auto-app-reminders">Enviar Recordatorios Automáticos por App (Próximamente)</Label>
+                </div>
+              </div>
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground mt-4" disabled>Guardar Cambios (Deshabilitado en Demo)</Button>
             </CardContent>
           </Card>
 
@@ -491,7 +571,6 @@ export default function PortalVeterinariasDashboardPage() {
               </p>
             </CardContent>
           </Card>
-
         </TabsContent>
       </Tabs>
 
