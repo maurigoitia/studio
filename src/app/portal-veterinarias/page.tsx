@@ -12,6 +12,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
 
 import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, LogIn, Briefcase, Building, DollarSign, ExternalLink, ChevronDown } from "lucide-react";
 import Link from "next/link";
@@ -63,6 +65,7 @@ export default function PortalVeterinariasDashboardPage() {
   // The actual login mechanism and data persistence are not implemented here.
 
   return (
+    <TooltipProvider>
     <div className="container mx-auto py-8 px-4 min-h-[calc(100vh-8rem)]">
       <header className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -256,75 +259,32 @@ export default function PortalVeterinariasDashboardPage() {
                     <CardTitle className="text-lg flex items-center">
                       <Clock className="mr-2 h-5 w-5 text-primary" /> Gestión de Sala de Espera y Triage
                     </CardTitle>
-                    <CardDescription className="text-xs">Maneja el flujo de pacientes sin turno previo y prioriza urgencias.</CardDescription>
+                    <CardDescription className="text-xs">Maneja el flujo de pacientes sin turno previo y prioriza urgencias. (Urgencias y Espontáneos)</CardDescription>
                   </CardHeader>
                   <CardContent className="p-4 space-y-4">
                     <div>
-                      <h4 className="text-sm font-semibold mb-1 text-foreground">Niveles de Triage (Ejemplo):</h4>
-                      <div className="flex flex-wrap gap-2">
+                      <h4 className="text-sm font-semibold mb-2 text-foreground">Niveles de Triage (Ejemplo):</h4>
+                      <div className="flex flex-wrap gap-2 mb-3">
                         <Badge className={`${getTriageBadgeColor("Rojo")} text-xs`}>Rojo (Crítico)</Badge>
                         <Badge className={`${getTriageBadgeColor("Naranja")} text-xs`}>Naranja (Urgente)</Badge>
                         <Badge className={`${getTriageBadgeColor("Amarillo")} text-xs`}>Amarillo (Estándar)</Badge>
                         <Badge className={`${getTriageBadgeColor("Azul")} text-xs`}>Azul (Consulta Rápida)</Badge>
                       </div>
                     </div>
+                     <p className="text-sm text-muted-foreground">Actualmente hay {waitingRoomPatients.length} pacientes en la sala de espera.</p>
                     <Separator />
-                    <div>
-                      <h4 className="text-sm font-semibold mb-1 text-foreground">Pacientes en Espera (Ejemplo):</h4>
-                      {waitingRoomPatients.length > 0 ? (
-                        <Table>
-                          <TableHeader>
-                            <TableRow>
-                              <TableHead className="h-8 px-2 text-xs">Mascota</TableHead>
-                              <TableHead className="h-8 px-2 text-xs">Triage</TableHead>
-                              <TableHead className="h-8 px-2 text-xs">ETA</TableHead>
-                              <TableHead className="h-8 px-2 text-xs">Estado</TableHead>
-                              <TableHead className="h-8 px-2 text-xs">Asignado a</TableHead>
-                              <TableHead className="h-8 px-2 text-xs text-right">Acciones</TableHead>
-                            </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                            {waitingRoomPatients.map((patient, index) => (
-                              <TableRow key={index}>
-                                <TableCell className="py-1 px-2 text-xs font-medium">{patient.name}</TableCell>
-                                <TableCell className="py-1 px-2 text-xs">
-                                  <Badge className={`${getTriageBadgeColor(patient.triage)} text-xs`}>
-                                    {patient.triage}
-                                  </Badge>
-                                </TableCell>
-                                <TableCell className="py-1 px-2 text-xs">{patient.eta}</TableCell>
-                                <TableCell className="py-1 px-2 text-xs">{patient.status}</TableCell>
-                                <TableCell className="py-1 px-2 text-xs">{patient.assignedTo}</TableCell>
-                                <TableCell className="py-1 px-2 text-xs text-right">
-                                   <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" size="icon" className="h-7 w-7">
-                                                <ChevronDown className="h-3 w-3"/>
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                            {patient.triage === "Rojo" && <DropdownMenuItem className="text-red-600 hover:!bg-red-100"><AlertTriangle className="mr-2 h-4 w-4"/> Atender Urgencia</DropdownMenuItem>}
-                                            {(patient.triage === "Naranja" || patient.triage === "Amarillo") && <DropdownMenuItem><Video className="mr-2 h-4 w-4"/> Iniciar Consulta</DropdownMenuItem>}
-                                            {patient.triage === "Azul" && <DropdownMenuItem><Send className="mr-2 h-4 w-4"/> Atención Rápida</DropdownMenuItem>}
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem><FileText className="mr-2 h-4 w-4" /> Ver Ficha Paciente</DropdownMenuItem>
-                                            <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Modificar Triage/Estado</DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      ) : (
-                        <p className="text-muted-foreground text-xs">No hay pacientes en la sala de espera.</p>
-                      )}
-                    </div>
                     <div className="mt-3 text-center">
-                        <Button variant="outline" size="sm" className="text-xs">Gestionar Sala de Espera Completa</Button>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="outline" size="sm" className="text-xs">Gestionar Sala de Espera Completa</Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Llevaría a la vista detallada de la sala de espera.</p>
+                          </TooltipContent>
+                        </Tooltip>
                     </div>
                     <Separator/>
-                     <div className="space-y-1 text-xs text-muted-foreground">
+                     <div className="space-y-1 text-xs text-muted-foreground mt-3">
                       <p><AlertTriangle className="inline h-3 w-3 mr-1 text-primary"/> Sistema de priorización por niveles de urgencia (Crítico, Urgente, Estándar, Consulta Rápida).</p>
                       <p><UsersRound className="inline h-3 w-3 mr-1 text-primary"/> Los tutores con la app PetSync podrán visualizar el estado y tiempo estimado de espera de su mascota.</p>
                       <p><Users className="inline h-3 w-3 mr-1 text-primary" /> Múltiples perfiles de usuario para la clínica (recepción, veterinarios, administradores) con acceso diferenciado según el plan PetSync.</p>
@@ -591,6 +551,7 @@ export default function PortalVeterinariasDashboardPage() {
         </CardContent>
       </Card>
     </div>
+    </TooltipProvider>
   );
 }
 
