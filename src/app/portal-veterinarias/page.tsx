@@ -276,9 +276,16 @@ export default function PortalVeterinariasDashboardPage() {
                      <p className="text-sm text-muted-foreground">Actualmente hay {waitingRoomPatients.length} pacientes en la sala de espera.</p>
                     <Separator />
                     <div className="mt-3 text-center">
-                        <Button variant="outline" size="sm" className="text-xs" onClick={() => setActiveTab("sala-espera")}>
-                            Gestionar Sala de Espera Completa
-                        </Button>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button variant="outline" size="sm" className="text-xs" onClick={() => setActiveTab("sala-espera")}>
+                                    Gestionar Sala de Espera Completa
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Llevaría a la vista detallada de la sala de espera.</p>
+                            </TooltipContent>
+                        </Tooltip>
                     </div>
                     <Separator/>
                      <div className="space-y-1 text-xs text-muted-foreground mt-3">
@@ -660,6 +667,5 @@ export default function PortalVeterinariasDashboardPage() {
     </TooltipProvider>
   );
 }
-```
 
-This provides a more interactive mock-up of the vet portal. I also updated some icons in the "Gestión de Sala de Espera y Triage" section for clarity and enabled the demo switches and buttons in the "Comunicaciones" and "Configuración" tabs to make them feel more interactive, though they don't perform real actions.
+    
