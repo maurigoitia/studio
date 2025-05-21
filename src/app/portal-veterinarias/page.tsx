@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,10 +16,14 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { Command, CommandInput, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 
-import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, LogIn, Briefcase, Building, DollarSign, ExternalLink, ChevronDown, UserCog, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud } from "lucide-react";
+import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, LogIn, Briefcase, Building, DollarSign, ExternalLink, ChevronDown, UserCog, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, Check, ChevronsUpDown, Dog, Cat, Bird, Rabbit, Microscope, Pill, FileHeart, Image as ImageIcon, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
+
 
 // Dummy data for placeholders
 const upcomingAppointments = [
@@ -29,10 +33,12 @@ const upcomingAppointments = [
 ];
 
 const recentPatients = [
-  { id: "P001", name: "Max (Perro)", owner: "Juan Rodriguez", lastVisit: "2024-05-10" },
-  { id: "P002", name: "Luna (Gato)", owner: "Maria Fernández", lastVisit: "2024-05-12" },
-  { id: "P003", name: "Rocky (Perro)", owner: "Pedro Martinez", lastVisit: "2024-05-15" },
+  { id: "P001", name: "Max", species: "Perro", breed: "Labrador Retriever", age: "5 años", sex: "Macho", microchip: "981000001234567", sterilized: "Sí", owner: "Juan Rodriguez", ownerEmail: "juan.r@example.com", ownerPhone: "11-2345-6789", lastVisit: "2024-05-10", photoUrl: "https://placehold.co/100x100.png", photoHint:"dog labrador" },
+  { id: "P002", name: "Luna", species: "Gato", breed: "Siamés", age: "3 años", sex: "Hembra", microchip: "981000007654321", sterilized: "Sí", owner: "Maria Fernández", ownerEmail: "maria.f@example.com", ownerPhone: "11-3456-7890", lastVisit: "2024-05-12", photoUrl: "https://placehold.co/100x100.png", photoHint: "cat siamese"},
+  { id: "P003", name: "Rocky", species: "Perro", breed: "Bulldog Francés", age: "2 años", sex: "Macho", microchip: "981000001122334", sterilized: "No", owner: "Pedro Martinez", ownerEmail: "pedro.m@example.com", ownerPhone: "11-4567-8901", lastVisit: "2024-05-15", photoUrl: "https://placehold.co/100x100.png", photoHint: "dog bulldog" },
 ];
+
+type Patient = typeof recentPatients[0];
 
 const waitingRoomPatients = [
   { id: "W001", name: "Manchas (Perro)", owner: "Elena Soler", triage: "Amarillo", eta: "15 min", status: "En espera", assignedTo: "Dr. Vet Ejemplo" },
@@ -41,6 +47,21 @@ const waitingRoomPatients = [
   { id: "W004", name: "Kira (Perro)", owner: "Luis Paz", triage: "Amarillo", eta: "20 min", status: "Esperando resultados", assignedTo: "Laboratorio" },
   { id: "W005", name: "Thor (Gato)", owner: "Marta Gómez", triage: "Naranja", eta: "5 min", status: "En espera", assignedTo: "Pendiente Asignación" },
 ];
+
+const commonDogBreeds = [
+  { value: "labrador retriever", label: "Labrador Retriever" }, { value: "bulldog francés", label: "Bulldog Francés" },
+  { value: "pastor alemán", label: "Pastor Alemán" }, { value: "golden retriever", label: "Golden Retriever" },
+  { value: "caniche", label: "Caniche (Poodle)" }, { value: "bulldog inglés", label: "Bulldog Inglés" },
+  { value: "beagle", label: "Beagle" }, { value: "rottweiler", label: "Rottweiler" }, { value: "siberian husky", label: "Siberian Husky" },
+  { value: "mestizo perro", label: "Mestizo / Cruza (Perro)" }, { value: "otro perro", label: "Otra Raza (Perro)" },
+];
+const commonCatBreeds = [
+  { value: "siamés", label: "Siamés" }, { value: "persa", label: "Persa" }, { value: "maine coon", label: "Maine Coon" },
+  { value: "ragdoll", label: "Ragdoll" }, { value: "bengalí", label: "Bengalí" }, { value: "british shorthair", label: "British Shorthair" },
+  { value: "sphynx", label: "Sphynx (Gato sin pelo)" }, { value: "mestizo gato", label: "Mestizo / Común Europeo (Gato)" },
+  { value: "otro gato", label: "Otra Raza (Gato)" },
+];
+const allBreeds = [...commonDogBreeds, ...commonCatBreeds];
 
 
 const getServiceIcon = (serviceType?: string) => {
@@ -59,9 +80,46 @@ const getTriageBadgeColor = (triageLevel: string) => {
   }
 };
 
+const mockPatientMedicalHistory = {
+  consultations: [
+    { date: "2024-05-10", reason: "Control anual y vacunación", vet: "Dr. Vet Ejemplo", notes: "Paciente saludable, vacunas al día. Leve sarro dental." },
+    { date: "2023-11-15", reason: "Otitis externa", vet: "Dr. Vet Ejemplo", notes: "Se recetó tratamiento antibiótico y antiinflamatorio por 7 días. Limpieza de oídos." },
+    { date: "2023-03-01", reason: "Vacunación cachorro", vet: "Dr. Vet Ejemplo", notes: "Primera dosis de vacuna quintuple." },
+  ],
+  vaccines: [
+    { date: "2024-05-10", vaccine: "Quintuple Canina (Refuerzo)", nextDueDate: "2025-05-10" },
+    { date: "2024-05-10", vaccine: "Antirrábica", nextDueDate: "2025-05-10" },
+    { date: "2023-03-01", vaccine: "Quintuple Canina (1ra Dosis)", nextDueDate: "N/A" },
+  ],
+  deworming: [
+    { date: "2024-04-01", product: "Total Full CG", internal: true, external: true },
+    { date: "2024-01-05", product: "Pipeta Advantix", internal: false, external: true },
+  ],
+  currentTreatments: [
+    { drug: "Condroprotector (preventivo)", dosage: "1 comp/día", duration: "Continuo", startDate: "2024-01-01" },
+  ],
+  allergies: "Alergia leve a picadura de pulgas, controlada con antiparasitario mensual.",
+  chronicConditions: "Ninguna condición crónica diagnosticada.",
+  documents: [
+    { name: "Analisis_Sangre_2023.pdf", type: "Análisis de Laboratorio", date: "2023-10-20" },
+    { name: "Radiografia_Torax_2022.jpg", type: "Radiografía", date: "2022-07-05" },
+  ]
+};
+
 
 export default function PortalVeterinariasDashboardPage() {
   const [activeTab, setActiveTab] = useState("agenda");
+  const [openBreedCombobox, setOpenBreedCombobox] = useState(false);
+  const [selectedBreed, setSelectedBreed] = useState("");
+  const [isPatientDetailOpen, setIsPatientDetailOpen] = useState(false);
+  const [selectedPatientForDetail, setSelectedPatientForDetail] = useState<Patient | null>(null);
+
+
+  const handleViewPatientDetail = (patient: Patient) => {
+    setSelectedPatientForDetail(patient);
+    setIsPatientDetailOpen(true);
+  };
+  
 
   return (
     <TooltipProvider>
@@ -81,7 +139,7 @@ export default function PortalVeterinariasDashboardPage() {
             <p className="text-xs text-muted-foreground">Clínica Veterinaria Central</p>
           </div>
           <Button variant="outline" size="icon" asChild>
-            <Link href="#"> {/* Placeholder for logout */}
+            <Link href="#"> 
               <LogOut className="h-5 w-5" />
               <span className="sr-only">Cerrar Sesión</span>
             </Link>
@@ -383,7 +441,10 @@ export default function PortalVeterinariasDashboardPage() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem><FileText className="mr-2 h-4 w-4" /> Ver Ficha</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                const p = recentPatients.find(rp => rp.name.startsWith(patient.name.split(" ")[0]));
+                                if(p) handleViewPatientDetail(p);
+                            }}><FileText className="mr-2 h-4 w-4" /> Ver Ficha</DropdownMenuItem>
                             <DropdownMenuItem><UserCheck className="mr-2 h-4 w-4" /> Iniciar Consulta</DropdownMenuItem>
                             <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Actualizar Triage/Estado</DropdownMenuItem>
                             <DropdownMenuItem><UserCog className="mr-2 h-4 w-4" /> Asignar a Veterinario</DropdownMenuItem>
@@ -434,13 +495,52 @@ export default function PortalVeterinariasDashboardPage() {
                           </div>
                           <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="newPatientBreed" className="text-right">Raza (Opcional)</Label>
-                            <Input id="newPatientBreed" placeholder="Ej: Labrador" className="col-span-3 bg-background" />
+                             <Popover open={openBreedCombobox} onOpenChange={setOpenBreedCombobox}>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  role="combobox"
+                                  aria-expanded={openBreedCombobox}
+                                  className="col-span-3 justify-between bg-background font-normal"
+                                >
+                                  {selectedBreed
+                                    ? allBreeds.find((breed) => breed.value === selectedBreed)?.label
+                                    : "Seleccionar raza..."}
+                                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-[375px] p-0">
+                                <Command>
+                                  <CommandInput placeholder="Buscar raza..." />
+                                  <CommandList>
+                                    <CommandEmpty>No se encontró la raza.</CommandEmpty>
+                                    <CommandGroup>
+                                      {allBreeds.map((breed) => (
+                                        <CommandItem
+                                          key={breed.value}
+                                          value={breed.value}
+                                          onSelect={(currentValue) => {
+                                            setSelectedBreed(currentValue === selectedBreed ? "" : currentValue);
+                                            setOpenBreedCombobox(false);
+                                          }}
+                                        >
+                                          <Check
+                                            className={`mr-2 h-4 w-4 ${selectedBreed === breed.value ? "opacity-100" : "opacity-0"}`}
+                                          />
+                                          {breed.label}
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                  </CommandList>
+                                </Command>
+                              </PopoverContent>
+                            </Popover>
                           </div>
                            <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="newPatientBirthdate" className="text-right">Fecha Nac. (Opc.)</Label>
                             <Input id="newPatientBirthdate" type="date" className="col-span-3 bg-background" />
                           </div>
-                          <Separator className="my-2"/>
+                          <Separator className="my-2 col-span-4"/>
                           <p className="text-sm font-medium text-muted-foreground col-span-4">Datos del Tutor</p>
                           <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="newOwnerName" className="text-right">Nombre Tutor</Label>
@@ -481,7 +581,7 @@ export default function PortalVeterinariasDashboardPage() {
                     {recentPatients.map((patient) => (
                        <TableRow key={patient.id}>
                         <TableCell className="font-medium">{patient.id}</TableCell>
-                        <TableCell>{patient.name}</TableCell>
+                        <TableCell>{patient.name} ({patient.species})</TableCell>
                         <TableCell>{patient.owner}</TableCell>
                         <TableCell>{patient.lastVisit}</TableCell>
                         <TableCell className="text-right">
@@ -492,7 +592,9 @@ export default function PortalVeterinariasDashboardPage() {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem><FileText className="mr-2 h-4 w-4" /> Ver Historial Completo</DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => handleViewPatientDetail(patient)}>
+                                        <FileText className="mr-2 h-4 w-4" /> Ver Historial Completo
+                                    </DropdownMenuItem>
                                     <DropdownMenuItem><Video className="mr-2 h-4 w-4" /> Iniciar Nueva Consulta</DropdownMenuItem>
                                     <DropdownMenuItem><CalendarDays className="mr-2 h-4 w-4" /> Agendar Próximo Turno</DropdownMenuItem>
                                     <DropdownMenuSeparator />
@@ -638,6 +740,163 @@ export default function PortalVeterinariasDashboardPage() {
         </TabsContent>
       </Tabs>
 
+      {selectedPatientForDetail && (
+        <Dialog open={isPatientDetailOpen} onOpenChange={setIsPatientDetailOpen}>
+          <DialogContent className="sm:max-w-[90vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[900px] h-[90vh] flex flex-col">
+            <DialogHeader>
+              <DialogTitle className="text-2xl flex items-center">
+                {selectedPatientForDetail.species === "Perro" ? <Dog className="mr-2 h-7 w-7 text-primary" /> : selectedPatientForDetail.species === "Gato" ? <Cat className="mr-2 h-7 w-7 text-primary" /> : <Bird className="mr-2 h-7 w-7 text-primary" />}
+                Ficha de Paciente: {selectedPatientForDetail.name}
+              </DialogTitle>
+              <DialogDescription>
+                Historial médico completo y datos de {selectedPatientForDetail.name} ({selectedPatientForDetail.species} - {selectedPatientForDetail.breed}).
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="flex-grow overflow-y-auto pr-2 space-y-6 py-4">
+              <Card>
+                <CardHeader>
+                    <CardTitle className="text-lg">Datos del Paciente</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="md:col-span-1 flex flex-col items-center">
+                        <Avatar className="h-32 w-32 mb-2">
+                            <AvatarImage src={selectedPatientForDetail.photoUrl} alt={selectedPatientForDetail.name} data-ai-hint={selectedPatientForDetail.photoHint} />
+                            <AvatarFallback>{selectedPatientForDetail.name.substring(0,2).toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                        <Button variant="outline" size="sm" className="mt-1 text-xs"><ImageIcon className="mr-1 h-3 w-3"/> Cambiar Foto</Button>
+                    </div>
+                    <div className="md:col-span-2 grid grid-cols-2 gap-x-4 gap-y-2">
+                        <div><strong>Especie:</strong> {selectedPatientForDetail.species}</div>
+                        <div><strong>Raza:</strong> {selectedPatientForDetail.breed}</div>
+                        <div><strong>Edad:</strong> {selectedPatientForDetail.age}</div>
+                        <div><strong>Sexo:</strong> {selectedPatientForDetail.sex}</div>
+                        <div><strong>Nº Chip:</strong> {selectedPatientForDetail.microchip || "No registrado"}</div>
+                        <div><strong>Esterilizado/a:</strong> {selectedPatientForDetail.sterilized}</div>
+                    </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                    <CardTitle className="text-lg">Datos del Tutor</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div><strong>Nombre:</strong> {selectedPatientForDetail.owner}</div>
+                    <div><strong>Email:</strong> {selectedPatientForDetail.ownerEmail}</div>
+                    <div><strong>Teléfono:</strong> {selectedPatientForDetail.ownerPhone}</div>
+                </CardContent>
+              </Card>
+
+              <Tabs defaultValue="historial" className="w-full">
+                <TabsList className="grid w-full grid-cols-3 md:grid-cols-5 mb-4">
+                  <TabsTrigger value="historial"><FileHeart className="mr-1 h-4 w-4"/> Historial Consultas</TabsTrigger>
+                  <TabsTrigger value="vacunas"><Syringe className="mr-1 h-4 w-4"/>Vacunas/Desparasitación</TabsTrigger>
+                  <TabsTrigger value="tratamientos"><Pill className="mr-1 h-4 w-4"/>Tratamientos</TabsTrigger>
+                  <TabsTrigger value="condiciones"><ShieldAlert className="mr-1 h-4 w-4"/>Alergias/Crónicas</TabsTrigger>
+                  <TabsTrigger value="documentos"><FileText className="mr-1 h-4 w-4"/>Documentos/Estudios</TabsTrigger>
+                </TabsList>
+                <TabsContent value="historial">
+                  <Card>
+                    <CardHeader><CardTitle className="text-md">Consultas Anteriores</CardTitle></CardHeader>
+                    <CardContent>
+                      {mockPatientMedicalHistory.consultations.length > 0 ? (
+                        <Table>
+                          <TableHeader><TableRow><TableHead>Fecha</TableHead><TableHead>Motivo</TableHead><TableHead>Veterinario</TableHead><TableHead>Notas</TableHead></TableRow></TableHeader>
+                          <TableBody>
+                            {mockPatientMedicalHistory.consultations.map((c,i) => <TableRow key={i}><TableCell>{c.date}</TableCell><TableCell>{c.reason}</TableCell><TableCell>{c.vet}</TableCell><TableCell className="text-xs">{c.notes}</TableCell></TableRow>)}
+                          </TableBody>
+                        </Table>
+                      ) : <p className="text-sm text-muted-foreground">No hay consultas registradas.</p>}
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                <TabsContent value="vacunas">
+                   <Card className="mb-4">
+                    <CardHeader><CardTitle className="text-md">Vacunación</CardTitle></CardHeader>
+                    <CardContent>
+                      {mockPatientMedicalHistory.vaccines.length > 0 ? (
+                        <Table>
+                          <TableHeader><TableRow><TableHead>Fecha</TableHead><TableHead>Vacuna</TableHead><TableHead>Próxima Dosis</TableHead></TableRow></TableHeader>
+                          <TableBody>
+                            {mockPatientMedicalHistory.vaccines.map((v,i) => <TableRow key={i}><TableCell>{v.date}</TableCell><TableCell>{v.vaccine}</TableCell><TableCell>{v.nextDueDate}</TableCell></TableRow>)}
+                          </TableBody>
+                        </Table>
+                      ) : <p className="text-sm text-muted-foreground">No hay vacunas registradas.</p>}
+                    </CardContent>
+                  </Card>
+                   <Card>
+                    <CardHeader><CardTitle className="text-md">Desparasitación</CardTitle></CardHeader>
+                    <CardContent>
+                      {mockPatientMedicalHistory.deworming.length > 0 ? (
+                        <Table>
+                          <TableHeader><TableRow><TableHead>Fecha</TableHead><TableHead>Producto</TableHead><TableHead>Interna</TableHead><TableHead>Externa</TableHead></TableRow></TableHeader>
+                          <TableBody>
+                            {mockPatientMedicalHistory.deworming.map((d,i) => <TableRow key={i}><TableCell>{d.date}</TableCell><TableCell>{d.product}</TableCell><TableCell>{d.internal ? "Sí" : "No"}</TableCell><TableCell>{d.external ? "Sí" : "No"}</TableCell></TableRow>)}
+                          </TableBody>
+                        </Table>
+                      ) : <p className="text-sm text-muted-foreground">No hay desparasitaciones registradas.</p>}
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                <TabsContent value="tratamientos">
+                  <Card>
+                    <CardHeader><CardTitle className="text-md">Tratamientos Actuales/Recientes</CardTitle></CardHeader>
+                    <CardContent>
+                       {mockPatientMedicalHistory.currentTreatments.length > 0 ? (
+                        <Table>
+                          <TableHeader><TableRow><TableHead>Medicamento</TableHead><TableHead>Dosis</TableHead><TableHead>Duración</TableHead><TableHead>Inicio</TableHead></TableRow></TableHeader>
+                          <TableBody>
+                            {mockPatientMedicalHistory.currentTreatments.map((t,i) => <TableRow key={i}><TableCell>{t.drug}</TableCell><TableCell>{t.dosage}</TableCell><TableCell>{t.duration}</TableCell><TableCell>{t.startDate}</TableCell></TableRow>)}
+                          </TableBody>
+                        </Table>
+                      ) : <p className="text-sm text-muted-foreground">No hay tratamientos activos registrados.</p>}
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                 <TabsContent value="condiciones">
+                   <Card className="mb-4">
+                    <CardHeader><CardTitle className="text-md">Alergias Conocidas</CardTitle></CardHeader>
+                    <CardContent>
+                        <p className="text-sm">{mockPatientMedicalHistory.allergies || "No hay alergias registradas."}</p>
+                    </CardContent>
+                  </Card>
+                   <Card>
+                    <CardHeader><CardTitle className="text-md">Condiciones Crónicas</CardTitle></CardHeader>
+                    <CardContent>
+                         <p className="text-sm">{mockPatientMedicalHistory.chronicConditions || "No hay condiciones crónicas registradas."}</p>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                <TabsContent value="documentos">
+                  <Card>
+                    <CardHeader><CardTitle className="text-md">Estudios y Documentos Adjuntos</CardTitle></CardHeader>
+                    <CardContent>
+                      {mockPatientMedicalHistory.documents.length > 0 ? (
+                        <ul className="space-y-2">
+                        {mockPatientMedicalHistory.documents.map((doc,i) =>(
+                            <li key={i} className="text-sm flex items-center justify-between p-2 border rounded-md hover:bg-muted/50">
+                                <span><FileText className="inline mr-2 h-4 w-4"/> {doc.name} ({doc.type}) - {doc.date}</span>
+                                <Button variant="outline" size="sm" className="text-xs">Ver/Descargar</Button>
+                            </li>
+                        ))}
+                        </ul>
+                      ) : <p className="text-sm text-muted-foreground">No hay documentos adjuntos.</p>}
+                      <Button variant="secondary" className="mt-4"><PlusCircle className="mr-2 h-4 w-4"/>Cargar Nuevo Documento</Button>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
+
+            <DialogFooter className="mt-auto pt-4 border-t">
+              <Button variant="outline" onClick={() => setIsPatientDetailOpen(false)}>Cerrar Ficha</Button>
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground"><Edit3 className="mr-2 h-4 w-4"/> Editar Ficha (Demo)</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
       <Card className="mt-12 shadow-lg border-primary/50">
         <CardHeader>
             <CardTitle className="flex items-center"><LifeBuoy className="mr-3 h-6 w-6 text-primary"/> Gestión de Plan y Soporte</CardTitle>
@@ -684,5 +943,3 @@ export default function PortalVeterinariasDashboardPage() {
     </TooltipProvider>
   );
 }
-
-    
