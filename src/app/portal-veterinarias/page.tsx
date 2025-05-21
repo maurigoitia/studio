@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck } from "lucide-react";
+import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -80,7 +80,7 @@ export default function PortalVeterinariasDashboardPage() {
             <Card className="shadow-lg">
               <CardHeader>
                 <CardTitle className="text-2xl">Gestión de Agenda</CardTitle>
-                <CardDescription>Visualiza y administra los turnos programados para cada animal.</CardDescription>
+                <CardDescription>Visualiza y administra los turnos programados para cada animal, **sincronizados en tiempo real con la base de datos central de PetSync.**</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
@@ -117,7 +117,7 @@ export default function PortalVeterinariasDashboardPage() {
                   </CardHeader>
                   <CardContent className="p-0">
                       <p className="text-sm text-muted-foreground mb-3">
-                          Permite que los tutores soliciten turnos directamente desde la app PetSync. Define tus horarios disponibles, servicios y duraciones.
+                          Permite que los tutores soliciten turnos directamente desde la app PetSync. Define tus horarios disponibles, servicios y duraciones. **Las solicitudes se reflejan automáticamente en tu agenda y base de datos.**
                       </p>
                       <Button variant="secondary">Configurar Disponibilidad Online</Button>
                   </CardContent>
@@ -185,8 +185,8 @@ export default function PortalVeterinariasDashboardPage() {
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p><AlertTriangle className="inline h-4 w-4 mr-1 text-primary"/> Los tutores con la app PetSync podrán visualizar el estado y tiempo estimado de espera de su mascota.</p>
                   <p><UsersRound className="inline h-4 w-4 mr-1 text-primary"/> El sistema permitirá múltiples perfiles de usuario para la clínica (recepción, veterinarios, administradores, marketing) con acceso diferenciado según el plan PetSync.</p>
-                  <p><Send className="inline h-4 w-4 mr-1 text-primary"/> Los veterinarios accederán al historial completo y podrán enviar resúmenes de consulta, recetas y recomendaciones al perfil del tutor en la app PetSync o a su email.</p>
-                  <p><ListChecks className="inline h-4 w-4 mr-1 text-primary"/> Herramientas para incorporar información de pacientes cuyos tutores no usen la app (ej. carga de documentos escaneados).</p>
+                  <p><Send className="inline h-4 w-4 mr-1 text-primary"/> Los veterinarios accederán al historial completo del paciente **(desde la base de datos)** y podrán enviar resúmenes de consulta, recetas y recomendaciones al perfil del tutor en la app PetSync o a su email, **actualizando el historial del paciente en la base de datos.**</p>
+                  <p><ListChecks className="inline h-4 w-4 mr-1 text-primary"/> Herramientas para incorporar información de pacientes cuyos tutores no usen la app (ej. carga de documentos escaneados **directamente a la base de datos**).</p>
                 </div>
                 <div className="mt-4 text-center">
                      <Button variant="outline">Gestionar Sala de Espera</Button>
@@ -247,7 +247,7 @@ export default function PortalVeterinariasDashboardPage() {
                     </CardHeader>
                     <CardContent className="p-0">
                         <p className="text-sm text-muted-foreground">
-                            PetSync te permite mantener fichas clínicas digitales completas e individuales para cada paciente animal. Registra consultas, diagnósticos, tratamientos, estudios y más. La información se guarda de forma segura y es accesible para ti y (con permiso) para el tutor.
+                            PetSync te permite mantener fichas clínicas digitales completas e individuales para cada paciente animal, **almacenadas de forma segura y centralizada en la base de datos en la nube de PetSync.** Registra consultas, diagnósticos, tratamientos, estudios y más. La información se guarda de forma segura y es accesible para ti y (con permiso) para el tutor.
                         </p>
                     </CardContent>
                 </Card>
@@ -271,11 +271,11 @@ export default function PortalVeterinariasDashboardPage() {
                 </CardHeader>
                 <CardContent className="p-0">
                     <p className="text-sm text-muted-foreground mb-3">
-                        Configura plantillas de correo para recordatorios de citas, seguimientos post-consulta o noticias de tu clínica. PetSync te ayudará a automatizar el envío a tus clientes registrados.
+                        Configura plantillas de correo para recordatorios de citas, seguimientos post-consulta o noticias de tu clínica. PetSync te ayudará a automatizar el envío a tus clientes registrados, **utilizando la información de contacto de tu base de datos de pacientes. (Se integra con plataformas de email marketing populares y permite conexión SMTP).**
                     </p>
                      <p className="text-sm text-muted-foreground mb-3">
                         <BarChart3 className="inline h-4 w-4 mr-1 text-primary"/>
-                        Los usuarios con rol de marketing podrán diseñar y enviar campañas segmentadas a grupos de tutores (ej. recordatorios de vacunación antirrábica, promociones de alimentos).
+                        Los usuarios con rol de marketing podrán diseñar y enviar campañas segmentadas a grupos de tutores (ej. recordatorios de vacunación antirrábica, promociones de alimentos) **(basado en los datos y etiquetas de tu base de pacientes, con conexión a tus listas de contactos existentes).**
                     </p>
                     <div className="flex gap-2 flex-wrap">
                         <Button variant="secondary">Configurar Plantillas</Button>
@@ -294,11 +294,11 @@ export default function PortalVeterinariasDashboardPage() {
                 </CardHeader>
                 <CardContent className="p-0">
                   <p className="text-sm text-muted-foreground mb-2">
-                    Envía recordatorios automáticos de citas y vacunas pendientes a los tutores a través de la app PetSync y/o por email.
+                    Envía recordatorios automáticos de citas y vacunas pendientes a los tutores a través de la app PetSync y/o por email, **disparados por los datos de salud y citas almacenados en la ficha de cada paciente.**
                   </p>
                    <p className="text-sm text-muted-foreground mb-3">
                         <ListChecks className="inline h-4 w-4 mr-1 text-primary"/>
-                        Ejemplo: Si Thor fue vacunado hoy, el sistema puede programar automáticamente un recordatorio para su próxima vacuna en un año y notificar al tutor.
+                        Ejemplo: Si Thor fue vacunado hoy, el sistema puede programar automáticamente un recordatorio para su próxima vacuna en un año y notificar al tutor, **basándose en los datos almacenados de cada paciente y los protocolos de tu clínica.**
                     </p>
                   <form className="space-y-3">
                     <div>
@@ -318,7 +318,7 @@ export default function PortalVeterinariasDashboardPage() {
         </TabsContent>
 
         <TabsContent value="configuracion">
-          <Card className="shadow-lg">
+          <Card className="shadow-lg mb-6">
             <CardHeader>
               <CardTitle className="text-2xl">Configuración del Portal</CardTitle>
               <CardDescription>Administra los datos de tu clínica y preferencias del portal.</CardDescription>
@@ -339,6 +339,22 @@ export default function PortalVeterinariasDashboardPage() {
               <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Guardar Cambios (Deshabilitado en Demo)</Button>
             </CardContent>
           </Card>
+
+          <Card className="shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-xl flex items-center">
+                <Plug className="mr-2 h-5 w-5 text-primary" />
+                Conexiones e Integraciones (Futuro)
+              </CardTitle>
+              <CardDescription>Conecta PetSync con tus herramientas y plataformas existentes.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Estamos trabajando para que PetSync se integre con tus herramientas favoritas. Próximamente: Conexión con [Software de Gestión Clínica Ejemplo], [Plataforma de Email Marketing Ejemplo], pasarelas de pago y más. **La información de tu clínica y pacientes se gestionará de forma segura para facilitar estas integraciones.**
+              </p>
+            </CardContent>
+          </Card>
+
         </TabsContent>
       </Tabs>
 
