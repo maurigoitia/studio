@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
-import { Brain } from 'lucide-react';
+import { Brain, LayoutDashboard } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -23,6 +23,12 @@ export default function Header() {
             <Link href="/gia">
               <Brain className="mr-2 h-5 w-5" />
               Chatea con GIA
+            </Link>
+          </Button>
+          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Link href="/portal-veterinarias">
+              <LayoutDashboard className="mr-2 h-5 w-5" />
+              Portal Veterinarias
             </Link>
           </Button>
         </nav>
