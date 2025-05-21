@@ -17,7 +17,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
-import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, LogIn, Briefcase, Building, DollarSign, ExternalLink, ChevronDown, UserCog, ClipboardEdit } from "lucide-react";
+import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, LogIn, Briefcase, Building, DollarSign, ExternalLink, ChevronDown, UserCog, ClipboardEdit, LifeBuoy, CreditCard } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -286,15 +286,6 @@ export default function PortalVeterinariasDashboardPage() {
                                 <p>Llevaría a la vista detallada de la sala de espera.</p>
                             </TooltipContent>
                         </Tooltip>
-                    </div>
-                    <Separator/>
-                     <div className="space-y-1 text-xs text-muted-foreground mt-3">
-                      <p><AlertTriangle className="inline h-3 w-3 mr-1 text-primary"/> Sistema de priorización por niveles de urgencia (Crítico, Urgente, Estándar, Consulta Rápida).</p>
-                      <p><UsersRound className="inline h-3 w-3 mr-1 text-primary"/> Los tutores con la app PetSync podrán visualizar el estado y tiempo estimado de espera de su mascota.</p>
-                      <p><UserCog className="inline h-3 w-3 mr-1 text-primary" /> Múltiples perfiles de usuario para la clínica (recepción, veterinarios, administradores) con acceso diferenciado según el plan PetSync.</p>
-                      <p><FileText className="inline h-3 w-3 mr-1 text-primary" /> Acceso rápido al historial del paciente para veterinarios durante la consulta.</p>
-                      <p><Send className="inline h-3 w-3 mr-1 text-primary"/> Envío de resúmenes de consulta, recetas y recomendaciones al perfil del tutor en la app PetSync o a su email, **actualizando el historial del paciente en la base de datos.**</p>
-                      <p><ClipboardEdit className="inline h-3 w-3 mr-1 text-primary"/> Herramientas para incorporar información de pacientes cuyos tutores no usen la app (ej. carga de documentos escaneados).</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -649,18 +640,27 @@ export default function PortalVeterinariasDashboardPage() {
 
       <Card className="mt-12 shadow-lg border-primary/50">
         <CardHeader>
-            <CardTitle>¿Aún no tienes tu portal PetSync?</CardTitle>
+            <CardTitle className="flex items-center"><LifeBuoy className="mr-3 h-6 w-6 text-primary"/> Gestión de Plan y Soporte</CardTitle>
             <CardDescription>
-            PetSync te ofrece las herramientas para optimizar la gestión de tu clínica, mejorar la comunicación con tus clientes y dedicar más tiempo al cuidado de tus pacientes.
+            Revisa el estado de tu plan actual, gestiona usuarios adicionales o contacta a nuestro equipo de soporte si necesitas ayuda.
             </CardDescription>
         </CardHeader>
-        <CardContent>
-            <p className="mb-4 text-muted-foreground">
-                Si estás interesado en utilizar PetSync para tu práctica veterinaria, contáctanos para obtener más información y ser de los primeros en acceder cuando lancemos oficialmente.
-            </p>
-            <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-                <Link href="/#waitlist">Solicitar Acceso para Veterinarias</Link>
-            </Button>
+        <CardContent className="space-y-4">
+            <div className="p-4 bg-muted/50 rounded-md">
+                <p className="text-sm text-foreground">Tu plan actual: <Badge variant="secondary">Plan PRO (Demo)</Badge></p>
+                <p className="text-sm text-muted-foreground mt-1">Usuarios activos: 3 de 5</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+                <Button variant="outline" className="w-full sm:w-auto">
+                    <CreditCard className="mr-2 h-4 w-4"/> Ver Detalles del Plan / Actualizar
+                </Button>
+                <Button variant="outline" className="w-full sm:w-auto">
+                    <UserCog className="mr-2 h-4 w-4"/> Gestionar Usuarios
+                </Button>
+                <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground w-full sm:w-auto">
+                    <Link href="#"> <Mail className="mr-2 h-4 w-4"/>Contactar Soporte</Link>
+                </Button>
+            </div>
         </CardContent>
       </Card>
     </div>
