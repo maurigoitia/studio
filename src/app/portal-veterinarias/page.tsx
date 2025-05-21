@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, ChangeEvent } from "react";
@@ -723,7 +722,7 @@ export default function PortalVeterinariasDashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg">
+          <Card className="shadow-lg mb-6">
             <CardHeader>
               <CardTitle className="text-xl flex items-center">
                 <Plug className="mr-2 h-5 w-5 text-primary" />
@@ -735,6 +734,49 @@ export default function PortalVeterinariasDashboardPage() {
               <p className="text-sm text-muted-foreground">
                 Estamos trabajando para que PetSync se integre con tus herramientas favoritas. Próximamente: Conexión con [Software de Gestión Clínica Ejemplo], [Plataforma de Email Marketing Ejemplo], pasarelas de pago y más. **La información de tu clínica y pacientes se gestionará de forma segura para facilitar estas integraciones.**
               </p>
+            </CardContent>
+          </Card>
+          
+           <Card className="shadow-lg mb-6">
+            <CardHeader>
+                <CardTitle className="flex items-center"><LifeBuoy className="mr-3 h-6 w-6 text-primary"/> Gestión de Plan y Soporte</CardTitle>
+                <CardDescription>
+                Revisa el estado de tu plan actual, gestiona usuarios adicionales o contacta a nuestro equipo de soporte si necesitas ayuda.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="p-4 bg-muted/50 rounded-md">
+                    <p className="text-sm text-foreground">Tu plan actual: <Badge variant="secondary">Plan PRO (Demo)</Badge></p>
+                    <p className="text-sm text-muted-foreground mt-1">Usuarios activos: 3 de 5</p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <Button variant="outline" className="w-full sm:w-auto">
+                        <CreditCard className="mr-2 h-4 w-4"/> Ver Detalles del Plan / Actualizar
+                    </Button>
+                    <Button variant="outline" className="w-full sm:w-auto">
+                        <UserCog className="mr-2 h-4 w-4"/> Gestionar Usuarios
+                    </Button>
+                    <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground w-full sm:w-auto">
+                        <Link href="#"> <Mail className="mr-2 h-4 w-4"/>Contactar Soporte</Link>
+                    </Button>
+                </div>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-lg">
+            <CardHeader>
+                <CardTitle className="flex items-center text-primary"><DownloadCloud className="mr-3 h-6 w-6"/>Exportar Información de tu Clínica</CardTitle>
+                <CardDescription>
+                    Sabemos lo importante que es tu información. PetSync te ofrecerá opciones para exportar los datos de tus pacientes y tu actividad en la plataforma.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+                <p className="text-sm text-muted-foreground">
+                    Actualmente, para exportar tus datos (ej. en formato XLS, CSV), por favor, comunícate con nuestro equipo de soporte. Estaremos encantados de asistirte en el proceso y asegurar una transición de datos fluida si lo necesitas.
+                </p>
+                <Button variant="outline" className="w-full sm:w-auto text-primary border-primary hover:bg-primary/10">
+                    <Mail className="mr-2 h-4 w-4"/>Contactar Soporte para Exportación
+                </Button>
             </CardContent>
           </Card>
         </TabsContent>
@@ -896,49 +938,6 @@ export default function PortalVeterinariasDashboardPage() {
           </DialogContent>
         </Dialog>
       )}
-
-      <Card className="mt-12 shadow-lg border-primary/50">
-        <CardHeader>
-            <CardTitle className="flex items-center"><LifeBuoy className="mr-3 h-6 w-6 text-primary"/> Gestión de Plan y Soporte</CardTitle>
-            <CardDescription>
-            Revisa el estado de tu plan actual, gestiona usuarios adicionales o contacta a nuestro equipo de soporte si necesitas ayuda.
-            </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-            <div className="p-4 bg-muted/50 rounded-md">
-                <p className="text-sm text-foreground">Tu plan actual: <Badge variant="secondary">Plan PRO (Demo)</Badge></p>
-                <p className="text-sm text-muted-foreground mt-1">Usuarios activos: 3 de 5</p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-                <Button variant="outline" className="w-full sm:w-auto">
-                    <CreditCard className="mr-2 h-4 w-4"/> Ver Detalles del Plan / Actualizar
-                </Button>
-                <Button variant="outline" className="w-full sm:w-auto">
-                    <UserCog className="mr-2 h-4 w-4"/> Gestionar Usuarios
-                </Button>
-                <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground w-full sm:w-auto">
-                    <Link href="#"> <Mail className="mr-2 h-4 w-4"/>Contactar Soporte</Link>
-                </Button>
-            </div>
-        </CardContent>
-      </Card>
-
-      <Card className="mt-12 shadow-lg border-destructive/50">
-        <CardHeader>
-            <CardTitle className="flex items-center text-destructive"><DownloadCloud className="mr-3 h-6 w-6"/>Exportar Información de tu Clínica</CardTitle>
-            <CardDescription>
-                Sabemos lo importante que es tu información. PetSync te ofrecerá opciones para exportar los datos de tus pacientes y tu actividad en la plataforma.
-            </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-3">
-            <p className="text-sm text-muted-foreground">
-                Actualmente, para exportar tus datos (ej. en formato XLS, CSV), por favor, comunícate con nuestro equipo de soporte. Estaremos encantados de asistirte en el proceso y asegurar una transición de datos fluida si lo necesitas.
-            </p>
-            <Button variant="destructive" className="w-full sm:w-auto">
-                <Mail className="mr-2 h-4 w-4"/>Contactar Soporte para Exportación
-            </Button>
-        </CardContent>
-      </Card>
     </div>
     </TooltipProvider>
   );
