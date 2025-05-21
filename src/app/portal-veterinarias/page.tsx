@@ -5,10 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks } from "lucide-react";
+import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 // Dummy data for placeholders
 const upcomingAppointments = [
@@ -21,6 +22,12 @@ const recentPatients = [
   { id: "P001", name: "Max (Perro)", owner: "Juan Rodriguez", lastVisit: "2024-05-10" },
   { id: "P002", name: "Luna (Gato)", owner: "Maria Fernández", lastVisit: "2024-05-12" },
   { id: "P003", name: "Rocky (Perro)", owner: "Pedro Martinez", lastVisit: "2024-05-15" },
+];
+
+const waitingRoomPatients = [
+  { name: "Manchas (Perro)", owner: "Elena Soler", triage: "Amarillo", eta: "15 min" },
+  { name: "Nube (Gato)", owner: "Roberto Diaz", triage: "Rojo", eta: "Urgente" },
+  { name: "Pipo (Perro)", owner: "Sofia Luna", triage: "Azul", eta: "30 min" },
 ];
 
 export default function PortalVeterinariasDashboardPage() {
@@ -55,7 +62,7 @@ export default function PortalVeterinariasDashboardPage() {
       <Tabs defaultValue="agenda" className="w-full">
         <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-6">
           <TabsTrigger value="agenda" className="text-sm sm:text-base py-2.5">
-            <CalendarDays className="mr-2 h-5 w-5" /> Agenda
+            <CalendarDays className="mr-2 h-5 w-5" /> Agenda y Turnos
           </TabsTrigger>
           <TabsTrigger value="pacientes" className="text-sm sm:text-base py-2.5">
             <Users className="mr-2 h-5 w-5" /> Pacientes
@@ -69,53 +76,124 @@ export default function PortalVeterinariasDashboardPage() {
         </TabsList>
 
         <TabsContent value="agenda">
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl">Gestión de Agenda y Turnos</CardTitle>
-              <CardDescription>Visualiza y administra los turnos de tus pacientes.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex flex-col sm:flex-row gap-4 items-center">
-                <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground">
-                  <PlusCircle className="mr-2 h-5 w-5" /> Nuevo Turno
-                </Button>
-                <Input type="date" defaultValue={new Date().toISOString().split('T')[0]} className="w-full sm:w-auto bg-background" />
-              </div>
-              <Separator />
-              <div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Próximos Turnos del Día</h3>
-                {upcomingAppointments.length > 0 ? (
-                  <div className="space-y-3">
-                    {upcomingAppointments.map((appt, index) => (
-                      <Card key={index} className="bg-secondary/50 p-4 shadow-sm">
-                        <p className="font-semibold text-primary">{appt.time} - {appt.patient}</p>
-                        <p className="text-sm text-muted-foreground">Dueño: {appt.owner} - Servicio: {appt.service}</p>
-                      </Card>
-                    ))}
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl">Gestión de Agenda</CardTitle>
+                <CardDescription>Visualiza y administra los turnos programados.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                  <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground">
+                    <PlusCircle className="mr-2 h-5 w-5" /> Nuevo Turno Programado
+                  </Button>
+                  <Input type="date" defaultValue={new Date().toISOString().split('T')[0]} className="w-full sm:w-auto bg-background" />
+                </div>
+                <Separator />
+                <div>
+                  <h3 className="text-xl font-semibold mb-3 text-foreground">Próximos Turnos del Día</h3>
+                  {upcomingAppointments.length > 0 ? (
+                    <div className="space-y-3">
+                      {upcomingAppointments.map((appt, index) => (
+                        <Card key={index} className="bg-secondary/50 p-4 shadow-sm">
+                          <p className="font-semibold text-primary">{appt.time} - {appt.patient}</p>
+                          <p className="text-sm text-muted-foreground">Dueño: {appt.owner} - Servicio: {appt.service}</p>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-muted-foreground">No hay turnos programados para hoy.</p>
+                  )}
+                </div>
+                <div className="mt-6 text-center">
+                  <Button variant="outline">Ver Agenda Completa</Button>
+                </div>
+                <Card className="mt-6 p-4 bg-muted/30 border-dashed border-primary/50">
+                  <CardHeader className="p-0 mb-2">
+                      <CardTitle className="text-lg text-primary flex items-center">
+                          <ListChecks className="mr-2 h-5 w-5"/>
+                          Habilitar/Configurar Agenda Online
+                      </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-0">
+                      <p className="text-sm text-muted-foreground mb-3">
+                          Permite que los tutores soliciten turnos directamente desde la app PetSync. Define tus horarios disponibles, servicios y duraciones.
+                      </p>
+                      <Button variant="secondary">Configurar Disponibilidad Online</Button>
+                  </CardContent>
+                </Card>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl flex items-center">
+                  <Clock className="mr-2 h-6 w-6 text-primary" /> Gestión de Sala de Espera y Triage
+                </CardTitle>
+                <CardDescription>Sistema de priorización para atenciones espontáneas y urgencias (Concepto).</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <h4 className="text-md font-semibold mb-2 text-foreground">Niveles de Triage:</h4>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Badge className="bg-red-500 text-white hover:bg-red-600">Rojo (Crítico)</Badge>
+                    <Badge className="bg-orange-400 text-white hover:bg-orange-500">Naranja (Urgente)</Badge>
+                    <Badge className="bg-yellow-400 text-black hover:bg-yellow-500">Amarillo (Estándar)</Badge>
+                    <Badge className="bg-blue-500 text-white hover:bg-blue-600">Azul (Consulta Rápida)</Badge>
                   </div>
-                ) : (
-                  <p className="text-muted-foreground">No hay turnos programados para hoy.</p>
-                )}
-              </div>
-              <div className="mt-6 text-center">
-                <Button variant="outline">Ver Agenda Completa</Button>
-              </div>
-              <Card className="mt-6 p-4 bg-muted/30 border-dashed border-primary/50">
-                 <CardHeader className="p-0 mb-2">
-                    <CardTitle className="text-lg text-primary flex items-center">
-                        <ListChecks className="mr-2 h-5 w-5"/>
-                        Habilitar/Configurar Agenda Online
-                    </CardTitle>
-                 </CardHeader>
-                 <CardContent className="p-0">
-                    <p className="text-sm text-muted-foreground mb-3">
-                        Permite que los tutores soliciten turnos directamente desde la app PetSync. Define tus horarios disponibles, servicios y duraciones.
-                    </p>
-                    <Button variant="secondary">Configurar Disponibilidad</Button>
-                 </CardContent>
-              </Card>
-            </CardContent>
-          </Card>
+                </div>
+                <Separator />
+                <div>
+                  <h4 className="text-md font-semibold mb-2 text-foreground">Pacientes en Espera (Ejemplo):</h4>
+                  {waitingRoomPatients.length > 0 ? (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Mascota</TableHead>
+                          <TableHead>Tutor</TableHead>
+                          <TableHead>Triage</TableHead>
+                          <TableHead>ETA</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {waitingRoomPatients.map((patient, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{patient.name}</TableCell>
+                            <TableCell>{patient.owner}</TableCell>
+                            <TableCell>
+                              <Badge 
+                                className={
+                                  patient.triage === "Rojo" ? "bg-red-500 text-white" :
+                                  patient.triage === "Naranja" ? "bg-orange-400 text-white" :
+                                  patient.triage === "Amarillo" ? "bg-yellow-400 text-black" :
+                                  "bg-blue-500 text-white"
+                                }
+                              >
+                                {patient.triage}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>{patient.eta}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  ) : (
+                     <p className="text-muted-foreground">No hay pacientes en la sala de espera.</p>
+                  )}
+                </div>
+                <Separator />
+                <div className="space-y-2 text-sm text-muted-foreground">
+                  <p><AlertTriangle className="inline h-4 w-4 mr-1 text-primary"/> Los tutores con la app PetSync podrán visualizar el estado y tiempo estimado de espera de su mascota.</p>
+                  <p><UsersRound className="inline h-4 w-4 mr-1 text-primary"/> El sistema permitirá múltiples perfiles de usuario para la clínica (recepción, veterinarios, administradores) con acceso diferenciado según el plan PetSync.</p>
+                  <p><Send className="inline h-4 w-4 mr-1 text-primary"/> Los veterinarios accederán al historial completo y podrán enviar resúmenes de consulta, recetas y recomendaciones al perfil del tutor en la app PetSync o a su email.</p>
+                  <p><ListChecks className="inline h-4 w-4 mr-1 text-primary"/> Herramientas para incorporar información de pacientes cuyos tutores no usen la app (ej. carga de documentos escaneados).</p>
+                </div>
+                <div className="mt-4 text-center">
+                     <Button variant="outline">Gestionar Sala de Espera</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         <TabsContent value="pacientes">
@@ -195,7 +273,7 @@ export default function PortalVeterinariasDashboardPage() {
                     <p className="text-sm text-muted-foreground mb-3">
                         Configura plantillas de correo para recordatorios de citas, seguimientos post-consulta, campañas de vacunación o noticias de tu clínica. PetSync puede ayudarte a automatizar el envío a tus clientes registrados.
                     </p>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap">
                         <Button variant="secondary">Configurar Plantillas</Button>
                         <Button variant="secondary">Ver Historial de Envíos</Button>
                     </div>
@@ -206,7 +284,7 @@ export default function PortalVeterinariasDashboardPage() {
                 <CardHeader className="p-0 mb-2">
                   <CardTitle className="text-lg text-foreground flex items-center">
                     <BellRing className="mr-2 h-5 w-5 text-primary" />
-                    Notificaciones a Clientes
+                    Notificaciones a Clientes (App y Email)
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
