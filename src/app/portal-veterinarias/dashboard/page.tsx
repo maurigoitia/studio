@@ -565,7 +565,7 @@ export default function VetPortalDashboardPage() {
                             <p className="text-sm text-muted-foreground">
                                 Los usuarios con rol de marketing podrán diseñar y enviar campañas segmentadas a grupos de tutores (basado en los datos y etiquetas de tu base de pacientes) para promociones, anuncios importantes o campañas de salud preventiva.
                             </p>
-                            <Button variant="outline" className="w-full mt-2" disabled><Send className="mr-2 h-4 w-4"/>Diseñar Nueva Campaña de Email</Button>
+                            <Button variant="outline" className="w-full mt-2" ><Send className="mr-2 h-4 w-4"/>Diseñar Nueva Campaña de Email</Button>
                         </CardContent>
                     </Card>
                     <Card>
@@ -578,7 +578,7 @@ export default function VetPortalDashboardPage() {
                             </p>
                             <p className="text-sm text-muted-foreground">Ejemplo: "¡Hola Ana Pérez! Es hora de la próxima vacuna de Max (programada automáticamente basada en su última visita el 15/07/2024)."</p>
                             <div className="flex items-center space-x-2 pt-2">
-                                <Switch id="auto-reminders-switch" defaultChecked disabled/>
+                                <Switch id="auto-reminders-switch" defaultChecked />
                                 <Label htmlFor="auto-reminders-switch">Activar Recordatorios Globales</Label>
                             </div>
                              <p className="text-xs text-muted-foreground mt-1">Nota: La programación inteligente de recordatorios futuros (ej: revacunación anual) se configurará según los protocolos veterinarios.</p>
@@ -634,7 +634,7 @@ export default function VetPortalDashboardPage() {
                             <Button variant="outline" className="w-full">Guardar Preferencias</Button>
                         </CardContent>
                     </Card>
-                    <Card className="md:col-span-2">
+                    <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center"><Plug className="mr-2 h-5 w-5 text-primary"/>Conexiones e Integraciones (Futuro)</CardTitle>
                         </CardHeader>
@@ -819,3 +819,5 @@ export default function VetPortalDashboardPage() {
     </div>
   );
 }
+
+
