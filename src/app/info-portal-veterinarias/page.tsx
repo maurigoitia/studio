@@ -90,7 +90,10 @@ export default function InfoPortalVeterinariasPage() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-                  {/* This button would ideally link to a Google Form or a dedicated signup service */}
+                  {/* Este botón debería enlazar al formulario de Google real. 
+                      Reemplaza el href con tu enlace. Ejemplo: 
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSxxxxxxxxx/viewform?usp=sf_link" 
+                  */}
                   <Link href="https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
                     Registrarme para Acceso Anticipado
                   </Link>
