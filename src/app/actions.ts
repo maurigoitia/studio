@@ -54,10 +54,10 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
     };
   }
   
-  const { email, petName, species, petAge, question } = validatedFields.data;
+  const { userName, email, petName, species, question } = validatedFields.data;
 
   try {
-    const input: GenericQueryInput = { email, petName, species, petAge, question };
+    const input: GenericQueryInput = { userName, email, petName, species, question };
     const result = await genericQuery(input);
     if (!result || !result.answer) {
         console.error("No answer received from GIA for input:", input);
@@ -74,3 +74,4 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
 // No specific server actions are needed here for them unless you have additional server-side logic
 // to perform post-authentication, which is not the case for this basic setup.
 // For example, creating a user profile in a separate database after Firebase signup.
+

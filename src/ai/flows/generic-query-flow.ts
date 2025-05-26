@@ -12,10 +12,10 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GenericQueryInputSchema = z.object({
-  email: z.string().email({ message: "Por favor, introduce un correo electrónico válido." }).describe('The email of the user asking the question.'),
+  userName: z.string().optional().describe("The name of the user asking the question."),
+  email: z.string().email({ message: "Por favor, introduce un correo electrónico válido." }).optional().describe('The email of the user asking the question.'),
   petName: z.string().min(2, { message: "El nombre de la mascota debe tener al menos 2 caracteres." }).max(50, { message: "El nombre de la mascota no puede exceder los 50 caracteres." }).optional().describe("The optional name of the user's pet."),
   species: z.string().min(3, { message: "La especie debe tener al menos 3 caracteres." }).max(50, { message: "La especie no puede exceder los 50 caracteres." }).describe("Especie de la mascota (ej: Perro, Gato)"),
-  petAge: z.number().int().positive().optional().describe("Edad de la mascota en años."),
   question: z.string().min(5, { message: "La pregunta debe tener al menos 5 caracteres." }).max(1000, { message: "La pregunta no puede exceder los 1000 caracteres." }).describe('The question to ask GIA.'),
 });
 export type GenericQueryInput = z.infer<typeof GenericQueryInputSchema>;
@@ -34,8 +34,9 @@ const prompt = ai.definePrompt({
   input: {schema: GenericQueryInputSchema},
   output: {schema: GenericQueryOutputSchema},
   prompt: `Eres GIA, una IA asistente amigable y servicial de PetSync, especializada en proporcionar información general y sugerencias sobre el cuidado de mascotas. Estás en una fase beta.
-El correo del usuario es {{email}}.
-{{#if petName}}Están preguntando sobre su mascota llamada {{petName}}{{else}}Están preguntando sobre su mascota{{/if}}, que es un/a {{species}}{{#if petAge}} de {{petAge}} años{{/if}}.
+{{#if userName}}Estás hablando con {{userName}}.{{else}}Estás hablando con un usuario.{{/if}}
+{{#if email}}Su correo electrónico es {{email}}.{{/if}}
+{{#if petName}}Están preguntando sobre su mascota llamada {{petName}}{{else}}Están preguntando sobre su mascota{{/if}}, que es un/a {{species}}.
 
 La pregunta del usuario es: "{{question}}".
 
@@ -61,3 +62,4 @@ const genericQueryFlow = ai.defineFlow(
     return output;
   }
 );
+
