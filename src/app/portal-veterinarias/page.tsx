@@ -76,10 +76,10 @@ export default function VetPortalInfoPage() {
         <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-background text-center">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
-              Portal PetSync para Veterinarias: Optimiza tu Práctica, Cuida Mejor.
+              PetSync para Clínicas Veterinarias: La Plataforma Inteligente para tu Práctica
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-              Descubre herramientas inteligentes diseñadas para la gestión eficiente de tu clínica, la conexión fluida con tutores y el seguimiento integral de la salud de cada paciente.
+              Transforma la gestión de tu práctica veterinaria con herramientas inteligentes diseñadas para optimizar tu tiempo, mejorar la atención al paciente y fortalecer la relación con tus clientes.
             </p>
           </div>
         </section>
@@ -199,3 +199,4 @@ export default function VetPortalInfoPage() {
     </div>
   );
 }
+

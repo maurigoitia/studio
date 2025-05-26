@@ -195,16 +195,16 @@ export default function HomePage() {
               </CardHeader>
               <CardContent className="p-0 space-y-3 text-muted-foreground text-sm sm:text-base">
                 <div className="flex items-start">
+                    <DownloadCloud className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
+                    <p>Cuando la app PetSync esté lista, descárgala para iOS y Android. Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
+                </div>
+                <div className="flex items-start">
                     <ClipboardList className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
                     <p>Centralizá el historial de salud de tu mascota: vacunas, tratamientos, alergias y más, todo en un solo lugar.</p>
                 </div>
                 <div className="flex items-start">
                     <BellRing className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
                     <p>Recibí recordatorios personalizados sobre medicación, controles de salud y fechas importantes.</p>
-                </div>
-                <div className="flex items-start">
-                    <DownloadCloud className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
-                    <p>Cuando la app PetSync esté lista, descárgala para iOS y Android. Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
                 </div>
               </CardContent>
             </Card>
