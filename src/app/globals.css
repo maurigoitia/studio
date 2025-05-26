@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,8 +18,8 @@ body {
     --popover: 0 0% 100%; /* White */
     --popover-foreground: 240 10% 3.9%; /* Near Black */
 
-    --primary: 180 100% 25%; /* Teal (#008080) (PRD) */
-    --primary-foreground: 0 0% 100%; /* White text on Teal */
+    --primary: 135 65% 45%; /* Vivid Green (New) */
+    --primary-foreground: 0 0% 100%; /* White text on Vivid Green */
 
     --secondary: 0 0% 97%; /* Very Light Gray, for elements on the light gray bg */
     --secondary-foreground: 240 10% 20%; /* Darker Gray for text on secondary */
@@ -34,45 +35,45 @@ body {
 
     --border: 0 0% 85%; /* Gray border, contrasts with light gray bg */
     --input: 0 0% 100%; /* White input background */
-    --ring: 180 100% 25%; /* Teal for focus states */
+    --ring: 135 65% 45%; /* Vivid Green for focus states (New) */
 
-    /* Chart colors - Teal, Coral, Blue, Soft Green, Warm Neutral */
-    --chart-1: 180 100% 25%; /* Teal - Primary */
-    --chart-2: 16 100% 66%;  /* Coral - Accent */
+    /* Chart colors - Vivid Green, Coral, Blue, Soft Green, Warm Neutral */
+    --chart-1: 135 65% 45%; /* Vivid Green - Primary (New) */
+    --chart-2: 16 100% 66%;  /* Coral - Accent (PRD) */
     --chart-3: 210 70% 55%; /* A nice Blue */
-    --chart-4: 90 35% 60%;  /* Soft Green */
-    --chart-5: 30 10% 60%;  /* Light Brown/Tan */
+    --chart-4: 90 45% 60%;  /* Softer Green, less vivid than primary */
+    --chart-5: 30 15% 60%;  /* Light Brown/Tan */
     --radius: 0.5rem;
 
     /* Sidebar variables */
     --sidebar-background: 0 0% 98%; /* Slightly lighter than main bg, or a distinct color */
     --sidebar-foreground: 240 10% 15%; /* Darker Gray for sidebar text */
-    --sidebar-primary: 180 100% 23%; /* Slightly darker Teal for sidebar */
+    --sidebar-primary: 135 60% 40%; /* Slightly darker Vivid Green for sidebar (New) */
     --sidebar-primary-foreground: 0 0% 100%; /* White */
     --sidebar-accent: 16 100% 60%; /* Slightly darker/desaturated Coral for sidebar */
     --sidebar-accent-foreground: 0 0% 100%; /* White text on sidebar accent */
     --sidebar-border: 0 0% 90%; /* Light Gray border for sidebar */
-    --sidebar-ring: 180 100% 25%; /* Teal */
+    --sidebar-ring: 135 65% 45%; /* Vivid Green (New) */
   }
 
   .dark {
-    --background: 220 15% 10%; /* Very Dark Blue/Gray */
-    --foreground: 220 10% 90%; /* Light Gray */
+    --background: 135 10% 10%; /* Very Dark Green/Gray (New) */
+    --foreground: 135 10% 90%; /* Light Off-Green/Gray (New) */
 
-    --card: 220 15% 15%; /* Darker Blue/Gray */
-    --card-foreground: 220 10% 90%; /* Light Gray */
+    --card: 135 10% 15%; /* Darker Green/Gray (New) */
+    --card-foreground: 135 10% 90%; /* Light Off-Green/Gray (New) */
 
-    --popover: 220 15% 15%; /* Darker Blue/Gray */
-    --popover-foreground: 220 10% 90%; /* Light Gray */
+    --popover: 135 10% 15%; /* Darker Green/Gray (New) */
+    --popover-foreground: 135 10% 90%; /* Light Off-Green/Gray (New) */
 
-    --primary: 180 70% 45%; /* Brighter Teal */
-    --primary-foreground: 180 95% 96%; /* Very Light Teal/White text */
+    --primary: 135 60% 55%; /* Brighter Vivid Green (New) */
+    --primary-foreground: 135 95% 10%; /* Very Dark Green text (New) */
 
-    --secondary: 220 15% 20%; /* Dark Blue/Gray for elements */
-    --secondary-foreground: 220 10% 88%; /* Light Gray */
+    --secondary: 135 10% 20%; /* Dark Green/Gray for elements (New) */
+    --secondary-foreground: 135 10% 88%; /* Light Off-Green/Gray (New) */
 
-    --muted: 220 15% 25%; /* Lighter muted elements in dark */
-    --muted-foreground: 220 10% 65%; /* Medium-light Gray */
+    --muted: 135 10% 25%; /* Lighter muted elements in dark (New) */
+    --muted-foreground: 135 10% 65%; /* Medium-light Off-Green/Gray (New) */
 
     --accent: 16 90% 70%; /* Brighter Coral */
     --accent-foreground: 0 0% 100%; /* White text on Coral */
@@ -80,26 +81,26 @@ body {
     --destructive: 0 70% 50%; /* Red */
     --destructive-foreground: 0 0% 98%; /* Light text on red */
 
-    --border: 220 15% 28%; /* Darker Blue/Gray border */
-    --input: 220 15% 22%; /* Darker Blue/Gray input background */
-    --ring: 180 70% 45%; /* Brighter Teal */
+    --border: 135 10% 28%; /* Darker Green/Gray border (New) */
+    --input: 135 10% 22%; /* Darker Green/Gray input background (New) */
+    --ring: 135 60% 55%; /* Brighter Vivid Green (New) */
     
     /* chart colors for dark mode */
-    --chart-1: 180 70% 45%; /* Brighter Teal */
+    --chart-1: 135 60% 55%; /* Brighter Vivid Green (New) */
     --chart-2: 16 90% 70%;  /* Brighter Coral */
     --chart-3: 210 60% 65%; /* Lighter Blue */
-    --chart-4: 90 30% 65%;  /* Brighter Soft Green */
-    --chart-5: 30 8% 65%;   /* Lighter Brown/Tan */
+    --chart-4: 90 40% 65%;  /* Brighter Soft Green */
+    --chart-5: 30 12% 65%;   /* Lighter Brown/Tan */
 
     /* Sidebar variables for dark mode */
-    --sidebar-background: 220 15% 8%; /* Even darker Blue/Gray for sidebar */
-    --sidebar-foreground: 220 10% 88%; /* Light Gray */
-    --sidebar-primary: 180 65% 42%; /* Slightly adjusted Brighter Teal */
-    --sidebar-primary-foreground: 180 10% 95%; /* Very Light Teal */
+    --sidebar-background: 135 10% 8%; /* Even darker Green/Gray for sidebar (New) */
+    --sidebar-foreground: 135 10% 88%; /* Light Off-Green/Gray (New) */
+    --sidebar-primary: 135 55% 50%; /* Slightly adjusted Brighter Vivid Green (New) */
+    --sidebar-primary-foreground: 135 10% 95%; /* Very Light Off-Green (New) */
     --sidebar-accent: 16 85% 68%; /* Slightly adjusted Brighter Coral */
     --sidebar-accent-foreground: 0 0% 100%; /* White */
-    --sidebar-border: 220 15% 25%; /* Dark Blue/Gray border for sidebar */
-    --sidebar-ring: 180 70% 45%; /* Brighter Teal */
+    --sidebar-border: 135 10% 25%; /* Dark Green/Gray border for sidebar (New) */
+    --sidebar-ring: 135 60% 55%; /* Brighter Vivid Green (New) */
   }
 }
 
