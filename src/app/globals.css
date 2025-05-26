@@ -9,7 +9,7 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* White */
+    --background: 0 0% 98%; /* Very Light Gray / Off-white */
     --foreground: 240 10% 3.9%; /* Near Black for text */
 
     --card: 0 0% 100%; /* White */
@@ -18,89 +18,89 @@ body {
     --popover: 0 0% 100%; /* White */
     --popover-foreground: 240 10% 3.9%; /* Near Black */
 
-    --primary: 210 70% 50%; /* Professional Blue */
-    --primary-foreground: 0 0% 100%; /* White text on Blue */
+    --primary: 160 50% 25%; /* Dark Teal/Green from logo */
+    --primary-foreground: 0 0% 100%; /* White text on Primary */
 
-    --secondary: 210 20% 96%; /* Very Light Blue-Gray */
-    --secondary-foreground: 210 70% 40%; /* Darker Blue for text on secondary */
+    --secondary: 160 20% 92%; /* Very Light Teal/Green tint */
+    --secondary-foreground: 160 50% 20%; /* Darker Teal for text on secondary */
 
-    --muted: 210 20% 90%; /* Light Blue-Gray */
-    --muted-foreground: 210 10% 50%; /* Medium Blue-Gray text */
+    --muted: 0 0% 94.1%; /* Light Gray */
+    --muted-foreground: 240 5% 45%; /* Medium Gray text */
 
-    --accent: 135 60% 40%; /* Vibrant Green */
-    --accent-foreground: 0 0% 100%; /* White text on Green */
+    --accent: 40 60% 50%; /* Muted Gold/Ochre */
+    --accent-foreground: 40 50% 15%; /* Dark text on Accent */
 
     --destructive: 0 84% 60%; /* Red */
     --destructive-foreground: 0 0% 98%; /* Light text on red */
 
-    --border: 210 20% 80%; /* Light Blue-Gray border for inputs and cards */
-    --input: 0 0% 100%; /* White input background (with border) */
-    --ring: 210 70% 50%; /* Professional Blue for focus states */
+    --border: 0 0% 88%; /* Light Gray border */
+    --input: 0 0% 100%; /* White input background */
+    --ring: 160 50% 35%; /* Slightly lighter Teal for focus rings */
 
-    /* Chart colors - Blue, Green, Teal, Orange, Purple */
-    --chart-1: 210 70% 50%; /* Professional Blue - Primary */
-    --chart-2: 135 60% 40%;  /* Vibrant Green - Accent */
-    --chart-3: 180 65% 45%; /* A nice Teal */
-    --chart-4: 30 80% 60%;  /* A warm Orange */
-    --chart-5: 260 60% 65%;  /* A soft Purple */
+    /* Chart colors - Teal, Gold, Complementary Blue, Soft Green, Neutral Gray */
+    --chart-1: 160 50% 30%; /* Primary Teal */
+    --chart-2: 40 60% 55%;  /* Accent Gold */
+    --chart-3: 210 60% 50%; /* A complementary Blue */
+    --chart-4: 140 40% 50%; /* A soft Green */
+    --chart-5: 220 5% 65%;  /* A neutral Gray */
     --radius: 0.5rem;
 
     /* Sidebar variables */
-    --sidebar-background: 0 0% 98%; /* Slightly off-white, or a distinct light color */
-    --sidebar-foreground: 240 10% 15%; /* Darker Gray for sidebar text */
-    --sidebar-primary: 210 65% 45%; /* Slightly darker/desaturated Blue for sidebar */
-    --sidebar-primary-foreground: 0 0% 100%; /* White */
-    --sidebar-accent: 135 55% 35%; /* Slightly darker/desaturated Green for sidebar */
-    --sidebar-accent-foreground: 0 0% 100%; /* White text on sidebar accent */
-    --sidebar-border: 0 0% 90%; /* Light Gray border for sidebar */
-    --sidebar-ring: 210 70% 50%; /* Professional Blue */
+    --sidebar-background: 0 0% 96%; 
+    --sidebar-foreground: 240 10% 10%; 
+    --sidebar-primary: 160 50% 22%; 
+    --sidebar-primary-foreground: 0 0% 100%; 
+    --sidebar-accent: 40 55% 45%; 
+    --sidebar-accent-foreground: 0 0% 100%; 
+    --sidebar-border: 0 0% 90%; 
+    --sidebar-ring: 160 50% 35%; 
   }
 
   .dark {
-    --background: 220 20% 10%; /* Very Dark Blue-Gray */
-    --foreground: 210 15% 90%; /* Light Off-White/Blue-Gray */
+    --background: 160 10% 10%; /* Very Dark Teal/Black */
+    --foreground: 160 10% 90%; /* Light Off-White/Teal tint */
 
-    --card: 220 20% 14%; /* Darker Blue-Gray */
-    --card-foreground: 210 15% 90%;
+    --card: 160 10% 15%; /* Dark Teal */
+    --card-foreground: 160 10% 90%;
 
-    --popover: 220 20% 14%;
-    --popover-foreground: 210 15% 90%;
+    --popover: 160 10% 15%;
+    --popover-foreground: 160 10% 90%;
 
-    --primary: 210 70% 60%; /* Brighter Blue */
-    --primary-foreground: 210 95% 10%; /* Very Dark Blue text */
+    --primary: 160 50% 40%; /* Brighter Teal for Dark Mode */
+    --primary-foreground: 160 30% 95%; /* Very Light Teal/White text */
 
-    --secondary: 220 20% 18%; /* Dark Blue-Gray for elements */
-    --secondary-foreground: 210 15% 88%;
+    --secondary: 160 10% 20%; /* Darker Teal for elements */
+    --secondary-foreground: 160 10% 88%;
 
-    --muted: 220 20% 22%; /* Lighter muted elements in dark */
-    --muted-foreground: 210 15% 65%;
+    --muted: 160 10% 25%; 
+    --muted-foreground: 160 10% 65%;
 
-    --accent: 135 60% 50%; /* Brighter Green */
-    --accent-foreground: 135 95% 10%; /* Very Dark Green text */
+    --accent: 40 70% 60%; /* Brighter Gold for Dark Mode */
+    --accent-foreground: 40 50% 10%; /* Very Dark text on Accent */
 
     --destructive: 0 70% 50%; /* Red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 20% 25%; /* Darker Blue-Gray border */
-    --input: 220 20% 20%; /* Darker Blue-Gray input background */
-    --ring: 210 70% 60%; /* Brighter Blue */
+    --border: 160 10% 28%; 
+    --input: 160 10% 22%; 
+    --ring: 160 50% 50%; 
     
     /* chart colors for dark mode */
-    --chart-1: 210 70% 60%; /* Brighter Blue */
-    --chart-2: 135 60% 50%;  /* Brighter Green */
-    --chart-3: 180 60% 55%; /* Lighter Teal */
-    --chart-4: 30 75% 65%;  /* Brighter Orange */
-    --chart-5: 260 55% 70%;   /* Lighter Purple */
+    --chart-1: 160 50% 45%; 
+    --chart-2: 40 70% 65%;  
+    --chart-3: 210 50% 60%; 
+    --chart-4: 140 35% 60%;  
+    --chart-5: 220 5% 55%;   
 
     /* Sidebar variables for dark mode */
-    --sidebar-background: 220 20% 8%; /* Even darker Blue-Gray for sidebar */
-    --sidebar-foreground: 210 15% 88%;
-    --sidebar-primary: 210 65% 55%; /* Slightly adjusted Brighter Blue */
-    --sidebar-primary-foreground: 210 10% 95%;
-    --sidebar-accent: 135 55% 45%; /* Slightly adjusted Brighter Green */
-    --sidebar-accent-foreground: 135 10% 95%;
-    --sidebar-border: 220 20% 22%;
-    --sidebar-ring: 210 70% 60%;
+    --sidebar-background: 160 10% 8%; 
+    --sidebar-foreground: 160 10% 88%;
+    --sidebar-primary: 160 45% 38%; 
+    --sidebar-primary-foreground: 160 10% 95%;
+    --sidebar-accent: 40 65% 55%; 
+    --sidebar-accent-foreground: 40 10% 95%;
+    --sidebar-border: 160 10% 22%;
+    --sidebar-ring: 160 50% 50%;
   }
 }
 
@@ -112,5 +112,4 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
     
