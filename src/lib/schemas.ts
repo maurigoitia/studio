@@ -12,6 +12,7 @@ export const GenericQueryFormSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un correo electrónico válido." }),
   petName: z.string().min(2, { message: "El nombre de la mascota debe tener al menos 2 caracteres." }).max(50, { message: "El nombre de la mascota no puede exceder los 50 caracteres." }).optional(),
   species: z.string().min(3, { message: "La especie debe tener al menos 3 caracteres." }).max(50, { message: "La especie no puede exceder los 50 caracteres." }).describe("Especie de la mascota (ej: Perro, Gato)"),
+  petAge: z.number({invalid_type_error: "La edad debe ser un número."}).int({message: "La edad debe ser un número entero."}).positive({message: "La edad debe ser un número positivo."}).optional().describe("Edad de la mascota en años."),
   question: z.string().min(5, { message: "La pregunta debe tener al menos 5 caracteres." }).max(1000, { message: "La pregunta no puede exceder los 1000 caracteres." }),
 });
 export type GenericQueryFormValues = z.infer<typeof GenericQueryFormSchema>;

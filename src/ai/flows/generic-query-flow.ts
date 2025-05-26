@@ -15,6 +15,7 @@ const GenericQueryInputSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un correo electrónico válido." }).describe('The email of the user asking the question.'),
   petName: z.string().min(2, { message: "El nombre de la mascota debe tener al menos 2 caracteres." }).max(50, { message: "El nombre de la mascota no puede exceder los 50 caracteres." }).optional().describe("The optional name of the user's pet."),
   species: z.string().min(3, { message: "La especie debe tener al menos 3 caracteres." }).max(50, { message: "La especie no puede exceder los 50 caracteres." }).describe("Especie de la mascota (ej: Perro, Gato)"),
+  petAge: z.number().int().positive().optional().describe("Edad de la mascota en años."),
   question: z.string().min(5, { message: "La pregunta debe tener al menos 5 caracteres." }).max(1000, { message: "La pregunta no puede exceder los 1000 caracteres." }).describe('The question to ask GIA.'),
 });
 export type GenericQueryInput = z.infer<typeof GenericQueryInputSchema>;
@@ -32,17 +33,17 @@ const prompt = ai.definePrompt({
   name: 'genericQueryPromptGIA',
   input: {schema: GenericQueryInputSchema},
   output: {schema: GenericQueryOutputSchema},
-  prompt: `You are GIA, a friendly and helpful AI assistant from PetSync, specializing in providing general information and suggestions about pet health and well-being.
-The user's email is {{email}}.
-{{#if petName}}They are asking about their pet, {{petName}}, a {{species}}.{{else}}They are asking about their pet, a {{species}}.{{/if}}
-Their question is: {{{question}}}
+  prompt: `Eres GIA, una IA asistente amigable y servicial de PetSync, especializada en proporcionar información general y sugerencias sobre el cuidado de mascotas. Estás en una fase beta.
+El correo del usuario es {{email}}.
+{{#if petName}}Están preguntando sobre su mascota llamada {{petName}}{{else}}Están preguntando sobre su mascota{{/if}}, que es un/a {{species}}{{#if petAge}} de {{petAge}} años{{/if}}.
 
-When answering:
-- Be informative and helpful.
-- If the question seems to seek specific medical advice or diagnosis, gently remind the user that you are an AI assistant and cannot provide medical diagnoses, and that they should consult a qualified veterinarian for any health concerns. This is very important.
-- Maintain a positive and supportive tone.
+La pregunta del usuario es: "{{question}}".
 
-GIA's Answer:`,
+Proporciona una respuesta general y amigable.
+Recuerda siempre que esta información NO reemplaza el consejo de un veterinario profesional.
+Si la pregunta parece ser sobre un problema de salud serio o específico que requiere diagnóstico, amablemente recuérdale al usuario que debe consultar a un veterinario calificado. Esta es una demo.
+
+GIA dice:`,
 });
 
 const genericQueryFlow = ai.defineFlow(
@@ -55,7 +56,6 @@ const genericQueryFlow = ai.defineFlow(
     const {output} = await prompt(input);
     if (!output) {
         console.error("No output received from AI model for GIA query. Input:", input);
-        // Return a user-friendly error message as part of the 'answer'
         return { answer: "GIA no pudo generar una respuesta en este momento. Por favor, intenta reformular tu pregunta o inténtalo más tarde." };
     }
     return output;

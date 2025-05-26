@@ -1,174 +1,268 @@
 
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { GenericQueryFormSchema, type GenericQueryFormValues } from "@/lib/schemas"; 
 import { askGenericQuestionAction } from "@/app/actions"; 
-import { useState, useTransition } from "react";
-import { Loader2, Brain, Bot, UserCircle } from "lucide-react"; 
+import { useState, useTransition, useRef, useEffect, FormEvent } from "react";
+import { Loader2, Send, Bot, UserCircle, MessageSquare } from "lucide-react"; 
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
+
+interface Message {
+  id: string;
+  text: string;
+  sender: "user" | "gia";
+}
+
+type ConversationStage = 
+  | 'INIT' 
+  | 'AWAITING_EMAIL' 
+  | 'AWAITING_PET_NAME' 
+  | 'AWAITING_SPECIES' 
+  | 'AWAITING_PET_AGE' 
+  | 'AWAITING_QUESTION' 
+  | 'PROCESSING' 
+  | 'CONVERSATION_ENDED';
+
+interface CollectedInfo {
+  email?: string;
+  petName?: string;
+  species?: string;
+  petAge?: number;
+  question?: string;
+}
 
 export default function GIAClient() { 
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
-  const [aiResponse, setAiResponse] = useState<string | null>(null);
-  const [userQuestionForDisplay, setUserQuestionForDisplay] = useState<string | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputValue, setInputValue] = useState("");
+  const [conversationStage, setConversationStage] = useState<ConversationStage>('INIT');
+  const [collectedInfo, setCollectedInfo] = useState<Partial<CollectedInfo>>({});
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
+  const addMessage = (text: string, sender: 'user' | 'gia') => {
+    setMessages(prev => [...prev, { id: Date.now().toString() + Math.random(), text, sender }]);
+  };
 
-  const form = useForm<GenericQueryFormValues>({
-    resolver: zodResolver(GenericQueryFormSchema),
-    defaultValues: {
-      email: "",
-      petName: "", // Optional, can be empty
-      species: "", 
-      question: "",
-    },
-  });
+  useEffect(() => {
+    if (conversationStage === 'INIT') {
+      addMessage("¡Hola! Soy GIA, tu asistente IA para mascotas. Para comenzar, ¿podrías decirme tu correo electrónico?", "gia");
+      setConversationStage('AWAITING_EMAIL');
+    }
+  }, [conversationStage]);
 
-  async function onSubmit(data: GenericQueryFormValues) {
-    setAiResponse(null); 
-    setUserQuestionForDisplay(data.question); 
-    startTransition(async () => {
-      const response = await askGenericQuestionAction(data);
-      if (response.success && response.data) {
-        setAiResponse(response.data.answer);
-      } else {
-        setAiResponse(response.message || "Hubo un error al obtener una respuesta de GIA. Por favor, inténtalo de nuevo.");
-        toast({
-          title: "Error",
-          description: response.message || "No se pudo obtener una respuesta.",
-          variant: "destructive",
-        });
+  useEffect(() => {
+    // Scroll to bottom when new messages are added
+    if (scrollAreaRef.current) {
+      const viewport = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
+      if (viewport) {
+        viewport.scrollTop = viewport.scrollHeight;
       }
-    });
-  }
+    }
+  }, [messages]);
+
+  const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const userInput = inputValue.trim();
+    if (!userInput && conversationStage !== 'AWAITING_PET_NAME') return; // Allow empty pet name
+
+    addMessage(userInput, "user");
+    setInputValue("");
+    let nextStage: ConversationStage = conversationStage;
+    let nextPrompt: string | null = null;
+    const newCollectedInfo = { ...collectedInfo };
+
+    switch (conversationStage) {
+      case 'AWAITING_EMAIL':
+        const emailValidation = z.string().email().safeParse(userInput);
+        if (!emailValidation.success) {
+          addMessage("Por favor, introduce un correo electrónico válido.", "gia");
+          return;
+        }
+        newCollectedInfo.email = userInput;
+        nextPrompt = "¿Cuál es el nombre de tu mascota? (Puedes omitirlo presionando Enviar)";
+        nextStage = 'AWAITING_PET_NAME';
+        break;
+      case 'AWAITING_PET_NAME':
+        if (userInput) { // Pet name is optional
+            const petNameValidation = z.string().min(2).max(50).safeParse(userInput);
+            if (!petNameValidation.success) {
+              addMessage("El nombre de la mascota debe tener entre 2 y 50 caracteres, o déjalo vacío.", "gia");
+              return;
+            }
+            newCollectedInfo.petName = userInput;
+        }
+        nextPrompt = "¿Qué especie es tu mascota? (Ej: Perro, Gato)";
+        nextStage = 'AWAITING_SPECIES';
+        break;
+      case 'AWAITING_SPECIES':
+        const speciesValidation = z.string().min(3).max(50).safeParse(userInput);
+        if(!speciesValidation.success){
+          addMessage("La especie debe tener entre 3 y 50 caracteres.", "gia");
+          return;
+        }
+        newCollectedInfo.species = userInput;
+        nextPrompt = "¿Cuántos años tiene tu mascota? (Ingresa un número)";
+        nextStage = 'AWAITING_PET_AGE';
+        break;
+      case 'AWAITING_PET_AGE':
+        const age = parseInt(userInput, 10);
+        const ageValidation = z.number().int().positive().safeParse(age);
+         if (isNaN(age) || !ageValidation.success) {
+          addMessage("Por favor, ingresa una edad válida en años (número entero y positivo).", "gia");
+          return;
+        }
+        newCollectedInfo.petAge = age;
+        nextPrompt = "¡Genial! Ahora, ¿cuál es tu pregunta para GIA?";
+        nextStage = 'AWAITING_QUESTION';
+        break;
+      case 'AWAITING_QUESTION':
+        const questionValidation = z.string().min(5).max(1000).safeParse(userInput);
+        if(!questionValidation.success){
+            addMessage("Tu pregunta debe tener entre 5 y 1000 caracteres.", "gia");
+            return;
+        }
+        newCollectedInfo.question = userInput;
+        setConversationStage('PROCESSING');
+        
+        startTransition(async () => {
+          const validatedData = GenericQueryFormSchema.safeParse(newCollectedInfo);
+          if (!validatedData.success) {
+            addMessage(`Error de validación: ${validatedData.error.errors.map(e => e.message).join(', ')}`, "gia");
+            setConversationStage('AWAITING_QUESTION'); // Or reset to an appropriate stage
+            return;
+          }
+          const response = await askGenericQuestionAction(validatedData.data as GenericQueryFormValues);
+          if (response.success && response.data) {
+            addMessage(response.data.answer, "gia");
+          } else {
+            addMessage(response.message || "Hubo un error al obtener una respuesta de GIA. Por favor, inténtalo de nuevo.", "gia");
+          }
+          setConversationStage('CONVERSATION_ENDED');
+          addMessage("¿Tienes alguna otra pregunta o deseas comenzar de nuevo? (Escribe 'nuevo' para reiniciar)", "gia");
+
+        });
+        break;
+      case 'CONVERSATION_ENDED':
+        if (userInput.toLowerCase() === 'nuevo') {
+          setMessages([]);
+          setCollectedInfo({});
+          setConversationStage('INIT');
+          // The useEffect for INIT will then trigger the welcome message.
+          return; 
+        } else {
+          // Treat as a new question
+          newCollectedInfo.question = userInput;
+          setConversationStage('PROCESSING');
+          startTransition(async () => {
+            const validatedData = GenericQueryFormSchema.safeParse(newCollectedInfo);
+             if (!validatedData.success) {
+                addMessage(`Error de validación: ${validatedData.error.errors.map(e => e.message).join(', ')}`, "gia");
+                setConversationStage('AWAITING_QUESTION'); 
+                return;
+            }
+            const response = await askGenericQuestionAction(validatedData.data as GenericQueryFormValues);
+            if (response.success && response.data) {
+              addMessage(response.data.answer, "gia");
+            } else {
+              addMessage(response.message || "Hubo un error al obtener una respuesta de GIA.", "gia");
+            }
+            setConversationStage('CONVERSATION_ENDED');
+            addMessage("¿Tienes alguna otra pregunta o deseas comenzar de nuevo? (Escribe 'nuevo' para reiniciar)", "gia");
+          });
+        }
+        break;
+    }
+    setCollectedInfo(newCollectedInfo);
+
+    if (nextPrompt && nextStage !== 'PROCESSING') {
+      setTimeout(() => addMessage(nextPrompt, "gia"), 300); // Small delay for GIA's response
+    }
+    if (nextStage !== 'PROCESSING') {
+      setConversationStage(nextStage);
+    }
+  };
 
   return (
-    <div className="space-y-8">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg">Tu Email</FormLabel>
-                <FormControl>
-                  <Input type="email" placeholder="tu@correo.com" className="bg-background" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+    <div className="flex flex-col h-[600px] max-h-[70vh] bg-background rounded-lg shadow-inner border">
+      <ScrollArea className="flex-grow p-4 space-y-4" ref={scrollAreaRef}>
+        {messages.map((msg) => (
+          <div
+            key={msg.id}
+            className={cn(
+              "flex items-end space-x-2 max-w-[85%] mb-3",
+              msg.sender === 'user' ? "ml-auto justify-end" : "mr-auto justify-start"
             )}
-          />
-          <FormField
-            control={form.control}
-            name="petName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg">Nombre de tu Mascota (Opcional)</FormLabel>
-                <FormControl>
-                  <Input placeholder="Ej: Firulais, Mishi" className="bg-background" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+          >
+            {msg.sender === 'gia' && (
+              <Avatar className="h-8 w-8 self-start">
+                <AvatarFallback className="bg-accent text-accent-foreground">
+                  <Bot className="h-5 w-5" />
+                </AvatarFallback>
+              </Avatar>
             )}
-          />
-          <FormField
-            control={form.control}
-            name="species"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg">Especie (Perro, Gato, etc.)</FormLabel>
-                <FormControl>
-                  <Input placeholder="Ej: Perro, Gato" className="bg-background" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="question"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-lg">Tu Pregunta para GIA</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Escribe aquí tu pregunta general..."
-                    className="min-h-[100px] bg-background"
-                    {...field}
-                  />
-                </FormControl>
-                 <FormDescription>
-                  Ej: ¿Cada cuánto debo desparasitar a mi cachorro?
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6" disabled={isPending}>
-            {isPending && aiResponse === null ? ( 
-              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-            ) : (
-              <Brain className="mr-2 h-5 w-5" />
-            )}
-            {isPending && aiResponse === null ? "GIA está pensando..." : "Pregunta a GIA"}
-          </Button>
-        </form>
-      </Form>
-
-      {userQuestionForDisplay && ( 
-        <div className="mt-8 space-y-6 p-4 bg-secondary/30 rounded-lg shadow-inner">
-            <div className="flex justify-end items-start space-x-2">
-                <div className="bg-primary text-primary-foreground p-3 rounded-lg max-w-[80%] shadow">
-                    <p className="font-semibold text-sm">Tú</p>
-                    <p className="text-sm">{userQuestionForDisplay}</p>
-                </div>
-                 <span className="flex-shrink-0 inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary text-primary-foreground shadow">
-                    <UserCircle className="h-5 w-5" />
-                </span>
+            <div
+              className={cn(
+                "p-3 rounded-lg shadow",
+                msg.sender === 'user' 
+                  ? "bg-primary text-primary-foreground rounded-br-none" 
+                  : "bg-card border text-card-foreground rounded-bl-none"
+              )}
+            >
+              <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
             </div>
-
-            {isPending && !aiResponse && (
-                 <div className="flex items-start space-x-2">
-                    <span className="flex-shrink-0 inline-flex items-center justify-center h-9 w-9 rounded-full bg-accent text-accent-foreground shadow">
-                        <Bot className="h-5 w-5" />
-                    </span>
-                    <div className="bg-card border p-3 rounded-lg max-w-[80%] shadow">
-                        <p className="font-semibold text-sm text-accent">GIA</p>
-                        <div className="flex items-center space-x-2 text-muted-foreground text-sm">
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            <span>Pensando...</span>
-                        </div>
-                    </div>
-                </div>
+             {msg.sender === 'user' && (
+              <Avatar className="h-8 w-8 self-start">
+                 <AvatarFallback className="bg-secondary text-secondary-foreground">
+                  <UserCircle className="h-5 w-5" />
+                </AvatarFallback>
+              </Avatar>
             )}
-            {aiResponse && ( 
-                 <div className="flex items-start space-x-2">
-                    <span className="flex-shrink-0 inline-flex items-center justify-center h-9 w-9 rounded-full bg-accent text-accent-foreground shadow">
-                        <Bot className="h-5 w-5" />
-                    </span>
-                    <div className="bg-card border p-3 rounded-lg max-w-[80%] shadow">
-                        <p className="font-semibold text-sm text-accent">GIA</p>
-                        <p className="text-foreground text-sm whitespace-pre-wrap">{aiResponse}</p>
-                    </div>
-                </div>
-            )}
-        </div>
-    )}
+          </div>
+        ))}
+        {conversationStage === 'PROCESSING' && (
+          <div className="flex items-center space-x-2 mr-auto justify-start mb-3">
+             <Avatar className="h-8 w-8 self-start">
+                <AvatarFallback className="bg-accent text-accent-foreground">
+                  <Bot className="h-5 w-5" />
+                </AvatarFallback>
+              </Avatar>
+            <div className="bg-card border text-card-foreground p-3 rounded-lg shadow rounded-bl-none">
+              <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>GIA está pensando...</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </ScrollArea>
+      <form onSubmit={handleSendMessage} className="p-4 border-t bg-background flex items-center gap-2">
+        <Input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder={
+            conversationStage === 'AWAITING_EMAIL' ? "Tu correo electrónico..." :
+            conversationStage === 'AWAITING_PET_NAME' ? "Nombre de tu mascota (opcional)..." :
+            conversationStage === 'AWAITING_SPECIES' ? "Especie (Perro, Gato...)" :
+            conversationStage === 'AWAITING_PET_AGE' ? "Edad en años..." :
+            conversationStage === 'AWAITING_QUESTION' ? "Escribe tu pregunta para GIA..." :
+            conversationStage === 'CONVERSATION_ENDED' ? "Escribe 'nuevo' para reiniciar o haz otra pregunta..." :
+            "Escribe tu mensaje..."
+          }
+          className="flex-grow"
+          disabled={conversationStage === 'PROCESSING' || conversationStage === 'INIT'}
+        />
+        <Button type="submit" disabled={conversationStage === 'PROCESSING' || conversationStage === 'INIT' || (!inputValue && conversationStage !== 'AWAITING_PET_NAME')} size="icon">
+          {conversationStage === 'PROCESSING' ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
+          <span className="sr-only">Enviar</span>
+        </Button>
+      </form>
     </div>
   );
 }

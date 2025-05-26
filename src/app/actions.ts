@@ -46,16 +46,18 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
   const validatedFields = GenericQueryFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
+    // Construct a more detailed error message from Zod errors
+    const errorMessages = validatedFields.error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
     return {
       success: false,
-      message: "Datos inválidos. Por favor, revisa el formulario.",
+      message: `Datos inválidos: ${errorMessages}. Por favor, revisa el formulario.`,
     };
   }
   
-  const { email, petName, species, question } = validatedFields.data;
+  const { email, petName, species, petAge, question } = validatedFields.data;
 
   try {
-    const input: GenericQueryInput = { email, petName, species, question };
+    const input: GenericQueryInput = { email, petName, species, petAge, question };
     const result = await genericQuery(input);
     if (!result || !result.answer) {
         console.error("No answer received from GIA for input:", input);
