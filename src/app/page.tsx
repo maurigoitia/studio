@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, UsersRound, Smartphone, Bot, Search, HeartPulse, ActivitySquare, Lightbulb, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn } from 'lucide-react';
+import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, UsersRound, Smartphone, Bot, Search, HeartPulse, ActivitySquare, Lightbulb, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn, PawPrint, HandCoins, Stethoscope, Syringe, Microscope, Pill, FileHeart, Image as ImageIcon } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
