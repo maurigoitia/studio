@@ -1,8 +1,8 @@
 
 "use server";
 
-import { WaitlistFormSchema, GenericQueryFormSchema } from "@/lib/schemas";
-import type { WaitlistFormValues, GenericQueryFormValues } from "@/lib/schemas";
+import { WaitlistFormSchema, GenericQueryFormSchema, SignInFormSchema, SignUpFormSchema } from "@/lib/schemas";
+import type { WaitlistFormValues, GenericQueryFormValues, SignInFormValues, SignUpFormValues } from "@/lib/schemas";
 import { genericQuery } from "@/ai/flows/generic-query-flow";
 import type { GenericQueryInput, GenericQueryOutput } from "@/ai/flows/generic-query-flow";
 
@@ -57,9 +57,18 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
   try {
     const input: GenericQueryInput = { email, petName, species, question };
     const result = await genericQuery(input);
+    if (!result || !result.answer) {
+        console.error("No answer received from GIA for input:", input);
+        return { success: false, message: "GIA no pudo generar una respuesta en este momento. Inténtalo de nuevo más tarde." };
+    }
     return { success: true, data: result };
   } catch (error) {
     console.error("Error asking generic question:", error);
     return { success: false, message: "Hubo un error al procesar tu pregunta. Inténtalo de nuevo." };
   }
 }
+
+// Note: SignUp and SignIn actions are handled by Firebase client-side SDK in AuthContext
+// No specific server actions are needed here for them unless you have additional server-side logic
+// to perform post-authentication, which is not the case for this basic setup.
+// For example, creating a user profile in a separate database after Firebase signup.
