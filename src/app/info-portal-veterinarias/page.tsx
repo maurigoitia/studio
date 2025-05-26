@@ -52,7 +52,7 @@ export default function InfoPortalVeterinariasPage() {
     <div className="container mx-auto py-12 px-4">
       <section className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
-          PetSync: El Portal Avanzado para Clínicas Veterinarias
+          PetSync: Simplificando la Gestión de tu Práctica Veterinaria
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
           Transforma la gestión de tu práctica veterinaria con herramientas inteligentes diseñadas para optimizar tu tiempo, mejorar la atención al paciente y fortalecer la relación con tus clientes.
