@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, Smartphone, Bot, Search, HeartPulse, ActivitySquare, Lightbulb, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare } from 'lucide-react';
+import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, UsersRound, Smartphone, Bot, Search, HeartPulse, ActivitySquare, Lightbulb, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -44,7 +44,7 @@ const faqData = [
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-background">
       {/* Hero Section */}
       <section className="w-full py-16 md:py-28 bg-gradient-to-br from-primary/10 via-background to-background">
         <div className="container mx-auto text-center px-4">
@@ -58,7 +58,7 @@ export default function HomePage() {
             Una plataforma para clínicas. Una app para tutores.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform w-full sm:w-auto" asChild>
+            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform w-full sm:w-auto" asChild>
               <Link href="#features">DESCUBRIR MÁS</Link>
             </Button>
           </div>
@@ -70,7 +70,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Simplifica el Cuidado de tu Mascota con PetSync</h2>
           <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-            <Card className="shadow-md hover:shadow-xl transition-shadow duration-300">
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <Users className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Para Tutores de Mascotas</CardTitle>
@@ -83,7 +83,7 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="shadow-md hover:shadow-xl transition-shadow duration-300">
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <UserCog className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Para Clínicas Veterinarias</CardTitle>
@@ -96,7 +96,7 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="shadow-md hover:shadow-xl transition-shadow duration-300">
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <BotMessageSquare className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Conoce a GIA (Demo IA)</CardTitle>
@@ -105,7 +105,7 @@ export default function HomePage() {
                 <p className="text-muted-foreground mb-3 text-sm sm:text-base">
                   Prueba nuestro asistente IA para obtener respuestas generales sobre el cuidado de mascotas. ¡GIA aprende y mejora cada día!
                 </p>
-                 <Button variant="outline" className="w-full sm:w-auto border-primary text-primary hover:bg-primary/10" asChild>
+                 <Button variant="outline" className="w-full sm:w-auto border-accent text-accent hover:bg-accent/10 hover:text-accent" asChild>
                     <Link href="/gia">Chatear con GIA</Link>
                   </Button>
               </CardContent>
@@ -118,7 +118,7 @@ export default function HomePage() {
       <section id="tutores" className="w-full py-12 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Beneficios para tutores</h2>
-          <Card className="p-4 sm:p-6 md:p-8 shadow-xl">
+          <Card className="p-4 sm:p-6 md:p-8 shadow-xl bg-card">
             <CardContent className="p-0">
               <div className="space-y-8">
                 <div className="flex flex-col items-center text-center md:flex-row md:items-start md:text-left gap-4">
@@ -152,7 +152,7 @@ export default function HomePage() {
       <section id="veterinarios" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Beneficios para veterinarias</h2>
-          <Card className="p-4 sm:p-6 md:p-8 shadow-xl">
+          <Card className="p-4 sm:p-6 md:p-8 shadow-xl bg-card">
             <CardContent className="p-0">
               <div className="space-y-8"> 
                 <div className="flex flex-col items-center text-center md:flex-row md:items-start md:text-left gap-4">
@@ -189,7 +189,7 @@ export default function HomePage() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona PetSync?</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-            <Card className="shadow-md border p-4 sm:p-6">
+            <Card className="shadow-lg border p-4 sm:p-6 bg-card">
               <CardHeader className="p-0 mb-3 sm:mb-4">
                 <CardTitle className="text-xl sm:text-2xl">Para Tutores: Organiza y Accede a la Información de tu Mascota</CardTitle>
               </CardHeader>
@@ -208,7 +208,7 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="shadow-md border p-4 sm:p-6">
+            <Card className="shadow-lg border p-4 sm:p-6 bg-card">
               <CardHeader className="p-0 mb-3 sm:mb-4">
                 <CardTitle className="text-xl sm:text-2xl">Para Clínicas Veterinarias: Digitalizá y Potenciá tu Práctica</CardTitle>
               </CardHeader>
@@ -277,7 +277,7 @@ export default function HomePage() {
       </section>
 
       {/* Waitlist Section */}
-      <section id="waitlist" className="w-full py-12 md:py-20 bg-secondary/30">
+      <section id="waitlist" className="w-full py-12 md:py-20 bg-primary/10">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">¡Estamos en versión beta!</h2>
           <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base">

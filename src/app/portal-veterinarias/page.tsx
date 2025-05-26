@@ -4,7 +4,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug } from "lucide-react";
+import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 
@@ -101,7 +101,7 @@ export default function VetPortalInfoPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Funcionalidades Destacadas del Portal</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature, index) => (
-                <Card key={index} className="shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col text-center">
+                <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col text-center bg-card">
                   <CardHeader className="items-center">
                     {feature.icon}
                     <CardTitle className="text-xl">{feature.title}</CardTitle>
@@ -113,7 +113,7 @@ export default function VetPortalInfoPage() {
               ))}
             </div>
              <div className="text-center mt-12">
-                <Card className="inline-block p-6 bg-primary/10 border-primary/30 shadow-md">
+                <Card className="inline-block p-6 bg-primary/10 border-primary/30 shadow-lg">
                     <CardHeader className="p-0 items-center">
                         <Plug className="h-10 w-10 text-primary mb-3" />
                         <CardTitle className="text-xl">Conexiones e Integraciones (Futuro)</CardTitle>
@@ -155,7 +155,7 @@ export default function VetPortalInfoPage() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
+                  <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
                     <Link href={googleFormLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
                       Solicitar Demo / Más Información <ExternalLink className="ml-2 h-5 w-5" />
                     </Link>
@@ -176,7 +176,6 @@ export default function VetPortalInfoPage() {
                 <p className="text-muted-foreground mb-6">
                     Si tienes alguna duda sobre el Portal PetSync para Veterinarias o el programa de acceso temprano, no dudes en escribirnos.
                 </p>
-                {/* Placeholder para un futuro formulario de contacto o email */}
                 <Button variant="outline" asChild>
                     <Link href="mailto:soporte-vets@petsync.example.com">Enviar un Email</Link>
                 </Button>
