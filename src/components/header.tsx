@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
-import { Brain, LayoutDashboard, Menu } from 'lucide-react';
+import { Brain, LayoutDashboard, Menu, Lightbulb } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import * as React from "react";
 
