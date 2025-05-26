@@ -30,7 +30,7 @@ export default function Header() {
             </Link>
           </Button>
           <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
-            <Link href="/portal-veterinarias/acceso">
+            <Link href="/portal-veterinarias">
               <LayoutDashboard className="mr-2 h-5 w-5" />
               Portal Veterinarias
             </Link>
@@ -61,7 +61,7 @@ export default function Header() {
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
-                  <Link href="/portal-veterinarias/acceso" className="text-lg font-medium text-foreground hover:text-primary transition-colors flex items-center">
+                  <Link href="/portal-veterinarias" className="text-lg font-medium text-foreground hover:text-primary transition-colors flex items-center">
                      <LayoutDashboard className="mr-2 h-5 w-5" /> Portal Veterinarias
                   </Link>
                 </SheetClose>
