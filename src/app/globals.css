@@ -8,7 +8,7 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* White */
+    --background: 0 0% 94.1%; /* Light Gray #F0F0F0 (PRD) */
     --foreground: 240 10% 3.9%; /* Near Black for text */
 
     --card: 0 0% 100%; /* White */
@@ -17,41 +17,41 @@ body {
     --popover: 0 0% 100%; /* White */
     --popover-foreground: 240 10% 3.9%; /* Near Black */
 
-    --primary: 180 100% 25%; /* Teal (#008080) */
-    --primary-foreground: 240 10% 3.9%; /* Dark Gray for better contrast on Teal */
+    --primary: 180 100% 25%; /* Teal (#008080) (PRD) */
+    --primary-foreground: 0 0% 100%; /* White text on Teal */
 
-    --secondary: 0 0% 96%; /* Very Light Gray */
+    --secondary: 0 0% 97%; /* Very Light Gray, for elements on the light gray bg */
     --secondary-foreground: 240 10% 20%; /* Darker Gray for text on secondary */
 
-    --muted: 0 0% 94%; /* Light Gray */
+    --muted: 0 0% 88%; /* Gray, slightly darker than main bg */
     --muted-foreground: 240 5% 50%; /* Medium Gray text */
 
-    --accent: 40 80% 55%; /* Soft Gold/Yellow */
-    --accent-foreground: 25 20% 15%; /* Dark Gray/Brown for text on accent */
+    --accent: 16 100% 66%; /* Coral (#FF7F50) (PRD) */
+    --accent-foreground: 0 0% 100%; /* White text on Coral */
 
     --destructive: 0 84% 60%; /* Red */
     --destructive-foreground: 0 0% 98%; /* Light text on red */
 
-    --border: 0 0% 90%; /* Light Gray border */
-    --input: 0 0% 92%; /* Light Gray input background */
+    --border: 0 0% 85%; /* Gray border, contrasts with light gray bg */
+    --input: 0 0% 100%; /* White input background */
     --ring: 180 100% 25%; /* Teal for focus states */
 
-    /* Chart colors - Teal, Gold, Blue, Soft Green, Warm Neutral */
+    /* Chart colors - Teal, Coral, Blue, Soft Green, Warm Neutral */
     --chart-1: 180 100% 25%; /* Teal - Primary */
-    --chart-2: 40 80% 55%;  /* Gold - Accent */
-    --chart-3: 205 75% 50%; /* A nice Blue */
-    --chart-4: 90 45% 60%;  /* Soft Green */
-    --chart-5: 35 40% 70%;  /* Light Brown/Tan */
+    --chart-2: 16 100% 66%;  /* Coral - Accent */
+    --chart-3: 210 70% 55%; /* A nice Blue */
+    --chart-4: 90 35% 60%;  /* Soft Green */
+    --chart-5: 30 10% 60%;  /* Light Brown/Tan */
     --radius: 0.5rem;
 
     /* Sidebar variables */
-    --sidebar-background: 0 0% 97%; /* Slightly darker Light Gray for sidebar */
+    --sidebar-background: 0 0% 98%; /* Slightly lighter than main bg, or a distinct color */
     --sidebar-foreground: 240 10% 15%; /* Darker Gray for sidebar text */
     --sidebar-primary: 180 100% 23%; /* Slightly darker Teal for sidebar */
     --sidebar-primary-foreground: 0 0% 100%; /* White */
-    --sidebar-accent: 40 80% 50%; /* Slightly darker Gold for sidebar */
-    --sidebar-accent-foreground: 25 20% 10%; /* Darker text on sidebar accent */
-    --sidebar-border: 0 0% 92%; /* Light Gray border for sidebar */
+    --sidebar-accent: 16 100% 60%; /* Slightly darker/desaturated Coral for sidebar */
+    --sidebar-accent-foreground: 0 0% 100%; /* White text on sidebar accent */
+    --sidebar-border: 0 0% 90%; /* Light Gray border for sidebar */
     --sidebar-ring: 180 100% 25%; /* Teal */
   }
 
@@ -66,7 +66,7 @@ body {
     --popover-foreground: 220 10% 90%; /* Light Gray */
 
     --primary: 180 70% 45%; /* Brighter Teal */
-    --primary-foreground: 220 15% 5%; /* Near Black for contrast */
+    --primary-foreground: 180 95% 96%; /* Very Light Teal/White text */
 
     --secondary: 220 15% 20%; /* Dark Blue/Gray for elements */
     --secondary-foreground: 220 10% 88%; /* Light Gray */
@@ -74,8 +74,8 @@ body {
     --muted: 220 15% 25%; /* Lighter muted elements in dark */
     --muted-foreground: 220 10% 65%; /* Medium-light Gray */
 
-    --accent: 40 75% 65%; /* Brighter Gold/Yellow */
-    --accent-foreground: 25 20% 10%; /* Very Dark Gray/Brown */
+    --accent: 16 90% 70%; /* Brighter Coral */
+    --accent-foreground: 0 0% 100%; /* White text on Coral */
 
     --destructive: 0 70% 50%; /* Red */
     --destructive-foreground: 0 0% 98%; /* Light text on red */
@@ -86,18 +86,18 @@ body {
     
     /* chart colors for dark mode */
     --chart-1: 180 70% 45%; /* Brighter Teal */
-    --chart-2: 40 75% 65%; /* Brighter Gold */
-    --chart-3: 205 65% 62%; /* Lighter Blue */
-    --chart-4: 90 40% 65%;  /* Brighter Soft Green */
-    --chart-5: 35 35% 72%;  /* Lighter Brown/Tan */
+    --chart-2: 16 90% 70%;  /* Brighter Coral */
+    --chart-3: 210 60% 65%; /* Lighter Blue */
+    --chart-4: 90 30% 65%;  /* Brighter Soft Green */
+    --chart-5: 30 8% 65%;   /* Lighter Brown/Tan */
 
     /* Sidebar variables for dark mode */
     --sidebar-background: 220 15% 8%; /* Even darker Blue/Gray for sidebar */
     --sidebar-foreground: 220 10% 88%; /* Light Gray */
     --sidebar-primary: 180 65% 42%; /* Slightly adjusted Brighter Teal */
-    --sidebar-primary-foreground: 220 15% 3%; /* Near Black */
-    --sidebar-accent: 40 70% 62%; /* Slightly adjusted Brighter Gold */
-    --sidebar-accent-foreground: 25 20% 8%; /* Very Dark Brown */
+    --sidebar-primary-foreground: 180 10% 95%; /* Very Light Teal */
+    --sidebar-accent: 16 85% 68%; /* Slightly adjusted Brighter Coral */
+    --sidebar-accent-foreground: 0 0% 100%; /* White */
     --sidebar-border: 220 15% 25%; /* Dark Blue/Gray border for sidebar */
     --sidebar-ring: 180 70% 45%; /* Brighter Teal */
   }
