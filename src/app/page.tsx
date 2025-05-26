@@ -3,10 +3,9 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { BrainCircuit, CalendarClock, Users, Network, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, HeartPulse, MapPin, ShoppingBag, ClipboardList, Bot, Lightbulb, Search, Smartphone, TriangleAlert, Brain, MessagesSquare, CheckCircle, UserCheck, BellRing, Cloud, FolderKanban, MailCheck, BarChart3 } from 'lucide-react';
-import WaitlistForm from '@/components/waitlist-form';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-
+import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, UsersRound, Mail, DownloadCloud, ShieldCheck, Smartphone, Bot, Search, HeartPulse, MessagesSquare, CheckCircle, UserCheck, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, TriangleAlert, BotMessageSquare, UserCog, ActivitySquare, Lightbulb } from 'lucide-react';
+import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
   {
@@ -15,7 +14,7 @@ const faqData = [
   },
   {
     question: "¿Cómo me registro en PetSync?",
-    answer: "Actualmente estamos en versión beta. Dejanos tu contacto en nuestra waitlist y te avisaremos tan pronto como puedas registrarte para ser de los primeros en probar PetSync."
+    answer: "Actualmente estamos en versión beta. Déjanos tu contacto en nuestra waitlist y te avisaremos tan pronto como puedas registrarte para ser de los primeros en probar PetSync."
   },
   {
     question: "¿PetSync tiene costo para los tutores de mascotas?",
@@ -60,14 +59,66 @@ export default function HomePage() {
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-              <Link href="#gia-chat-demo">DESCUBRIR MÁS</Link>
+              <Link href="#waitlist">ÚNETE A LA WAITLIST</Link>
+            </Button>
+             <Button size="lg" variant="outline" className="ml-4 shadow-lg transform hover:scale-105 transition-transform" asChild>
+              <Link href="#gia-intro">Conoce a GIA</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* GIA Chat Demo Section */}
-      <section id="gia-chat-demo" className="w-full py-12 md:py-20 bg-secondary/50">
+      {/* Feature Highlights Section */}
+      <section id="features" className="w-full py-12 md:py-20 bg-secondary/50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Simplifica el Cuidado de tu Mascota con PetSync</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader>
+                <Users className="h-10 w-10 text-primary mb-3" />
+                <CardTitle className="text-xl">Para Tutores de Mascotas</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                  <li>Historial médico centralizado y siempre accesible.</li>
+                  <li>GIA: Tu copiloto IA para dudas y orientación (beta).</li>
+                  <li>Agenda inteligente para turnos y recordatorios.</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader>
+                <UserCog className="h-10 w-10 text-primary mb-3" />
+                <CardTitle className="text-xl">Para Clínicas Veterinarias</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                  <li>Optimización de agenda y reducción de carga administrativa.</li>
+                  <li>Historiales digitales compartidos y seguros.</li>
+                  <li>Comunicación directa y eficaz con tutores.</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader>
+                <BotMessageSquare className="h-10 w-10 text-primary mb-3" />
+                <CardTitle className="text-xl">Conexión Inteligente con GIA</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Nuestra IA, GIA, está diseñada para asistirte, ofreciendo respuestas personalizadas y facilitando la gestión del cuidado de tu mascota.
+                </p>
+                 <Button variant="link" className="p-0 h-auto mt-2 text-primary" asChild>
+                    <Link href="/gia">Prueba la Demo de GIA</Link>
+                  </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+      
+      {/* GIA Intro Section */}
+      <section id="gia-intro" className="w-full py-12 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Bot className="h-16 w-16 text-primary mx-auto mb-4" />
@@ -100,7 +151,7 @@ export default function HomePage() {
               </Card>
               <Card className="p-6 shadow-lg">
                 <CardHeader className="p-0 mb-3 items-center">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary mb-2"><path d="M17.5 12.5a10.91 10.91 0 0 1-2.88 7.5"/><path d="M6.5 12.5A10.91 10.91 0 0 0 9.38 20"/><path d="M12.5 17.5a10.91 10.91 0 0 1-7.5-2.88"/><path d="M12.5 6.5a10.91 10.91 0 0 0-2.88-2.62"/><path d="M19.5 20.5a2.5 2.5 0 0 1-2.17-1.11L12.5 12.5l-4.83 6.89a2.5 2.5 0 0 1-4.33-2.5L7.5 12l-4.11-4.11a2.5 2.5 0 0 1 2.5-4.33L12.5 12.5l6.89-4.83a2.5 2.5 0 0 1 2.5 4.33L17 12l4.17 4.17a2.5 2.5 0 0 1-1.67 4.33Z"/></svg>
+                   <ActivitySquare className="h-10 w-10 text-primary mb-2" />
                   <CardTitle className="text-xl">Entiende Mejor a tu Mascota</CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
@@ -125,7 +176,7 @@ export default function HomePage() {
       </section>
 
       {/* Benefits for Tutors Section */}
-      <section id="tutores" className="w-full py-12 md:py-20 bg-background">
+      <section id="tutores" className="w-full py-12 md:py-20 bg-secondary/50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para tutores</h2>
           <Card className="p-6 md:p-8 shadow-xl">
@@ -161,7 +212,7 @@ export default function HomePage() {
       </section>
 
       {/* Benefits for Veterinarians Section */}
-      <section id="veterinarios" className="w-full py-12 md:py-20 bg-secondary/50">
+      <section id="veterinarios" className="w-full py-12 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Beneficios para veterinarias</h2>
           <Card className="p-6 md:p-8 shadow-xl">
@@ -176,7 +227,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="flex items-start">
-                    <ClipboardList className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
+                    <ListChecks className="h-10 w-10 text-primary mr-4 mt-1 shrink-0" />
                     <div>
                       <h3 className="text-xl font-semibold text-foreground mb-2">Historiales médicos centralizados y siempre accesibles</h3>
                       <p className="text-muted-foreground">Cada mascota tiene su ficha clínica completa, organizada y actualizada. Vos cargás la info, el tutor accede. Información compartida, sin errores ni duplicados.</p>
@@ -197,7 +248,7 @@ export default function HomePage() {
       </section>
       
       {/* How it Works Section */}
-      <section id="como-funciona" className="w-full py-12 md:py-20 bg-background">
+      <section id="como-funciona" className="w-full py-12 md:py-20 bg-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona PetSync?</h2>
@@ -209,7 +260,7 @@ export default function HomePage() {
               </CardHeader>
               <CardContent className="p-0 space-y-3 text-muted-foreground">
                 <div className="flex items-start">
-                    <ClipboardList className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
+                    <ListChecks className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
                     <p>Centralizá el historial de salud de tu mascota: vacunas, tratamientos, alergias y más, todo en un solo lugar.</p>
                 </div>
                 <div className="flex items-start">
@@ -217,8 +268,8 @@ export default function HomePage() {
                     <p>Recibí recordatorios personalizados sobre medicación, controles de salud y fechas importantes.</p>
                 </div>
                 <div className="flex items-start">
-                    <Cloud className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
-                    <p>Cuando la app PetSync esté lista, descárgala para iOS o Android. Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
+                    <DownloadCloud className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
+                    <p>Cuando la app PetSync esté lista, descárgala para iOS y Android. Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
                 </div>
               </CardContent>
             </Card>
@@ -304,3 +355,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+    

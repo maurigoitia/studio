@@ -1,2 +1,6 @@
+
 // This file will be deleted.
-// Content moved or a new approach is being taken.
+// Its purpose is now merged into /src/app/portal-veterinarias/page.tsx (informational page)
+// or handled by future authentication flows.
+
+    

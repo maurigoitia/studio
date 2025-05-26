@@ -1,56 +1,56 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ListChecks, Users, CalendarClock, ClipboardList, MessagesSquare, Lightbulb, ShieldCheck, BarChart3, UserCog, BrainCircuit } from "lucide-react";
-import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { CheckCircle, ListChecks, Users, CalendarClock, ClipboardList, MessagesSquare, Lightbulb, ShieldCheck, BarChart3, UserCog, BrainCircuit, ActivitySquare, BarChartBig, CalendarCog, ClipboardCheck, UsersRound, Search, HeartPulse, MapPin, ShoppingBag, BotMessageSquare, AlertTriangle } from "lucide-react";
+import Link from "next/link";
 
-export default function PortalVeterinariasInfoPage() {
+export default function VetPortalInfoPage() {
   const features = [
     {
-      icon: <CalendarClock className="h-8 w-8 text-primary mb-2" />,
+      icon: <CalendarCog className="h-10 w-10 text-primary mb-3" />,
       title: "Agenda Inteligente y Gestión de Turnos",
       description: "Optimiza la programación de citas, reduce las ausencias con recordatorios automáticos y permite a tus clientes solicitar turnos online de forma sencilla."
     },
     {
-      icon: <ClipboardList className="h-8 w-8 text-primary mb-2" />,
+      icon: <ClipboardCheck className="h-10 w-10 text-primary mb-3" />,
       title: "Historiales Clínicos Digitales Centralizados",
       description: "Accede y gestiona fichas completas de tus pacientes, incluyendo vacunas, tratamientos, cirugías, alergias y estudios. Información segura y siempre disponible."
     },
     {
-      icon: <MessagesSquare className="h-8 w-8 text-primary mb-2" />,
+      icon: <MessagesSquare className="h-10 w-10 text-primary mb-3" />,
       title: "Comunicación Directa y Eficaz con Tutores",
       description: "Envía recordatorios, resultados, y comunicados importantes directamente a los tutores a través de la app PetSync o por email. Todo queda registrado."
     },
     {
-      icon: <ListChecks className="h-8 w-8 text-primary mb-2" />,
+      icon: <ActivitySquare className="h-10 w-10 text-primary mb-3" />,
       title: "Gestión de Sala de Espera y Triage Avanzado",
       description: "Organiza el flujo de pacientes sin turno, prioriza urgencias con un sistema de triage visual y notifica al equipo sobre el estado de la atención."
     },
     {
-      icon: <BrainCircuit className="h-8 w-8 text-primary mb-2" />, // Changed from Lightbulb
+      icon: <BrainCircuit className="h-10 w-10 text-primary mb-3" />,
       title: "Asistencia IA (GIA) para Veterinarios",
       description: "GIA, nuestra IA en desarrollo, asistirá en la generación de resúmenes clínicos, búsqueda rápida de información relevante en historiales y protocolos, optimizando tu tiempo."
     },
     {
-      icon: <UserCog className="h-8 w-8 text-primary mb-2" />,
+      icon: <UserCog className="h-10 w-10 text-primary mb-3" />,
       title: "Gestión de Múltiples Usuarios y Roles",
       description: "Define perfiles para recepción, veterinarios y administradores, con accesos diferenciados para una gestión segura y eficiente de tu clínica."
     },
     {
-      icon: <BarChart3 className="h-8 w-8 text-primary mb-2" />,
+      icon: <BarChartBig className="h-10 w-10 text-primary mb-3" />,
       title: "Reportes y Analíticas (Próximamente)",
       description: "Obtén información valiosa sobre la actividad de tu clínica, rendimiento de servicios y seguimiento de pacientes para una mejor toma de decisiones."
     },
      {
-      icon: <ShieldCheck className="h-8 w-8 text-primary mb-2" />,
+      icon: <ShieldCheck className="h-10 w-10 text-primary mb-3" />,
       title: "Seguridad y Cumplimiento",
       description: "Tus datos y los de tus pacientes están protegidos con los más altos estándares de seguridad y en cumplimiento con las normativas de protección de datos."
     }
   ];
 
   return (
-    <div className="container mx-auto py-12 px-4">
+    <div className="container mx-auto py-12 md:py-20 px-4">
       <section className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
           PetSync para Clínicas Veterinarias: La Plataforma Inteligente para tu Práctica
@@ -77,9 +77,9 @@ export default function PortalVeterinariasInfoPage() {
         </div>
       </section>
 
-      <section id="early-access-vet" className="py-12 bg-secondary/50 rounded-lg shadow-xl">
+      <section id="early-access-vet" className="py-12 bg-primary/10 rounded-lg shadow-xl">
         <div className="container mx-auto px-4 max-w-3xl text-center">
-          <Users className="h-16 w-16 text-primary mx-auto mb-6" />
+          <UsersRound className="h-16 w-16 text-primary mx-auto mb-6" />
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
             Optimiza tu Clínica con PetSync: Solicita una Demostración o Únete al Programa de Acceso Anticipado
           </h2>
@@ -90,7 +90,6 @@ export default function PortalVeterinariasInfoPage() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-                  {/* Debes reemplazar este enlace con el de tu formulario de Google real */}
                   <Link href="https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
                     Solicitar Demo / Más Información
                   </Link>
@@ -106,3 +105,5 @@ export default function PortalVeterinariasInfoPage() {
     </div>
   );
 }
+
+    
