@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ListChecks, Users, CalendarClock, ClipboardList, MessagesSquare, Lightbulb, ShieldCheck, BarChart3, UserCog } from "lucide-react";
 import Link from "next/link";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function InfoPortalVeterinariasPage() {
   const features = [
@@ -85,15 +86,21 @@ export default function InfoPortalVeterinariasPage() {
           <p className="text-muted-foreground mb-8 text-lg">
             Estamos preparando una plataforma que revolucionará la forma en que gestionas tu clínica y te conectas con los tutores. Sé de los primeros en experimentar el poder de PetSync.
           </p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-            {/* This button would ideally link to a Google Form or a dedicated signup service */}
-            <Link href="https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
-              Registrarme para Acceso Anticipado
-            </Link>
-          </Button>
-          <p className="mt-4 text-sm text-muted-foreground">
-            (Serás redirigido a un formulario de Google para completar tu solicitud)
-          </p>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
+                  {/* This button would ideally link to a Google Form or a dedicated signup service */}
+                  <Link href="https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
+                    Registrarme para Acceso Anticipado
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Serás redirigido a un formulario de Google para completar tu solicitud.</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </section>
     </div>
