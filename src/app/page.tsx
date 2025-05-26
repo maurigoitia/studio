@@ -46,7 +46,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center">
       {/* Hero Section */}
-      <section className="w-full py-16 md:py-28 bg-gradient-to-br from-primary/10 to-background">
+      <section className="w-full py-16 md:py-28 bg-gradient-to-br from-primary/10 via-background to-background">
         <div className="container mx-auto text-center px-4">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground">
             PetSync: el cuidado veterinario, sin el desorden de siempre.
@@ -66,11 +66,11 @@ export default function HomePage() {
       </section>
 
       {/* Feature Highlights Section */}
-      <section id="features" className="w-full py-12 md:py-20 bg-secondary/50">
+      <section id="features" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Simplifica el Cuidado de tu Mascota con PetSync</h2>
           <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <Card className="shadow-md hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <Users className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Para Tutores de Mascotas</CardTitle>
@@ -83,7 +83,7 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <Card className="shadow-md hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <UserCog className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Para Clínicas Veterinarias</CardTitle>
@@ -96,7 +96,7 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <Card className="shadow-md hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <BotMessageSquare className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Conoce a GIA (Demo IA)</CardTitle>
@@ -149,7 +149,7 @@ export default function HomePage() {
       </section>
 
       {/* Benefits for Veterinarians Section */}
-      <section id="veterinarios" className="w-full py-12 md:py-20 bg-secondary/50">
+      <section id="veterinarios" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Beneficios para veterinarias</h2>
           <Card className="p-4 sm:p-6 md:p-8 shadow-xl">
@@ -189,7 +189,7 @@ export default function HomePage() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona PetSync?</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-            <Card className="shadow-lg border p-4 sm:p-6">
+            <Card className="shadow-md border p-4 sm:p-6">
               <CardHeader className="p-0 mb-3 sm:mb-4">
                 <CardTitle className="text-xl sm:text-2xl">Para Tutores: Organiza y Accede a la Información de tu Mascota</CardTitle>
               </CardHeader>
@@ -208,7 +208,7 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="shadow-lg border p-4 sm:p-6">
+            <Card className="shadow-md border p-4 sm:p-6">
               <CardHeader className="p-0 mb-3 sm:mb-4">
                 <CardTitle className="text-xl sm:text-2xl">Para Clínicas Veterinarias: Digitalizá y Potenciá tu Práctica</CardTitle>
               </CardHeader>
@@ -232,7 +232,7 @@ export default function HomePage() {
       </section>
 
       {/* Quiénes Somos Section */}
-      <section id="quienes-somos" className="w-full py-12 md:py-20 bg-secondary/50">
+      <section id="quienes-somos" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-10 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">Quiénes Somos</h2>
@@ -262,7 +262,7 @@ export default function HomePage() {
           
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
-              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow mb-2 border">
+              <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow-md mb-2 border">
                 <AccordionTrigger className="px-3 sm:px-4 py-2 sm:py-3 text-left hover:no-underline flex items-center text-foreground text-sm sm:text-base">
                   {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary shrink-0" /> }
                   <span className="flex-1">{faq.question}</span>
@@ -277,7 +277,7 @@ export default function HomePage() {
       </section>
 
       {/* Waitlist Section */}
-      <section id="waitlist" className="w-full py-12 md:py-20 bg-secondary/50">
+      <section id="waitlist" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">¡Estamos en versión beta!</h2>
           <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base">

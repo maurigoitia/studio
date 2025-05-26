@@ -1,4 +1,6 @@
 
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -53,7 +55,7 @@ export default function VetPortalInfoPage() {
   const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link"; // Reemplaza con tu link real
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       {/* Page-specific simple navigation */}
       <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b">
         <div className="container mx-auto px-4 h-14 flex items-center justify-between">
@@ -71,7 +73,7 @@ export default function VetPortalInfoPage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 to-background text-center">
+        <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-background text-center">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
               Portal PetSync para Veterinarias: Optimiza tu Práctica, Cuida Mejor.
@@ -85,7 +87,7 @@ export default function VetPortalInfoPage() {
         {/* Why Choose PetSync Section */}
         <section className="py-12 md:py-20 bg-secondary/30">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¿Por Qué Elegir el Portal PetSync?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¿Por Qué Elegir PetSync?</h2>
             <div className="my-6 flex justify-center"> <Logo /> </div>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               PetSync está diseñado para simplificar tu día a día, permitiéndote enfocarte en la atención al paciente mientras optimizas la gestión de tu clínica y fortaleces la relación con los tutores a través de una plataforma conectada e inteligente.
@@ -99,7 +101,7 @@ export default function VetPortalInfoPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Funcionalidades Destacadas del Portal</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {features.map((feature, index) => (
-                <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col text-center">
+                <Card key={index} className="shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col text-center">
                   <CardHeader className="items-center">
                     {feature.icon}
                     <CardTitle className="text-xl">{feature.title}</CardTitle>
@@ -111,7 +113,7 @@ export default function VetPortalInfoPage() {
               ))}
             </div>
              <div className="text-center mt-12">
-                <Card className="inline-block p-6 bg-primary/10 border-primary/30">
+                <Card className="inline-block p-6 bg-primary/10 border-primary/30 shadow-md">
                     <CardHeader className="p-0 items-center">
                         <Plug className="h-10 w-10 text-primary mb-3" />
                         <CardTitle className="text-xl">Conexiones e Integraciones (Futuro)</CardTitle>

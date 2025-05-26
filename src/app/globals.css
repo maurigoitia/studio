@@ -9,7 +9,7 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 94.1%; /* Light Gray #F0F0F0 (PRD) */
+    --background: 0 0% 100%; /* White */
     --foreground: 240 10% 3.9%; /* Near Black for text */
 
     --card: 0 0% 100%; /* White */
@@ -18,89 +18,89 @@ body {
     --popover: 0 0% 100%; /* White */
     --popover-foreground: 240 10% 3.9%; /* Near Black */
 
-    --primary: 135 65% 45%; /* Vivid Green (New) */
-    --primary-foreground: 0 0% 100%; /* White text on Vivid Green */
+    --primary: 210 70% 50%; /* Professional Blue */
+    --primary-foreground: 0 0% 100%; /* White text on Blue */
 
-    --secondary: 0 0% 97%; /* Very Light Gray, for elements on the light gray bg */
-    --secondary-foreground: 240 10% 20%; /* Darker Gray for text on secondary */
+    --secondary: 210 20% 96%; /* Very Light Blue-Gray */
+    --secondary-foreground: 210 70% 40%; /* Darker Blue for text on secondary */
 
-    --muted: 0 0% 88%; /* Gray, slightly darker than main bg */
-    --muted-foreground: 240 5% 50%; /* Medium Gray text */
+    --muted: 210 20% 90%; /* Light Blue-Gray */
+    --muted-foreground: 210 10% 50%; /* Medium Blue-Gray text */
 
-    --accent: 16 100% 66%; /* Coral (#FF7F50) (PRD) */
-    --accent-foreground: 0 0% 100%; /* White text on Coral */
+    --accent: 135 60% 40%; /* Vibrant Green */
+    --accent-foreground: 0 0% 100%; /* White text on Green */
 
     --destructive: 0 84% 60%; /* Red */
     --destructive-foreground: 0 0% 98%; /* Light text on red */
 
-    --border: 0 0% 85%; /* Gray border, contrasts with light gray bg */
-    --input: 0 0% 100%; /* White input background */
-    --ring: 135 65% 45%; /* Vivid Green for focus states (New) */
+    --border: 210 20% 80%; /* Light Blue-Gray border for inputs and cards */
+    --input: 0 0% 100%; /* White input background (with border) */
+    --ring: 210 70% 50%; /* Professional Blue for focus states */
 
-    /* Chart colors - Vivid Green, Coral, Blue, Soft Green, Warm Neutral */
-    --chart-1: 135 65% 45%; /* Vivid Green - Primary (New) */
-    --chart-2: 16 100% 66%;  /* Coral - Accent (PRD) */
-    --chart-3: 210 70% 55%; /* A nice Blue */
-    --chart-4: 90 45% 60%;  /* Softer Green, less vivid than primary */
-    --chart-5: 30 15% 60%;  /* Light Brown/Tan */
+    /* Chart colors - Blue, Green, Teal, Orange, Purple */
+    --chart-1: 210 70% 50%; /* Professional Blue - Primary */
+    --chart-2: 135 60% 40%;  /* Vibrant Green - Accent */
+    --chart-3: 180 65% 45%; /* A nice Teal */
+    --chart-4: 30 80% 60%;  /* A warm Orange */
+    --chart-5: 260 60% 65%;  /* A soft Purple */
     --radius: 0.5rem;
 
     /* Sidebar variables */
-    --sidebar-background: 0 0% 98%; /* Slightly lighter than main bg, or a distinct color */
+    --sidebar-background: 0 0% 98%; /* Slightly off-white, or a distinct light color */
     --sidebar-foreground: 240 10% 15%; /* Darker Gray for sidebar text */
-    --sidebar-primary: 135 60% 40%; /* Slightly darker Vivid Green for sidebar (New) */
+    --sidebar-primary: 210 65% 45%; /* Slightly darker/desaturated Blue for sidebar */
     --sidebar-primary-foreground: 0 0% 100%; /* White */
-    --sidebar-accent: 16 100% 60%; /* Slightly darker/desaturated Coral for sidebar */
+    --sidebar-accent: 135 55% 35%; /* Slightly darker/desaturated Green for sidebar */
     --sidebar-accent-foreground: 0 0% 100%; /* White text on sidebar accent */
     --sidebar-border: 0 0% 90%; /* Light Gray border for sidebar */
-    --sidebar-ring: 135 65% 45%; /* Vivid Green (New) */
+    --sidebar-ring: 210 70% 50%; /* Professional Blue */
   }
 
   .dark {
-    --background: 135 10% 10%; /* Very Dark Green/Gray (New) */
-    --foreground: 135 10% 90%; /* Light Off-Green/Gray (New) */
+    --background: 220 20% 10%; /* Very Dark Blue-Gray */
+    --foreground: 210 15% 90%; /* Light Off-White/Blue-Gray */
 
-    --card: 135 10% 15%; /* Darker Green/Gray (New) */
-    --card-foreground: 135 10% 90%; /* Light Off-Green/Gray (New) */
+    --card: 220 20% 14%; /* Darker Blue-Gray */
+    --card-foreground: 210 15% 90%;
 
-    --popover: 135 10% 15%; /* Darker Green/Gray (New) */
-    --popover-foreground: 135 10% 90%; /* Light Off-Green/Gray (New) */
+    --popover: 220 20% 14%;
+    --popover-foreground: 210 15% 90%;
 
-    --primary: 135 60% 55%; /* Brighter Vivid Green (New) */
-    --primary-foreground: 135 95% 10%; /* Very Dark Green text (New) */
+    --primary: 210 70% 60%; /* Brighter Blue */
+    --primary-foreground: 210 95% 10%; /* Very Dark Blue text */
 
-    --secondary: 135 10% 20%; /* Dark Green/Gray for elements (New) */
-    --secondary-foreground: 135 10% 88%; /* Light Off-Green/Gray (New) */
+    --secondary: 220 20% 18%; /* Dark Blue-Gray for elements */
+    --secondary-foreground: 210 15% 88%;
 
-    --muted: 135 10% 25%; /* Lighter muted elements in dark (New) */
-    --muted-foreground: 135 10% 65%; /* Medium-light Off-Green/Gray (New) */
+    --muted: 220 20% 22%; /* Lighter muted elements in dark */
+    --muted-foreground: 210 15% 65%;
 
-    --accent: 16 90% 70%; /* Brighter Coral */
-    --accent-foreground: 0 0% 100%; /* White text on Coral */
+    --accent: 135 60% 50%; /* Brighter Green */
+    --accent-foreground: 135 95% 10%; /* Very Dark Green text */
 
     --destructive: 0 70% 50%; /* Red */
-    --destructive-foreground: 0 0% 98%; /* Light text on red */
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 135 10% 28%; /* Darker Green/Gray border (New) */
-    --input: 135 10% 22%; /* Darker Green/Gray input background (New) */
-    --ring: 135 60% 55%; /* Brighter Vivid Green (New) */
+    --border: 220 20% 25%; /* Darker Blue-Gray border */
+    --input: 220 20% 20%; /* Darker Blue-Gray input background */
+    --ring: 210 70% 60%; /* Brighter Blue */
     
     /* chart colors for dark mode */
-    --chart-1: 135 60% 55%; /* Brighter Vivid Green (New) */
-    --chart-2: 16 90% 70%;  /* Brighter Coral */
-    --chart-3: 210 60% 65%; /* Lighter Blue */
-    --chart-4: 90 40% 65%;  /* Brighter Soft Green */
-    --chart-5: 30 12% 65%;   /* Lighter Brown/Tan */
+    --chart-1: 210 70% 60%; /* Brighter Blue */
+    --chart-2: 135 60% 50%;  /* Brighter Green */
+    --chart-3: 180 60% 55%; /* Lighter Teal */
+    --chart-4: 30 75% 65%;  /* Brighter Orange */
+    --chart-5: 260 55% 70%;   /* Lighter Purple */
 
     /* Sidebar variables for dark mode */
-    --sidebar-background: 135 10% 8%; /* Even darker Green/Gray for sidebar (New) */
-    --sidebar-foreground: 135 10% 88%; /* Light Off-Green/Gray (New) */
-    --sidebar-primary: 135 55% 50%; /* Slightly adjusted Brighter Vivid Green (New) */
-    --sidebar-primary-foreground: 135 10% 95%; /* Very Light Off-Green (New) */
-    --sidebar-accent: 16 85% 68%; /* Slightly adjusted Brighter Coral */
-    --sidebar-accent-foreground: 0 0% 100%; /* White */
-    --sidebar-border: 135 10% 25%; /* Dark Green/Gray border for sidebar (New) */
-    --sidebar-ring: 135 60% 55%; /* Brighter Vivid Green (New) */
+    --sidebar-background: 220 20% 8%; /* Even darker Blue-Gray for sidebar */
+    --sidebar-foreground: 210 15% 88%;
+    --sidebar-primary: 210 65% 55%; /* Slightly adjusted Brighter Blue */
+    --sidebar-primary-foreground: 210 10% 95%;
+    --sidebar-accent: 135 55% 45%; /* Slightly adjusted Brighter Green */
+    --sidebar-accent-foreground: 135 10% 95%;
+    --sidebar-border: 220 20% 22%;
+    --sidebar-ring: 210 70% 60%;
   }
 }
 
@@ -112,3 +112,5 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+    
