@@ -60,9 +60,67 @@ export default function HomePage() {
           </p>
           <div className="mt-10">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-              <Link href="#tutores">DESCUBRIR MÁS</Link>
+              <Link href="#gia-chat-demo">DESCUBRIR MÁS</Link>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* GIA Chat Demo Section */}
+      <section id="gia-chat-demo" className="w-full py-12 md:py-20 bg-secondary/50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Bot className="h-16 w-16 text-primary mx-auto mb-4" />
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">✨ Conoce a GIA: La Inteligencia Artificial que Acompaña a tu Mascota ✨</h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+              En PetSync, estamos desarrollando a GIA, una asistente virtual diseñada para ofrecerte respuestas inteligentes y personalizadas sobre el cuidado de tu mascota. Accede a información, resuelve dudas comunes y obtén orientación al instante.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <h3 className="text-2xl font-semibold text-foreground text-center mb-8">¿Qué puedes hacer con GIA en esta Demo Beta?</h3>
+            <div className="grid md:grid-cols-3 gap-6 text-center">
+              <Card className="p-6 shadow-lg">
+                <CardHeader className="p-0 mb-3 items-center">
+                  <Search className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle className="text-xl">Consultas Rápidas de Cuidado</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <p className="text-muted-foreground text-sm">Pregúntale a GIA sobre alimentación, comportamiento, o cuidados generales. (Ej: "GIA, ¿cuántas veces al día debe comer mi cachorro?")</p>
+                </CardContent>
+              </Card>
+              <Card className="p-6 shadow-lg">
+                <CardHeader className="p-0 mb-3 items-center">
+                  <HeartPulse className="h-10 w-10 text-primary mb-2" />
+                  <CardTitle className="text-xl">Orientación General de Salud</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <p className="text-muted-foreground text-sm">Describe un síntoma o una duda de salud y GIA te ofrecerá información general y posibles pasos a seguir. (Ej: "GIA, mi gato estornuda mucho últimamente, ¿qué podría indicar?")</p>
+                </CardContent>
+              </Card>
+              <Card className="p-6 shadow-lg">
+                <CardHeader className="p-0 mb-3 items-center">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary mb-2"><path d="M17.5 12.5a10.91 10.91 0 0 1-2.88 7.5"/><path d="M6.5 12.5A10.91 10.91 0 0 0 9.38 20"/><path d="M12.5 17.5a10.91 10.91 0 0 1-7.5-2.88"/><path d="M12.5 6.5a10.91 10.91 0 0 0-2.88-2.62"/><path d="M19.5 20.5a2.5 2.5 0 0 1-2.17-1.11L12.5 12.5l-4.83 6.89a2.5 2.5 0 0 1-4.33-2.5L7.5 12l-4.11-4.11a2.5 2.5 0 0 1 2.5-4.33L12.5 12.5l6.89-4.83a2.5 2.5 0 0 1 2.5 4.33L17 12l4.17 4.17a2.5 2.5 0 0 1-1.67 4.33Z"/></svg>
+                  <CardTitle className="text-xl">Entiende Mejor a tu Mascota</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <p className="text-muted-foreground text-sm">GIA te ayuda a descifrar comportamientos y necesidades de tu compañero peludo.</p>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="text-center mt-10">
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-md" asChild>
+                <Link href="/gia">Preguntar a GIA</Link>
+              </Button>
+            </div>
+          </div>
+          <Alert variant="destructive" className="max-w-2xl mx-auto mt-12 text-left shadow-md">
+            <TriangleAlert className="h-5 w-5" />
+            <AlertTitle className="font-semibold">⚠️ GIA es tu copiloto, no tu veterinario.</AlertTitle>
+            <AlertDescription>
+            La información proporcionada por GIA en esta demo es para fines orientativos y educativos. NUNCA debe reemplazar el diagnóstico, consejo o tratamiento de un veterinario profesional. Para la salud de tu mascota, consulta siempre a tu veterinario de confianza.
+            </AlertDescription>
+          </Alert>
         </div>
       </section>
 
@@ -160,7 +218,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-start">
                     <Cloud className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
-                    <p>Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
+                    <p>Cuando la app PetSync esté lista, descárgala para iOS o Android. Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
                 </div>
               </CardContent>
             </Card>
@@ -187,21 +245,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Waitlist Section */}
-      <section id="waitlist" className="w-full py-12 md:py-20">
-        <div className="container mx-auto px-4 max-w-2xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¡Estamos en versión beta!</h2>
-          <p className="text-muted-foreground mb-8">
-            Sumate a la waitlist para ser de los primeros en probarla y ayudarnos a construir la mejor herramienta para el cuidado de nuestras mascotas.
-          </p>
-          <WaitlistForm />
-        </div>
-      </section>
-      
-       {/* Quiénes Somos Section */}
-      <section id="quienes-somos" className="w-full py-12 md:py-20 bg-secondary/50">
-        <div className="container mx-auto px-4 max-w-3xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">Quiénes Somos</h2>
+      {/* Quiénes Somos Section */}
+      <section id="quienes-somos" className="w-full py-12 md:py-20 bg-background">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Quiénes Somos</h2>
+          </div>
           <Card className="p-6 md:p-8 shadow-xl bg-card">
             <CardContent className="p-0 text-left">
               <div className="max-w-3xl mx-auto space-y-6 text-muted-foreground">
@@ -219,7 +268,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="w-full py-12 md:py-20 bg-background">
+      <section id="faq" className="w-full py-12 md:py-20 bg-secondary/50">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Preguntas Frecuentes</h2>
@@ -241,9 +290,17 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Waitlist Section */}
+      <section id="waitlist" className="w-full py-12 md:py-20 bg-background">
+        <div className="container mx-auto px-4 max-w-2xl text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¡Estamos en versión beta!</h2>
+          <p className="text-muted-foreground mb-8">
+            Sumate a la waitlist para ser de los primeros en probarla y ayudarnos a construir la mejor herramienta para el cuidado de nuestras mascotas.
+          </p>
+          <WaitlistForm />
+          <p className="mt-8 text-sm text-muted-foreground">PetSync y GIA están en desarrollo. ¡Estamos construyendo la app que revolucionará el cuidado de tu mascota!</p>
+        </div>
+      </section>
     </div>
   );
 }
-
-
-    

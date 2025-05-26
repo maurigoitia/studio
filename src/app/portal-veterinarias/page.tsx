@@ -90,6 +90,7 @@ export default function PortalVeterinariasInfoPage() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
+                  {/* Debes reemplazar este enlace con el de tu formulario de Google real */}
                   <Link href="https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
                     Solicitar Demo / Más Información
                   </Link>
