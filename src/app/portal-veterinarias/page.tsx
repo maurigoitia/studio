@@ -80,10 +80,14 @@ export default function PortalVeterinariasAccessPage() {
         <CardContent className="space-y-6">
           <Alert variant="default" className="bg-accent/10 border-accent/50">
             <AlertTriangle className="h-5 w-5 text-accent" />
-            <AlertTitle className="text-accent font-semibold">Funcionalidad de Autenticación</AlertTitle>
-            <AlertDescription className="text-accent/90">
-              La autenticación con Email/Contraseña está habilitada. Los inicios de sesión sociales (Google, etc.) son visuales y estarán disponibles próximamente.
-              Necesitarás configurar tu proyecto Firebase en <code>src/lib/firebase/config.ts</code> y habilitar la autenticación por Email/Contraseña en la consola de Firebase.
+            <AlertTitle className="text-accent font-semibold">Configuración de Autenticación Necesaria</AlertTitle>
+            <AlertDescription className="text-accent/90 text-sm">
+              Para que el registro e inicio de sesión funcionen, debes:
+              <ol className="list-decimal list-inside mt-1 space-y-1">
+                <li>Configurar tu proyecto Firebase en <code>src/lib/firebase/config.ts</code> con tus credenciales reales.</li>
+                <li>Habilitar la autenticación por "Correo electrónico/Contraseña" en la consola de Firebase.</li>
+              </ol>
+              Los inicios de sesión sociales (Google, etc.) son visuales y estarán disponibles próximamente.
             </AlertDescription>
           </Alert>
 
@@ -213,7 +217,7 @@ export default function PortalVeterinariasAccessPage() {
           <Separator className="my-8" />
 
           <div className="text-center">
-            <p className="text-sm text-muted-foreground mb-2">¿Representas a una clínica y quieres unirte?</p>
+            <p className="text-sm text-muted-foreground mb-2">¿Representas a una clínica y quieres unirte a PetSync?</p>
             <Button variant="outline" asChild className="w-full border-primary text-primary hover:bg-primary/10">
               <Link href="/#waitlist">Registrar mi Clínica (Unirse a Waitlist)</Link>
             </Button>
@@ -224,3 +228,6 @@ export default function PortalVeterinariasAccessPage() {
     </div>
   );
 }
+
+
+    

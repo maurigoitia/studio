@@ -1,10 +1,8 @@
 
 "use server";
 
-import { medicalHistoryAssistant } from "@/ai/flows/medical-history-assistant";
-import type { MedicalHistoryAssistantInput, MedicalHistoryAssistantOutput } from "@/ai/flows/medical-history-assistant";
-import { WaitlistFormSchema, MedicalAssistantFormSchema, GenericQueryFormSchema } from "@/lib/schemas";
-import type { WaitlistFormValues, MedicalAssistantFormValues, GenericQueryFormValues } from "@/lib/schemas";
+import { WaitlistFormSchema, GenericQueryFormSchema } from "@/lib/schemas";
+import type { WaitlistFormValues, GenericQueryFormValues } from "@/lib/schemas";
 import { genericQuery } from "@/ai/flows/generic-query-flow";
 import type { GenericQueryInput, GenericQueryOutput } from "@/ai/flows/generic-query-flow";
 
@@ -38,34 +36,6 @@ export async function subscribeToWaitlistAction(data: WaitlistFormValues): Promi
   };
 }
 
-interface MedicalAdviceResponse {
-  success: boolean;
-  message?: string;
-  data?: MedicalHistoryAssistantOutput;
-}
-
-export async function getMedicalAdviceAction(data: MedicalAssistantFormValues): Promise<MedicalAdviceResponse> {
-  const validatedFields = MedicalAssistantFormSchema.safeParse(data);
-
-  if (!validatedFields.success) {
-    return {
-      success: false,
-      message: "Datos inválidos. Por favor, revisa el formulario.",
-    };
-  }
-  
-  const { medicalHistory, question } = validatedFields.data;
-
-  try {
-    const input: MedicalHistoryAssistantInput = { medicalHistory, question };
-    const result = await medicalHistoryAssistant(input);
-    return { success: true, data: result };
-  } catch (error) {
-    console.error("Error getting medical advice:", error);
-    return { success: false, message: "Hubo un error al procesar tu solicitud. Inténtalo de nuevo." };
-  }
-}
-
 interface GenericQueryResponse {
   success: boolean;
   message?: string;
@@ -81,7 +51,7 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
       message: "Datos inválidos. Por favor, revisa el formulario.",
     };
   }
-  // petAge is removed, species is added, petName is now optional
+  
   const { email, petName, species, question } = validatedFields.data;
 
   try {
