@@ -13,7 +13,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Logo />
-        <nav className="hidden items-center gap-1 md:gap-2 md:flex">
+        <nav className="hidden items-center gap-2 md:gap-4 md:flex">
           <Button variant="ghost" asChild>
             <Link href="/#tutores">Para Tutores</Link>
           </Button>
@@ -30,7 +30,7 @@ export default function Header() {
             </Link>
           </Button>
           <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
-            <Link href="/info-portal-veterinarias">
+            <Link href="/portal-veterinarias/acceso">
               <LayoutDashboard className="mr-2 h-5 w-5" />
               Portal Veterinarias
             </Link>
@@ -61,7 +61,7 @@ export default function Header() {
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
-                  <Link href="/info-portal-veterinarias" className="text-lg font-medium text-foreground hover:text-primary transition-colors flex items-center">
+                  <Link href="/portal-veterinarias/acceso" className="text-lg font-medium text-foreground hover:text-primary transition-colors flex items-center">
                      <LayoutDashboard className="mr-2 h-5 w-5" /> Portal Veterinarias
                   </Link>
                 </SheetClose>
