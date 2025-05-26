@@ -319,7 +319,7 @@ export default function PortalVeterinariasDashboardPage() {
                     <CardTitle className="text-lg flex items-center">
                       <Clock className="mr-2 h-5 w-5 text-primary" /> Gestión de Sala de Espera y Triage
                     </CardTitle>
-                    <CardDescription className="text-xs">Maneja el flujo de pacientes sin turno previo y prioriza urgencias. (Urgencias y Espontáneos)</CardDescription>
+                    <CardDescription className="text-xs">(Urgencias y Espontáneos). Maneja el flujo de pacientes sin turno previo y prioriza urgencias.</CardDescription>
                   </CardHeader>
                   <CardContent className="p-4 space-y-3">
                     <div>
@@ -600,7 +600,7 @@ export default function PortalVeterinariasDashboardPage() {
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Editar Datos del Paciente</DropdownMenuItem>
                                     <DropdownMenuItem className="text-destructive hover:!bg-destructive/10 focus:!bg-destructive/10 focus:!text-destructive">
-                                        <Trash2 className="mr-2 h-4 w-4" /> Eliminar Paciente (Demo)
+                                        <Trash2 className="mr-2 h-4 w-4" /> Eliminar Paciente
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
@@ -667,7 +667,7 @@ export default function PortalVeterinariasDashboardPage() {
                   <form className="space-y-3">
                     <div className="flex items-center space-x-2">
                         <Switch id="global-reminders" defaultChecked />
-                        <Label htmlFor="global-reminders" className="text-sm">Activar Recordatorios Globales (Demo)</Label>
+                        <Label htmlFor="global-reminders" className="text-sm">Activar Recordatorios Globales</Label>
                     </div>
                     <div>
                       <Label htmlFor="notificationType">Tipo de Notificación de Ejemplo</Label>
@@ -677,7 +677,7 @@ export default function PortalVeterinariasDashboardPage() {
                       <Label htmlFor="notificationMessage">Mensaje de Ejemplo</Label>
                       <Input id="notificationMessage" value="¡Hola [Dueño]! Es hora de la próxima vacuna anual de [Mascota] el [Fecha]." readOnly className="bg-background" />
                     </div>
-                    <Button disabled>Enviar Notificación de Prueba (Deshabilitado en Demo)</Button>
+                    <Button>Enviar Notificación de Prueba</Button>
                   </form>
                 </CardContent>
               </Card>
@@ -719,7 +719,7 @@ export default function PortalVeterinariasDashboardPage() {
                     <Label htmlFor="auto-app-reminders">Enviar Recordatorios por App (Próximamente)</Label>
                 </div>
               </div>
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground mt-4">Guardar Cambios (Demo)</Button>
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground mt-4">Guardar Cambios</Button>
             </CardContent>
           </Card>
 
@@ -747,7 +747,7 @@ export default function PortalVeterinariasDashboardPage() {
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="p-4 bg-muted/50 rounded-md">
-                    <p className="text-sm text-foreground">Tu plan actual: <Badge variant="secondary">Plan PRO (Demo)</Badge></p>
+                    <p className="text-sm text-foreground">Tu plan actual: <Badge variant="secondary">Plan PRO</Badge></p>
                     <p className="text-sm text-muted-foreground mt-1">Usuarios activos: 3 de 5</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3">
@@ -934,7 +934,7 @@ export default function PortalVeterinariasDashboardPage() {
 
             <DialogFooter className="mt-auto pt-4 border-t">
               <Button variant="outline" onClick={() => setIsPatientDetailOpen(false)}>Cerrar Ficha</Button>
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground"><Edit3 className="mr-2 h-4 w-4"/> Editar Ficha (Demo)</Button>
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground"><Edit3 className="mr-2 h-4 w-4"/> Editar Ficha</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

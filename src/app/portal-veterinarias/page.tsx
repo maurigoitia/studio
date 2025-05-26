@@ -20,12 +20,9 @@ export default function PortalVeterinariasAccessPage() {
         <CardContent className="space-y-6">
           <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6">
             <Link href="/portal-veterinarias/dashboard">
-              Ingresar al Portal (Demo)
+              Acceder al Portal
             </Link>
           </Button>
-          <p className="text-xs text-muted-foreground text-center px-4">
-            Nota: Este es un flujo de demostración. En la versión completa, el acceso se gestionaría a través de un sistema de autenticación seguro (ej. Auth0 u otro proveedor de identidad).
-          </p>
            <div className="text-center mt-4">
             <p className="text-sm text-muted-foreground">¿Aún no tienes acceso para tu clínica?</p>
             <Button variant="link" asChild className="text-primary">
