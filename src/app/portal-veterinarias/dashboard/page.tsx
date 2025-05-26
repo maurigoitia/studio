@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,10 +19,12 @@ import { Badge } from "@/components/ui/badge";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Command, CommandInput, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 
-import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, LogIn, Briefcase, Building, DollarSign, ExternalLink, ChevronDown, UserCog, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, Check, ChevronsUpDown, Dog, Cat, Bird, Rabbit, Microscope, Pill, FileHeart, Image as ImageIcon, ShieldAlert } from "lucide-react";
+import { CalendarDays, Users, Mail, Settings, LogOut, BellRing, PlusCircle, UserPlus, ListChecks, Clock, AlertTriangle, UsersRound, Send, BarChart3, FolderKanban, MailCheck, Plug, Syringe, Stethoscope, Edit3, MoreHorizontal, Trash2, FileText, UserCheck, Video, Briefcase, Building, DollarSign, ExternalLink, ChevronDown, UserCog, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, Check, ChevronsUpDown, Dog, Cat, Bird, Rabbit, Microscope, Pill, FileHeart, Image as ImageIcon, ShieldAlert, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 
 // Dummy data for placeholders
@@ -113,6 +115,33 @@ export default function PortalVeterinariasDashboardPage() {
   const [selectedBreed, setSelectedBreed] = useState("");
   const [isPatientDetailOpen, setIsPatientDetailOpen] = useState(false);
   const [selectedPatientForDetail, setSelectedPatientForDetail] = useState<Patient | null>(null);
+  const { user, loading, logOut } = useAuth();
+  const router = useRouter();
+
+ useEffect(() => {
+    if (!loading && !user) {
+      router.replace('/portal-veterinarias');
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[calc(100vh-8rem)]">
+        <Loader2 className="h-16 w-16 animate-spin text-primary" />
+        <p className="ml-4 text-lg">Cargando panel...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    // This should ideally not be reached if redirection works, but as a fallback
+    return (
+        <div className="flex flex-col justify-center items-center min-h-[calc(100vh-8rem)]">
+            <p className="text-xl mb-4">Debes iniciar sesión para acceder a esta página.</p>
+            <Button onClick={() => router.push('/portal-veterinarias')}>Ir a Inicio de Sesión</Button>
+        </div>
+    );
+  }
 
 
   const handleViewPatientDetail = (patient: Patient) => {
@@ -132,17 +161,15 @@ export default function PortalVeterinariasDashboardPage() {
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src="https://placehold.co/100x100.png" alt="Dr. Vet" data-ai-hint="doctor veterinarian" />
-            <AvatarFallback>DV</AvatarFallback>
+            <AvatarFallback>{user?.email?.substring(0,2).toUpperCase() || 'DV'}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-semibold text-foreground">Dr. Vet Ejemplo</p>
+            <p className="font-semibold text-foreground">{user?.email || 'Dr. Vet Ejemplo'}</p>
             <p className="text-xs text-muted-foreground">Clínica Veterinaria Central</p>
           </div>
-          <Button variant="outline" size="icon" asChild>
-            <Link href="/portal-veterinarias"> 
+          <Button variant="outline" size="icon" onClick={logOut}> 
               <LogOut className="h-5 w-5" />
               <span className="sr-only">Cerrar Sesión</span>
-            </Link>
           </Button>
         </div>
       </header>
@@ -319,7 +346,7 @@ export default function PortalVeterinariasDashboardPage() {
                     <CardTitle className="text-lg flex items-center">
                       <Clock className="mr-2 h-5 w-5 text-primary" /> Gestión de Sala de Espera y Triage
                     </CardTitle>
-                    <CardDescription className="text-xs">(Urgencias y Espontáneos). Maneja el flujo de pacientes sin turno previo y prioriza urgencias.</CardDescription>
+                    <CardDescription className="text-xs">(Urgencias y Espontáneos). Los veterinarios accederán al historial completo y podrán enviar resúmenes de consulta, recetas y recomendaciones al perfil del tutor en la app PetSync o a su email, **actualizando el historial del paciente en la base de datos.**</CardDescription>
                   </CardHeader>
                   <CardContent className="p-4 space-y-3">
                     <div>
@@ -467,7 +494,7 @@ export default function PortalVeterinariasDashboardPage() {
           <Card className="shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl">Gestión de Pacientes Animales</CardTitle>
-              <CardDescription>Accede y administra los historiales médicos individuales de tus pacientes, **almacenados de forma segura y centralizada en la base de datos en la nube de PetSync.**</CardDescription>
+              <CardDescription>PetSync te permite mantener fichas clínicas digitales completas e individuales para cada paciente animal, **almacenadas de forma segura y centralizada en la base de datos en la nube de PetSync.**</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex flex-col sm:flex-row gap-4 items-center">

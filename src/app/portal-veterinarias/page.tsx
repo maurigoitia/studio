@@ -1,13 +1,24 @@
 
+"use client";
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Mail, Briefcase, Building, DollarSign, ExternalLink } from 'lucide-react'; // Apple icon might not be in lucide, LogIn is good for general login
+import { Mail, Briefcase, Building, DollarSign, ExternalLink, Loader2, LogIn, AlertTriangle } from 'lucide-react';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SignInFormSchema, SignUpFormSchema, type SignInFormValues, type SignUpFormValues } from "@/lib/schemas";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useAuth } from '@/hooks/useAuth';
+import { useState, useTransition } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-// Simple SVG for Google and Apple icons as placeholders
+
 const GoogleIcon = () => (
   <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -24,8 +35,36 @@ const AppleIcon = () => (
   </svg>
 );
 
-
 export default function PortalVeterinariasAccessPage() {
+  const [activeTab, setActiveTab] = useState("signin");
+  const { signIn, signUp } = useAuth();
+  const [isSignInPending, startSignInTransition] = useTransition();
+  const [isSignUpPending, startSignUpTransition] = useTransition();
+  const { toast } = useToast();
+
+
+  const signInForm = useForm<SignInFormValues>({
+    resolver: zodResolver(SignInFormSchema),
+    defaultValues: { email: "", password: "" },
+  });
+
+  const signUpForm = useForm<SignUpFormValues>({
+    resolver: zodResolver(SignUpFormSchema),
+    defaultValues: { email: "", password: "", confirmPassword: "" },
+  });
+
+  const onSignInSubmit = (data: SignInFormValues) => {
+    startSignInTransition(async () => {
+      await signIn(data);
+    });
+  };
+
+  const onSignUpSubmit = (data: SignUpFormValues) => {
+    startSignUpTransition(async () => {
+      await signUp(data);
+    });
+  };
+
   return (
     <div className="container mx-auto py-12 md:py-20 px-4 flex flex-col items-center justify-center min-h-[calc(100vh-10rem)]">
       <Card className="w-full max-w-md shadow-xl">
@@ -39,59 +78,142 @@ export default function PortalVeterinariasAccessPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="space-y-3">
-            <Button variant="outline" className="w-full">
-              <GoogleIcon />
-              Iniciar sesión con Google
-            </Button>
-            <Button variant="outline" className="w-full">
-              <Mail className="mr-2 h-5 w-5" /> {/* Using Mail for Outlook as a generic email provider */}
-              Iniciar sesión con Outlook
-            </Button>
-            <Button variant="outline" className="w-full">
-              <AppleIcon />
-              Iniciar sesión con Apple
-            </Button>
-          </div>
+          <Alert variant="default" className="bg-accent/10 border-accent/50">
+            <AlertTriangle className="h-5 w-5 text-accent" />
+            <AlertTitle className="text-accent font-semibold">Funcionalidad de Autenticación</AlertTitle>
+            <AlertDescription className="text-accent/90">
+              La autenticación con Email/Contraseña está habilitada. Los inicios de sesión sociales (Google, etc.) son visuales y estarán disponibles próximamente.
+              Necesitarás configurar tu proyecto Firebase en <code>src/lib/firebase/config.ts</code> y habilitar la autenticación por Email/Contraseña en la consola de Firebase.
+            </AlertDescription>
+          </Alert>
 
-          <div className="relative">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="signin">Iniciar Sesión</TabsTrigger>
+              <TabsTrigger value="signup">Registrarse</TabsTrigger>
+            </TabsList>
+            <TabsContent value="signin" className="space-y-6 pt-6">
+              <Form {...signInForm}>
+                <form onSubmit={signInForm.handleSubmit(onSignInSubmit)} className="space-y-4">
+                  <FormField
+                    control={signInForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Correo Electrónico</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="tu@correo.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={signInForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Contraseña</FormLabel>
+                        <FormControl>
+                          <Input type="password" placeholder="••••••••" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" disabled={isSignInPending}>
+                    {isSignInPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogIn className="mr-2 h-4 w-4" />}
+                    Iniciar Sesión
+                  </Button>
+                </form>
+              </Form>
+              <div className="text-center text-sm">
+                <Link href="#" className="text-primary hover:underline" onClick={(e) => {e.preventDefault(); toast({title: "Funcionalidad no implementada", description: "La recuperación de contraseña estará disponible pronto."})}}>
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </div>
+            </TabsContent>
+            <TabsContent value="signup" className="space-y-6 pt-6">
+              <Form {...signUpForm}>
+                <form onSubmit={signUpForm.handleSubmit(onSignUpSubmit)} className="space-y-4">
+                  <FormField
+                    control={signUpForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Correo Electrónico</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="tu@correo.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={signUpForm.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Contraseña</FormLabel>
+                        <FormControl>
+                          <Input type="password" placeholder="Mínimo 6 caracteres" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={signUpForm.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Confirmar Contraseña</FormLabel>
+                        <FormControl>
+                          <Input type="password" placeholder="Repite tu contraseña" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" disabled={isSignUpPending}>
+                    {isSignUpPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                    Registrarse
+                  </Button>
+                </form>
+              </Form>
+            </TabsContent>
+          </Tabs>
+
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-card px-2 text-muted-foreground">
-                O inicia sesión con tu correo
+                O continúa con
               </span>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="email">Correo Electrónico</Label>
-              <Input id="email" type="email" placeholder="tu@correo.com" disabled className="bg-muted/50" />
-            </div>
-            <div>
-              <Label htmlFor="password">Contraseña</Label>
-              <Input id="password" type="password" placeholder="••••••••" disabled className="bg-muted/50" />
-            </div>
+          <div className="space-y-3">
+            <Button variant="outline" className="w-full" onClick={() => toast({title: "Próximamente", description: "Inicio de sesión con Google estará disponible pronto."})} disabled>
+              <GoogleIcon />
+              Iniciar sesión con Google
+            </Button>
+            <Button variant="outline" className="w-full" onClick={() => toast({title: "Próximamente", description: "Inicio de sesión con Outlook estará disponible pronto."})} disabled>
+              <Mail className="mr-2 h-5 w-5" />
+              Iniciar sesión con Outlook
+            </Button>
+            <Button variant="outline" className="w-full" onClick={() => toast({title: "Próximamente", description: "Inicio de sesión con Apple estará disponible pronto."})} disabled>
+              <AppleIcon />
+              Iniciar sesión con Apple
+            </Button>
           </div>
           
-          <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-3">
-            {/* For demo purposes, this button still links to the dashboard */}
-            <Link href="/portal-veterinarias/dashboard">
-              Iniciar Sesión
-            </Link>
-          </Button>
-          <div className="text-center text-sm">
-            <Link href="#" className="text-primary hover:underline">
-              ¿Olvidaste tu contraseña?
-            </Link>
-          </div>
-
-          <Separator className="my-6" />
+          <Separator className="my-8" />
 
           <div className="text-center">
-            <p className="text-sm text-muted-foreground mb-2">¿Aún no tienes cuenta en PetSync para tu clínica?</p>
+            <p className="text-sm text-muted-foreground mb-2">¿Representas a una clínica y quieres unirte?</p>
             <Button variant="outline" asChild className="w-full border-primary text-primary hover:bg-primary/10">
               <Link href="/#waitlist">Registrar mi Clínica (Unirse a Waitlist)</Link>
             </Button>
@@ -102,4 +224,3 @@ export default function PortalVeterinariasAccessPage() {
     </div>
   );
 }
-
