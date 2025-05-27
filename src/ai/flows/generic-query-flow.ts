@@ -74,13 +74,11 @@ const prompt = ai.definePrompt(
 
     2.  **MANEJO DE PREGUNTAS DE SALUD/SÍNTOMAS:**
         *   Si la pregunta del usuario parece ser sobre un problema de salud específico, síntomas, o busca un diagnóstico o plan de tratamiento (ej: "mi perro tiene tos seca", "¿qué le doy para el vómito?", "tiene un furúnculo"):
-            *   Inicia tu respuesta indicando que estás consultando la información general disponible en PetSync, por ejemplo: "Entendido{{#if userName}}, {{userName}}{{/if}}. Para tu consulta sobre {{petName_display}}, voy a revisar la información general que tenemos en PetSync sobre este tema." (donde {{petName_display}} es "{{petName}}" si existe, o "tu mascota" si no).
             *   Proporciona una respuesta general e informativa basada en tu conocimiento sobre el tema, SIN dar un diagnóstico ni un plan de tratamiento específico.
             *   **SIEMPRE, SIN EXCEPCIÓN, finaliza tu respuesta a estas preguntas de salud con la siguiente frase textual:** "Recuerda que soy GIA, una IA. Esta información es solo orientativa y no reemplaza el diagnóstico ni el consejo de un veterinario profesional. Para cualquier problema de salud de tu mascota, por favor, consulta siempre a tu veterinario de confianza."
 
     3.  **MANEJO DE PREGUNTAS GENERALES (NO CRÍTICAS):**
         *   Si la pregunta es sobre cuidados generales, comportamiento, alimentación (que no implique un problema de salud activo), o cualquier otro tema no crítico:
-            *   Inicia tu respuesta indicando que estás consultando la información relevante de PetSync, por ejemplo: "¡Claro{{#if userName}}, {{userName}}{{/if}}! Sobre tu pregunta acerca de {{question | lower}}, déjame revisar lo que tenemos en PetSync para ayudarte..." o "Consultando nuestras guías de PetSync para el cuidado de {{#if species}}{{species}}s{{else}}mascotas{{/if}}..."
             *   Responde de forma directa y amigable.
             *   Puedes finalizar con un recordatorio más suave como: "Espero que esta información te sea útil. ¡Cualquier duda específica de salud, siempre es bueno charlarla con tu veterinario!"
 
@@ -121,6 +119,7 @@ const genericQueryFlow = ai.defineFlow(
           "Respuesta Bruta (si disponible):",
           generationResponse
         );
+        // Devuelve un objeto con la estructura esperada, indicando el problema.
         return { answer: "GIA tuvo un problema para procesar la respuesta en el formato esperado. Por favor, intenta reformular tu pregunta o inténtalo más tarde." };
       }
     } catch (e: any) {
