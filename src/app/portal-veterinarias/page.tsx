@@ -4,9 +4,24 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn } from "lucide-react";
+import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel } from "@/components/ui/select";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useState } from "react";
+
+// URL de ejemplo para el Google Form. DEBES REEMPLAZARLA con tu URL real.
+const GOOGLE_FORM_VET_EARLY_ACCESS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link";
 
 export default function VetPortalInfoPage() {
   const features = [
@@ -52,8 +67,6 @@ export default function VetPortalInfoPage() {
     }
   ];
 
-  const googleFormLink = "https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link"; // Reemplaza con tu link real
-
   return (
     <div className="flex flex-col min-h-screen bg-background">
       {/* Page-specific simple navigation */}
@@ -61,7 +74,7 @@ export default function VetPortalInfoPage() {
         <div className="container mx-auto px-4 h-14 flex items-center justify-between">
           <Logo />
           <div className="space-x-4">
-            <Link href={googleFormLink} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-primary">
+            <Link href={GOOGLE_FORM_VET_EARLY_ACCESS_URL} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-primary">
               Registrarse (Acceso Temprano)
             </Link>
             <Link href="#contacto-portal" className="text-sm font-medium text-muted-foreground hover:text-primary">
@@ -119,9 +132,9 @@ export default function VetPortalInfoPage() {
                         <CardTitle className="text-xl">Conexiones e Integraciones (Futuro)</CardTitle>
                     </CardHeader>
                     <CardContent className="p-0 mt-2">
-                        <p className="text-muted-foreground text-sm">
+                        <CardDescription className="text-muted-foreground text-sm">
                         Estamos trabajando para que PetSync se integre con tus herramientas favoritas. Próximamente: Conexión con software de gestión clínica, plataformas de email marketing, pasarelas de pago y más. La información de tu clínica y pacientes se gestionará de forma segura para facilitar estas integraciones.
-                        </p>
+                        </CardDescription>
                     </CardContent>
                 </Card>
             </div>
@@ -156,7 +169,7 @@ export default function VetPortalInfoPage() {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform" asChild>
-                    <Link href={googleFormLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                    <Link href={GOOGLE_FORM_VET_EARLY_ACCESS_URL} target="_blank" rel="noopener noreferrer" className="flex items-center">
                       Solicitar Demo / Más Información <ExternalLink className="ml-2 h-5 w-5" />
                     </Link>
                   </Button>
@@ -173,9 +186,9 @@ export default function VetPortalInfoPage() {
         <section id="contacto-portal" className="py-12 md:py-20 bg-background">
             <div className="container mx-auto px-4 max-w-xl text-center">
                 <h2 className="text-3xl font-bold text-foreground mb-4">¿Preguntas? Contáctanos</h2>
-                <p className="text-muted-foreground mb-6">
+                <CardDescription className="text-muted-foreground mb-6">
                     Si tienes alguna duda sobre el Portal PetSync para Veterinarias o el programa de acceso temprano, no dudes en escribirnos.
-                </p>
+                </CardDescription>
                 <Button variant="outline" asChild>
                     <Link href="mailto:soporte-vets@petsync.example.com">Enviar un Email</Link>
                 </Button>
@@ -199,4 +212,3 @@ export default function VetPortalInfoPage() {
     </div>
   );
 }
-
