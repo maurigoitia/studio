@@ -23,12 +23,7 @@ export default function Header() {
           <Button variant="ghost" asChild>
             <Link href="/#faq">Preguntas Frecuentes</Link>
           </Button>
-          <Button variant="outline" asChild className="border-primary text-primary hover:bg-primary/10 hover:text-primary">
-            <Link href="/gia">
-              <Brain className="mr-2 h-5 w-5" />
-              Chatea con GIA
-            </Link>
-          </Button>
+          {/* GIA Chat button removed from here */}
           <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
             <Link href="/portal-veterinarias">
               <LogIn className="mr-2 h-5 w-5" />
@@ -55,11 +50,7 @@ export default function Header() {
                 <SheetClose asChild>
                   <Link href="/#faq" className="text-lg font-medium text-foreground hover:text-primary transition-colors py-2">Preguntas Frecuentes</Link>
                 </SheetClose>
-                <SheetClose asChild>
-                  <Link href="/gia" className="text-lg font-medium text-foreground hover:text-primary transition-colors flex items-center py-2">
-                    <Brain className="mr-2 h-5 w-5" /> Chatea con GIA
-                  </Link>
-                </SheetClose>
+                {/* GIA Chat link removed from mobile menu */}
                 <SheetClose asChild>
                   <Link href="/portal-veterinarias" className="text-lg font-medium text-foreground hover:text-primary transition-colors flex items-center py-2">
                      <LogIn className="mr-2 h-5 w-5" /> Portal Veterinarias

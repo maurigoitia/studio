@@ -69,7 +69,7 @@ export default function HomePage() {
       <section id="features" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Simplifica el Cuidado de tu Mascota con PetSync</h2>
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <Users className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
@@ -96,7 +96,7 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
+             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card md:col-span-1 lg:col-span-1">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <BotMessageSquare className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Conoce a GIA (Demo IA)</CardTitle>
@@ -105,9 +105,8 @@ export default function HomePage() {
                 <p className="text-muted-foreground mb-3 text-sm sm:text-base">
                   Prueba nuestro asistente IA para obtener respuestas generales sobre el cuidado de mascotas. ¡GIA aprende y mejora cada día!
                 </p>
-                 <Button variant="outline" className="w-full sm:w-auto border-accent text-accent hover:bg-accent/10 hover:text-accent" asChild>
-                    <Link href="/gia">Chatear con GIA</Link>
-                  </Button>
+                 {/* Button to open GIA chat widget will be globally available, so no specific link here */}
+                 <p className="text-sm text-primary font-medium">Busca el ícono de chat de GIA para interactuar.</p>
               </CardContent>
             </Card>
           </div>

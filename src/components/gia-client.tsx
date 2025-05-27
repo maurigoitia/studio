@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { askGenericQuestionAction } from "@/app/actions"; 
 import { useState, useTransition, useRef, useEffect, FormEvent } from "react";
-import { Loader2, Send, Bot, UserCircle } from "lucide-react"; 
+import { Loader2, Send, Bot, UserCircle, ChevronDown } from "lucide-react"; 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -26,6 +26,7 @@ type ConversationStage =
   | 'AWAITING_EMAIL_INPUT'
   | 'AWAITING_PET_NAME'
   | 'AWAITING_PET_SPECIES'
+  // | 'AWAITING_PET_AGE' // Pet age removed from flow
   | 'AWAITING_MAIN_QUESTION'
   | 'PROCESSING_AI'
   | 'AI_RESPONSE_DISPLAYED'
@@ -37,6 +38,7 @@ interface CollectedData {
   petName?: string;
   species?: string;
   question?: string;
+  // petAge?: number; // Pet age removed
 }
 
 export default function GIAClient() { 
@@ -48,21 +50,19 @@ export default function GIAClient() {
   const [collectedData, setCollectedData] = useState<CollectedData>({});
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
-  // --- Sound Effect Logic ---
   const playSound = (soundPath: string) => {
     try {
       const audio = new Audio(soundPath);
-      audio.play().catch(error => console.warn("Error playing sound:", error)); // Catch play promise rejection
+      audio.play().catch(error => console.warn("Error playing sound:", error));
     } catch (error) {
       console.warn("Could not play sound effect:", error);
     }
   };
-  // --- End Sound Effect Logic ---
-
+  
   const addMessage = (text: string, sender: 'user' | 'gia', options?: Array<{label: string, value: string}>) => {
     setMessages(prev => [...prev, { id: Date.now().toString() + Math.random().toString(36).substring(7), text, sender, options }]);
-    if (sender === 'gia' && !isPending) {
-      playSound('/sounds/message-received.mp3'); // User: Place message-received.mp3 in public/sounds/
+    if (sender === 'gia' && conversationStage !== 'PROCESSING_AI') {
+      playSound('/sounds/message-received.mp3'); 
     }
   };
   
@@ -80,24 +80,25 @@ export default function GIAClient() {
       addMessage("¡Hola! Soy GIA, tu asistente IA de PetSync. Para comenzar, ¿me podrías decir tu nombre?", "gia");
       setConversationStage('AWAITING_USER_NAME');
     }
-  }, [conversationStage]); // Ensure this runs only once or when stage explicitly resets to GREETING
+  }, [conversationStage]);
 
   const handleOptionClick = (value: string, label: string) => {
     addMessage(label, 'user');
-    playSound('/sounds/message-sent.mp3'); // User: Place message-sent.mp3 in public/sounds/
+    playSound('/sounds/message-sent.mp3');
+    setCurrentInput(""); // Clear input after option click
     
     if (conversationStage === 'AWAITING_EMAIL_PERMISSION') {
       if (value === 'yes_email') {
         addMessage("¡Genial! Por favor, escribe tu correo electrónico.", "gia");
         setConversationStage('AWAITING_EMAIL_INPUT');
-      } else {
+      } else { // no_email
         setCollectedData(prev => ({ ...prev, email: undefined }));
         addMessage("Entendido. Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
         setConversationStage('AWAITING_PET_NAME');
       }
     } else if (conversationStage === 'AI_RESPONSE_DISPLAYED') {
         if (value === 'new_question') {
-            setCollectedData(prev => ({ ...prev, question: undefined }));
+            setCollectedData(prev => ({ ...prev, question: undefined })); // Keep other collected data
             addMessage("Claro, ¿cuál es tu nueva pregunta?", "gia");
             setConversationStage('AWAITING_MAIN_QUESTION');
         } else if (value === 'end_convo') {
@@ -110,31 +111,32 @@ export default function GIAClient() {
   const handleSendMessage = async (e?: FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
     const userInput = currentInput.trim();
+
+    // Prevent sending empty messages unless specific stages allow it (like button clicks)
     if (!userInput && conversationStage !== 'AWAITING_EMAIL_PERMISSION' && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options)) return; 
 
     if (userInput) {
       addMessage(userInput, "user");
-      playSound('/sounds/message-sent.mp3'); // User: Place message-sent.mp3 in public/sounds/
+      playSound('/sounds/message-sent.mp3'); 
     }
     setCurrentInput("");
 
     switch (conversationStage) {
       case 'AWAITING_USER_NAME':
-        setCollectedData(prev => ({ ...prev, userName: userInput }));
-        addMessage(`¡Un gusto, ${userInput || 'usuario'}! ¿Te gustaría compartir tu correo electrónico conmigo?`, "gia", [{label: "Sí, compartir email", value: "yes_email"}, {label: "No, gracias", value: "no_email"}]);
+        setCollectedData(prev => ({ ...prev, userName: userInput || "Usuario" }));
+        addMessage(`¡Un gusto, ${userInput || 'usuario'}! ¿Te gustaría compartir tu correo electrónico conmigo? Esto es opcional.`, "gia", [{label: "Sí, compartir email", value: "yes_email"}, {label: "No, gracias", value: "no_email"}]);
         setConversationStage('AWAITING_EMAIL_PERMISSION');
         break;
       case 'AWAITING_EMAIL_INPUT':
         // Basic email validation (optional, as Zod will catch it later, but good for UX)
-        if (!userInput.includes('@') || !userInput.includes('.')) {
-            addMessage("Parece que ese no es un correo válido. Por favor, inténtalo de nuevo o puedes omitirlo.", "gia", [{label: "Omitir email", value: "no_email_retry"}]);
-            // Option to retry or skip. If skipping, we'd need to handle 'no_email_retry' in handleOptionClick or here.
-            // For simplicity, current flow proceeds, Zod will catch it if they don't correct or skip via an option.
-            // Re-prompting requires more complex state.
+        if (userInput && (!userInput.includes('@') || !userInput.includes('.'))) {
+            addMessage("Parece que ese no es un correo válido. Por favor, inténtalo de nuevo o puedes presionar 'No, gracias' si prefieres omitirlo.", "gia");
+             // No options button here, just re-prompt or let them correct
+        } else {
+            setCollectedData(prev => ({ ...prev, email: userInput }));
+            addMessage("¡Gracias! Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
+            setConversationStage('AWAITING_PET_NAME');
         }
-        setCollectedData(prev => ({ ...prev, email: userInput }));
-        addMessage("¡Gracias! Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
-        setConversationStage('AWAITING_PET_NAME');
         break;
       case 'AWAITING_PET_NAME':
         setCollectedData(prev => ({ ...prev, petName: userInput }));
@@ -142,11 +144,19 @@ export default function GIAClient() {
         setConversationStage('AWAITING_PET_SPECIES');
         break;
       case 'AWAITING_PET_SPECIES':
+        if (!userInput) {
+            addMessage("Por favor, indícame la especie de tu mascota (Ej: Perro, Gato).", "gia");
+            break;
+        }
         setCollectedData(prev => ({ ...prev, species: userInput }));
         addMessage(`Entendido, un/a ${userInput}. Ahora sí, ${collectedData.userName || 'dime'}, ¿en qué te puedo ayudar con ${collectedData.petName || 'tu mascota'}?`, "gia");
         setConversationStage('AWAITING_MAIN_QUESTION');
         break;
       case 'AWAITING_MAIN_QUESTION':
+        if (!userInput) {
+            addMessage("Por favor, escribe tu pregunta.", "gia");
+            break;
+        }
         setCollectedData(prev => ({ ...prev, question: userInput }));
         setConversationStage('PROCESSING_AI');
         addMessage("Entendido. Estoy procesando tu pregunta...", "gia");
@@ -155,8 +165,8 @@ export default function GIAClient() {
             userName: collectedData.userName,
             email: collectedData.email,
             petName: collectedData.petName,
-            species: collectedData.species, // species is required by schema
-            question: userInput, // question is required by schema
+            species: collectedData.species as string, // Species is required
+            question: userInput, 
           };
           const response = await askGenericQuestionAction(payload);
           if (response.success && response.data) {
@@ -174,18 +184,16 @@ export default function GIAClient() {
         });
         break;
       case 'AI_RESPONSE_DISPLAYED':
-         // This case is now primarily handled by handleOptionClick for buttons
-         // If user types instead of clicking a button:
-        if (userInput) { // If user typed something
+        if (userInput) { 
             setCollectedData(prev => ({ ...prev, question: userInput }));
             setConversationStage('PROCESSING_AI');
             addMessage("Entendido. Estoy procesando tu nueva pregunta...", "gia");
             startTransition(async () => {
-              const payload: GenericQueryFormValues = { // Reconstruct payload
+              const payload: GenericQueryFormValues = { 
                 userName: collectedData.userName,
                 email: collectedData.email,
                 petName: collectedData.petName,
-                species: collectedData.species,
+                species: collectedData.species as string,
                 question: userInput,
               };
               const response = await askGenericQuestionAction(payload);
@@ -212,27 +220,39 @@ export default function GIAClient() {
            (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length -1]?.options !== undefined) ;
   };
 
+  const getPlaceholderText = (): string => {
+    if (isInputDisabled()) return "Esperando respuesta...";
+    switch(conversationStage) {
+        case 'AWAITING_USER_NAME': return "Escribe tu nombre...";
+        case 'AWAITING_EMAIL_INPUT': return "Escribe tu correo electrónico...";
+        case 'AWAITING_PET_NAME': return "Nombre de tu mascota...";
+        case 'AWAITING_PET_SPECIES': return "Especie (Ej: Perro, Gato)...";
+        case 'AWAITING_MAIN_QUESTION': return "Escribe tu pregunta para GIA...";
+        default: return "Escribe tu mensaje...";
+    }
+  }
+
   return (
-    <div className="flex flex-col h-[calc(100vh-250px)] sm:h-[600px] max-h-[70vh] sm:max-h-[650px] bg-background rounded-lg shadow-inner border">
-      <ScrollArea className="flex-grow p-2 sm:p-4 space-y-4" ref={scrollAreaRef}>
+    <div className="flex flex-col h-full bg-background rounded-b-lg">
+      <ScrollArea className="flex-grow p-2 sm:p-3 space-y-3" ref={scrollAreaRef}>
         {messages.map((msg) => (
           <div
             key={msg.id}
             className={cn(
-              "flex items-end space-x-2 max-w-[85%] mb-3 text-sm animate-in fade-in-0 slide-in-from-bottom-2 duration-300 ease-out",
+              "flex items-end space-x-2 max-w-[85%] mb-2 text-sm animate-in fade-in-0 slide-in-from-bottom-2 duration-300 ease-out",
               msg.sender === 'user' ? "ml-auto justify-end" : "mr-auto justify-start"
             )}
           >
             {msg.sender === 'gia' && (
-              <Avatar className="h-6 w-6 sm:h-8 sm:w-8 self-start">
+              <Avatar className="h-6 w-6 self-start">
                 <AvatarFallback className="bg-accent text-accent-foreground">
-                  <Bot className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Bot className="h-3.5 w-3.5" />
                 </AvatarFallback>
               </Avatar>
             )}
             <div
               className={cn(
-                "p-2 sm:p-3 rounded-lg shadow",
+                "p-2.5 rounded-lg shadow-sm",
                 msg.sender === 'user' 
                   ? "bg-primary text-primary-foreground rounded-br-none" 
                   : "bg-card border text-card-foreground rounded-bl-none"
@@ -240,14 +260,14 @@ export default function GIAClient() {
             >
               <p className="whitespace-pre-wrap">{msg.text}</p>
               {msg.sender === 'gia' && msg.options && (
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-wrap gap-1.5">
                   {msg.options.map(option => (
                     <Button 
                       key={option.value} 
                       variant="outline" 
                       size="sm" 
                       onClick={() => handleOptionClick(option.value, option.label)}
-                      className="text-xs"
+                      className="text-xs h-auto py-1 px-2"
                     >
                       {option.label}
                     </Button>
@@ -256,9 +276,9 @@ export default function GIAClient() {
               )}
             </div>
              {msg.sender === 'user' && (
-              <Avatar className="h-6 w-6 sm:h-8 sm:w-8 self-start">
+              <Avatar className="h-6 w-6 self-start">
                  <AvatarFallback className="bg-secondary text-secondary-foreground">
-                  <UserCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <UserCircle className="h-3.5 w-3.5" />
                 </AvatarFallback>
               </Avatar>
             )}
@@ -266,14 +286,14 @@ export default function GIAClient() {
         ))}
         {isPending && conversationStage === 'PROCESSING_AI' && (
           <div className="flex items-center space-x-2 mr-auto justify-start mb-3 animate-in fade-in-0 duration-300">
-             <Avatar className="h-6 w-6 sm:h-8 sm:w-8 self-start">
+             <Avatar className="h-6 w-6 self-start">
                 <AvatarFallback className="bg-accent text-accent-foreground">
-                  <Bot className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Bot className="h-3.5 w-3.5" />
                 </AvatarFallback>
               </Avatar>
-            <div className="bg-card border text-card-foreground p-2 sm:p-3 rounded-lg shadow rounded-bl-none">
-              <div className="flex items-center space-x-1 text-xs sm:text-sm text-muted-foreground">
-                <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+            <div className="bg-card border text-card-foreground p-2.5 rounded-lg shadow-sm rounded-bl-none">
+              <div className="flex items-center space-x-1 text-xs text-muted-foreground">
+                <Loader2 className="h-3 w-3 animate-spin" />
                 <span>GIA está pensando...</span>
               </div>
             </div>
@@ -281,16 +301,13 @@ export default function GIAClient() {
         )}
       </ScrollArea>
       
-      <form onSubmit={handleSendMessage} className="p-2 sm:p-4 border-t bg-background flex items-center space-x-2">
+      <form onSubmit={handleSendMessage} className="p-2 sm:p-3 border-t bg-background flex items-center space-x-2">
         <Input
           type="text"
-          placeholder={
-            isInputDisabled() ? "Esperando respuesta..." : 
-            "Escribe tu mensaje..."
-          }
+          placeholder={getPlaceholderText()}
           value={currentInput}
           onChange={(e) => setCurrentInput(e.target.value)}
-          className="flex-grow bg-input text-xs sm:text-sm"
+          className="flex-grow bg-input text-xs"
           disabled={isInputDisabled()}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey && !isInputDisabled() && currentInput.trim()) {
@@ -300,11 +317,12 @@ export default function GIAClient() {
         />
         <Button 
             type="submit" 
-            className="text-sm sm:text-base" 
+            size="sm"
+            className="text-xs" 
             disabled={isInputDisabled() || (!currentInput.trim() && conversationStage !== 'AWAITING_EMAIL_PERMISSION' && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options))}
         >
-          {isPending && conversationStage === 'PROCESSING_AI' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-          <span className="sr-only sm:not-sr-only ml-0 sm:ml-2">Enviar</span>
+          {isPending && conversationStage === 'PROCESSING_AI' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
+          <span className="sr-only sm:not-sr-only ml-0 sm:ml-1.5">Enviar</span>
         </Button>
       </form>
     </div>

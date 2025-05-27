@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { AuthProvider } from '@/contexts/AuthContext';
+import GIAChatWidget from '@/components/gia-chat-widget'; // Import the widget
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,6 +37,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <GIAChatWidget /> {/* Add the widget here */}
           <Toaster />
         </AuthProvider>
       </body>
