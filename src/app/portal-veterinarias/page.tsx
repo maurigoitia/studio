@@ -3,22 +3,11 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel } from "@/components/ui/select";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React, { useState } from "react";
+import React from "react";
 
 // URL de ejemplo para el Google Form. DEBES REEMPLAZARLA con tu URL real.
 const GOOGLE_FORM_VET_EARLY_ACCESS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link";
@@ -89,10 +78,10 @@ export default function VetPortalInfoPage() {
         <section className="py-16 md:py-24 bg-gradient-to-br from-primary/10 via-background to-background text-center">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
-              PetSync para Clínicas Veterinarias: La Plataforma Inteligente para tu Práctica
+              Portal PetSync para Veterinarias: Optimiza tu Práctica, Cuida Mejor.
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-              Transforma la gestión de tu práctica veterinaria con herramientas inteligentes diseñadas para optimizar tu tiempo, mejorar la atención al paciente y fortalecer la relación con tus clientes.
+              Descubre herramientas inteligentes diseñadas para la gestión eficiente de tu clínica, la conexión fluida con tutores y el seguimiento integral de la salud de cada paciente.
             </p>
           </div>
         </section>
@@ -140,9 +129,64 @@ export default function VetPortalInfoPage() {
             </div>
           </div>
         </section>
+
+        {/* Canva Embed Section */}
+        <section className="py-12 md:py-20 bg-secondary/30">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+                Descubre el Portal PetSync en Detalle
+              </h2>
+              <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
+                Explora las funcionalidades y beneficios que PetSync ofrecerá a tu clínica veterinaria a través de esta presentación.
+              </p>
+            </div>
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              height: 0,
+              paddingTop: '56.2225%',
+              paddingBottom: 0,
+              boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
+              marginTop: '1.6em',
+              marginBottom: '0.9em',
+              overflow: 'hidden',
+              borderRadius: '8px',
+              willChange: 'transform'
+            }}>
+              <iframe
+                loading="lazy"
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: 0,
+                  left: 0,
+                  border: 'none',
+                  padding: 0,
+                  margin: 0
+                }}
+                src="https://www.canva.com/design/DAGoMHRHfj4/w_dUftQymojeLI2Qa10vGw/view?embed"
+                allowFullScreen
+                allow="fullscreen"
+              ></iframe>
+            </div>
+            <p className="text-center mt-4 text-sm text-muted-foreground">
+              <a
+                href="https://www.canva.com/design/DAGoMHRHfj4/w_dUftQymojeLI2Qa10vGw/view?utm_content=DAGoMHRHfj4&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-primary underline"
+              >
+                Presentación del Portal PetSync para Veterinarias
+              </a>{' '}
+              por PetSync Team.
+            </p>
+          </div>
+        </section>
         
         {/* Connect with Tutors Section */}
-        <section className="py-12 md:py-20 bg-secondary/30">
+        <section className="py-12 md:py-20 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
                 <UsersRound className="h-12 w-12 text-primary mx-auto mb-6" />
