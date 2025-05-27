@@ -1,15 +1,30 @@
 
+import Image from 'next/image';
 import Link from 'next/link';
-import { PawPrint } from 'lucide-react'; // Using PawPrint as a placeholder for the abstract pet icon
 
 export function Logo() {
+  // INSTRUCCIONES PARA EL USUARIO:
+  // 1. Asegúrate de que tu archivo de logo (idealmente llamado 'petsync-logo.png') 
+  //    esté en la carpeta `public/` en la raíz de tu proyecto.
+  // 2. Ajusta 'logoWidth' y 'logoHeight' a continuación si las dimensiones de tu logo son diferentes a 32x32.
+  //    Estas son las dimensiones intrínsecas de la imagen para optimización.
+  //    El tamaño visual en la página se controla con las clases de Tailwind (className).
+
+  const logoPath = '/petsync-logo.png'; // Ruta al logo en la carpeta public
+  const logoIntrinsicWidth = 32; // Ancho intrínseco de tu imagen de logo
+  const logoIntrinsicHeight = 32; // Alto intrínseco de tu imagen de logo
+
   return (
     <Link href="/" className="flex items-center gap-2 group">
-      <div className="bg-primary p-1.5 rounded-lg group-hover:bg-primary/90 transition-colors shadow-sm">
-        {/* Placeholder for the abstract pet icon. You can replace PawPrint with an SVG or another icon if you have one. */}
-        <PawPrint className="h-5 w-5 text-primary-foreground" />
-      </div>
-      <span className="text-xl sm:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+      <Image
+        src={logoPath}
+        alt="PetSync Logo"
+        width={logoIntrinsicWidth}
+        height={logoIntrinsicHeight}
+        className="h-8 w-8 object-contain group-hover:opacity-80 transition-opacity" // Controla el tamaño visual
+        priority // Cargar el logo con prioridad
+      />
+      <span className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
         PetSync
       </span>
     </Link>
