@@ -18,12 +18,17 @@ interface Message {
   sender: "user" | "gia";
 }
 
+const initialGiaGreetingMessage: Message = {
+  id: crypto.randomUUID(),
+  text: "¡Hola! Soy GIA.",
+  sender: "gia",
+};
+
 export default function GIAClient() {
   const { toast } = useToast();
-  const [isProcessingAI, startTransition] = useTransition();
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [isProcessingAI, startAITransition] = useTransition();
+  const [messages, setMessages] = useState<Message[]>([initialGiaGreetingMessage]);
   const [currentInput, setCurrentInput] = useState("");
-  const [initialGreetingSent, setInitialGreetingSent] = useState(false); // Nuevo estado
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -37,30 +42,28 @@ export default function GIAClient() {
       if (viewport) {
         setTimeout(() => {
           viewport.scrollTop = viewport.scrollHeight;
-        }, 50); // Ajustado el delay
+        }, 50);
       }
     }
-  }, [messages.length]); // Dependencia ajustada
+  }, [messages.length]);
 
   useEffect(() => {
     sentAudioRef.current = new Audio('/sounds/message-sent.mp3');
     receivedAudioRef.current = new Audio('/sounds/message-received.mp3');
+    // Play received sound for the initial greeting if messages array starts with it
+    if (messages.length === 1 && messages[0].sender === 'gia' && messages[0].id === initialGiaGreetingMessage.id) {
+        // Slight delay to ensure audio context is ready, or play on first interaction
+        // For simplicity, we'll let subsequent messages trigger sounds.
+        // Or, play it here:
+        // receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción inicial:", e));
+    }
   }, []);
 
   useEffect(() => {
-    // Saludo inicial de GIA
-    if (!initialGreetingSent && messages.length === 0) {
-      addMessage("¡Hola! Soy GIA.", "gia");
-      setInitialGreetingSent(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Se ejecuta solo una vez al montar
-
-  useEffect(() => {
-    if (!isProcessingAI) {
+    if (!isInputDisabled()) {
       inputRef.current?.focus();
     }
-  }, [isProcessingAI, messages]);
+  }, [messages, isProcessingAI]);
 
 
   // --- Manejo de Mensajes ---
@@ -68,10 +71,11 @@ export default function GIAClient() {
     setMessages(prev => [...prev, { id: crypto.randomUUID(), text, sender }]);
     if (sender === "user") {
       sentAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de envío:", e));
-    } else { // Simplificado para el saludo y respuesta de GIA
+    } else {
       receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción:", e));
     }
   };
+  
 
   // --- Lógica de la Conversación ---
   const handleSendMessage = async (e?: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLInputElement>) => {
@@ -82,16 +86,19 @@ export default function GIAClient() {
       return;
     }
 
-    addUserMessage(userInput); // Muestra el mensaje del usuario
+    addMessage(userInput, "user");
     const questionToSubmit = userInput;
-    setCurrentInput(""); // Limpia el input
+    setCurrentInput(""); 
 
     // GIA acusa recibo
     addMessage("Ok, leyendo... ya te ayudo 🐾", "gia");
 
-    startTransition(async () => {
+    startAITransition(async () => {
       try {
         const payload: GenericQueryFormValues = { question: questionToSubmit };
+        // Log para depuración
+        console.log("Payload enviado a askGenericQuestionAction:", payload);
+        
         const response = await askGenericQuestionAction(payload);
 
         // Elimina el mensaje "Ok, leyendo..." antes de añadir la respuesta real
@@ -107,9 +114,9 @@ export default function GIAClient() {
             variant: "destructive",
           });
         }
-      } catch (error) {
+      } catch (error: any) {
         setMessages(prev => prev.filter(msg => !(msg.sender === 'gia' && msg.text.startsWith("Ok, leyendo..."))));
-        console.error("Error en askGenericQuestionAction:", error);
+        console.error("Error en askGenericQuestionAction:", error.message || error);
         addMessage("Hubo un problema técnico al contactar a GIA. Por favor, intenta más tarde.", "gia");
         toast({
           title: "Error de Conexión",
@@ -126,7 +133,6 @@ export default function GIAClient() {
 
   const getPlaceholderText = (): string => {
     if (isProcessingAI) return "GIA está pensando...";
-    if (!initialGreetingSent) return "Cargando...";
     return "¿En qué puedo ayudarte hoy?";
   }
 
@@ -169,7 +175,7 @@ export default function GIAClient() {
             )}
           </div>
         ))}
-        {isProcessingAI && (
+        {isProcessingAI && !messages.some(m => m.text.startsWith("Ok, leyendo...")) && ( // Solo muestra si "Ok, leyendo..." no está
           <div className="flex items-center space-x-2 mr-auto justify-start mb-3 animate-in fade-in-0 duration-300">
              <Avatar className="h-7 w-7 self-start shrink-0">
                 <AvatarFallback className="bg-primary text-primary-foreground">
