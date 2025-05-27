@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { MessageSquare, X, Bot, TriangleAlert } from 'lucide-react';
-import GIAClient from '@/components/gia-client'; // Assuming GIAClient is adapted for widget
+import GIAClient from '@/components/gia-client'; 
 
 export default function GIAChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +44,7 @@ export default function GIAChatWidget() {
                 GIA es una IA en desarrollo. Sus respuestas son informativas y <strong>nunca reemplazan</strong> el consejo de un veterinario.
               </AlertDescription>
             </Alert>
-            <div className="flex-grow overflow-hidden p-2 sm:p-3">
+            <div className="flex-grow overflow-hidden"> 
               <GIAClient />
             </div>
           </CardContent>
@@ -53,3 +53,4 @@ export default function GIAChatWidget() {
     </>
   );
 }
+

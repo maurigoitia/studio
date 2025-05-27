@@ -26,7 +26,6 @@ type ConversationStage =
   | 'AWAITING_EMAIL_INPUT'
   | 'AWAITING_PET_NAME'
   | 'AWAITING_PET_SPECIES'
-  // | 'AWAITING_PET_AGE' // Pet age removed from flow
   | 'AWAITING_MAIN_QUESTION'
   | 'PROCESSING_AI'
   | 'AI_RESPONSE_DISPLAYED'
@@ -38,7 +37,6 @@ interface CollectedData {
   petName?: string;
   species?: string;
   question?: string;
-  // petAge?: number; // Pet age removed
 }
 
 export default function GIAClient() { 
@@ -49,6 +47,7 @@ export default function GIAClient() {
   const [conversationStage, setConversationStage] = useState<ConversationStage>('GREETING');
   const [collectedData, setCollectedData] = useState<CollectedData>({});
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const playSound = (soundPath: string) => {
     try {
@@ -82,23 +81,42 @@ export default function GIAClient() {
     }
   }, [conversationStage]);
 
+  useEffect(() => {
+    const stagesRequiringTextInput = [
+      'AWAITING_USER_NAME',
+      'AWAITING_EMAIL_INPUT',
+      'AWAITING_PET_NAME',
+      'AWAITING_PET_SPECIES',
+      'AWAITING_MAIN_QUESTION',
+    ];
+    // Also focus if AI has responded and there are no options (implying user can type a follow-up)
+    const shouldFocus = 
+        stagesRequiringTextInput.includes(conversationStage) ||
+        (conversationStage === 'AI_RESPONSE_DISPLAYED' && !messages[messages.length - 1]?.options);
+
+    if (shouldFocus && !isInputDisabled()) {
+      inputRef.current?.focus();
+    }
+  }, [conversationStage, messages]);
+
+
   const handleOptionClick = (value: string, label: string) => {
     addMessage(label, 'user');
     playSound('/sounds/message-sent.mp3');
-    setCurrentInput(""); // Clear input after option click
+    setCurrentInput(""); 
     
     if (conversationStage === 'AWAITING_EMAIL_PERMISSION') {
       if (value === 'yes_email') {
         addMessage("¡Genial! Por favor, escribe tu correo electrónico.", "gia");
         setConversationStage('AWAITING_EMAIL_INPUT');
-      } else { // no_email
+      } else { 
         setCollectedData(prev => ({ ...prev, email: undefined }));
         addMessage("Entendido. Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
         setConversationStage('AWAITING_PET_NAME');
       }
     } else if (conversationStage === 'AI_RESPONSE_DISPLAYED') {
         if (value === 'new_question') {
-            setCollectedData(prev => ({ ...prev, question: undefined })); // Keep other collected data
+            setCollectedData(prev => ({ ...prev, question: undefined })); 
             addMessage("Claro, ¿cuál es tu nueva pregunta?", "gia");
             setConversationStage('AWAITING_MAIN_QUESTION');
         } else if (value === 'end_convo') {
@@ -112,7 +130,6 @@ export default function GIAClient() {
     if (e) e.preventDefault();
     const userInput = currentInput.trim();
 
-    // Prevent sending empty messages unless specific stages allow it (like button clicks)
     if (!userInput && conversationStage !== 'AWAITING_EMAIL_PERMISSION' && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options)) return; 
 
     if (userInput) {
@@ -128,10 +145,8 @@ export default function GIAClient() {
         setConversationStage('AWAITING_EMAIL_PERMISSION');
         break;
       case 'AWAITING_EMAIL_INPUT':
-        // Basic email validation (optional, as Zod will catch it later, but good for UX)
         if (userInput && (!userInput.includes('@') || !userInput.includes('.'))) {
             addMessage("Parece que ese no es un correo válido. Por favor, inténtalo de nuevo o puedes presionar 'No, gracias' si prefieres omitirlo.", "gia");
-             // No options button here, just re-prompt or let them correct
         } else {
             setCollectedData(prev => ({ ...prev, email: userInput }));
             addMessage("¡Gracias! Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
@@ -165,7 +180,7 @@ export default function GIAClient() {
             userName: collectedData.userName,
             email: collectedData.email,
             petName: collectedData.petName,
-            species: collectedData.species as string, // Species is required
+            species: collectedData.species as string, 
             question: userInput, 
           };
           const response = await askGenericQuestionAction(payload);
@@ -303,6 +318,7 @@ export default function GIAClient() {
       
       <form onSubmit={handleSendMessage} className="p-2 sm:p-3 border-t bg-background flex items-center space-x-2">
         <Input
+          ref={inputRef}
           type="text"
           placeholder={getPlaceholderText()}
           value={currentInput}
