@@ -1,8 +1,8 @@
 
 "use server";
 
-import { WaitlistFormSchema, GenericQueryFormSchema, SignUpFormSchema, SignInFormSchema, NewPetFormSchema } from "@/lib/schemas";
-import type { WaitlistFormValues, GenericQueryFormValues, SignInFormValues, SignUpFormValues, NewPetFormValues } from "@/lib/schemas";
+import { WaitlistFormSchema, GenericQueryFormSchema, SignUpFormSchema, SignInFormSchema, NewPetFormSchema, WaitlistSubscriptionSchema } from "@/lib/schemas";
+import type { WaitlistFormValues, GenericQueryFormValues, SignInFormValues, SignUpFormValues, NewPetFormValues, WaitlistSubscriptionValues } from "@/lib/schemas";
 import { genericQuery } from "@/ai/flows/generic-query-flow";
 import type { GenericQueryInput, GenericQueryOutput } from "@/ai/flows/generic-query-flow";
 import { firestore } from '@/lib/firebase/config'; // Import Firestore
@@ -13,8 +13,11 @@ interface WaitlistResponse {
   message: string;
 }
 
-export async function subscribeToWaitlistAction(data: WaitlistFormValues): Promise<WaitlistResponse> {
-  const validatedFields = WaitlistFormSchema.safeParse(data);
+export async function subscribeToWaitlistAction(data: WaitlistSubscriptionValues | WaitlistFormValues ): Promise<WaitlistResponse> {
+  // We check which schema to use based on the presence of userType,
+  // as WaitlistSubscriptionSchema (from GIA chat) doesn't have it.
+  const schemaToUse = 'userType' in data ? WaitlistFormSchema : WaitlistSubscriptionSchema;
+  const validatedFields = schemaToUse.safeParse(data);
 
   if (!validatedFields.success) {
     return {
@@ -23,13 +26,34 @@ export async function subscribeToWaitlistAction(data: WaitlistFormValues): Promi
     };
   }
 
-  const { email, userType } = validatedFields.data;
+  const { email } = validatedFields.data;
+  // userType is only present in WaitlistFormValues from the main waitlist form
+  const userType = 'userType' in validatedFields.data ? validatedFields.data.userType : 'tutor (via GIA)';
 
-  // Simulate saving to a database or mailing list
+
   console.log(`Waitlist subscription: Email - ${email}, User Type - ${userType}`);
   
-  // Simulate a delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  // Simulate saving to Firestore for now
+  try {
+    if (firestore) {
+      await addDoc(collection(firestore, "waitlistSubscribers"), {
+        email: email,
+        userType: userType,
+        subscribedAt: serverTimestamp(),
+        source: 'userType' in data ? 'waitlist_form_landing' : 'gia_chat_widget'
+      });
+      console.log("Waitlist subscriber added to Firestore.");
+    } else {
+      console.warn("Firestore is not configured. Skipping waitlist save to Firestore.");
+    }
+  } catch (logError) {
+    console.error("Error saving waitlist subscriber to Firestore:", logError);
+    // Continue without blocking the user's response, but inform them of potential issue
+    return {
+      success: false,
+      message: "Hubo un problema al registrar tu correo. Inténtalo más tarde o usa el formulario principal.",
+    };
+  }
 
   return {
     success: true,
@@ -47,7 +71,7 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
   const validatedFields = GenericQueryFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
-    const errorMessages = validatedFields.error.errors.map(e => `$\{e.path.join('.')\}: $\{e.message}`).join(', ');
+    const errorMessages = validatedFields.error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
     console.error("Validation error in askGenericQuestionAction:", errorMessages, "Data:", data);
     return {
       success: false,
@@ -70,7 +94,7 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
     try {
       if (firestore) {
         await addDoc(collection(firestore, "giaConversationLogs"), {
-          userId: email || 'anonymous_user', // Use email as userId or a placeholder
+          userId: email || 'anonymous_user', 
           userName: userName || null,
           petName: petName || null,
           species: species,
@@ -85,7 +109,6 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
       }
     } catch (logError) {
       console.error("Error logging GIA conversation to Firestore:", logError);
-      // Continue without blocking the user's response
     }
 
     return { success: true, data: result };
@@ -106,34 +129,17 @@ export async function registerNewPetAction(data: NewPetFormValues): Promise<NewP
   const validatedFields = NewPetFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
-    const errorMessages = validatedFields.error.errors.map(e => `$\{e.path.join('.')\}: $\{e.message}`).join(', ');
+    const errorMessages = validatedFields.error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
     return {
       success: false,
       message: `Datos inválidos: ${errorMessages}. Por favor, revisa el formulario.`,
     };
   }
 
-  // Simulate saving to Firestore
   console.log("Simulating saving new pet profile to Firestore:", validatedFields.data);
   
-  // Simulate a delay
   await new Promise(resolve => setTimeout(resolve, 1000));
 
-  // In a real scenario, you would save to Firestore here:
-  // if (!firestore) {
-  //   return { success: false, message: "Error de configuración: Firestore no disponible." };
-  // }
-  // try {
-  //   const petRef = await addDoc(collection(firestore, "petProfiles"), {
-  //     ...validatedFields.data,
-  //     createdAt: serverTimestamp(),
-  //     // clinicId: someClinicId, // You'd associate this with the logged-in clinic
-  //   });
-  //   return { success: true, message: "¡Perfil de mascota registrado con éxito!", petId: petRef.id };
-  // } catch (error) {
-  //   console.error("Error registering new pet:", error);
-  //   return { success: false, message: "No se pudo registrar el perfil de la mascota." };
-  // }
 
   return {
     success: true,
@@ -141,8 +147,3 @@ export async function registerNewPetAction(data: NewPetFormValues): Promise<NewP
     petId: "simulated_pet_id_" + Date.now() 
   };
 }
-
-// Note: SignUp and SignIn actions are handled by Firebase client-side SDK in AuthContext
-// No specific server actions are needed here for them unless you have additional server-side logic
-// to perform post-authentication, which is not the case for this basic setup.
-// For example, creating a user profile in a separate database after Firebase signup.

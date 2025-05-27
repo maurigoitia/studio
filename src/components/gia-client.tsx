@@ -10,7 +10,7 @@ import { Loader2, Send, Bot, UserCircle } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import type { GenericQueryFormValues, WaitlistFormValues } from "@/lib/schemas";
+import type { GenericQueryFormValues, WaitlistSubscriptionValues } from "@/lib/schemas"; // Changed to WaitlistSubscriptionValues
 
 interface Message {
   id: string;
@@ -20,29 +20,26 @@ interface Message {
 }
 
 type ConversationStage =
-  | 'GREETING'
-  | 'AWAITING_USER_NAME'
-  // | 'AWAITING_EMAIL_PERMISSION' // Removed as per new flow
-  | 'AWAITING_PET_NAME'
-  | 'AWAITING_PET_SPECIES'
-  // | 'AWAITING_PET_AGE' // Removed as petAge was removed from schema
-  | 'AWAITING_MAIN_QUESTION'
-  | 'PROCESSING_AI'
-  | 'AI_RESPONSE_DISPLAYED'
-  | 'AWAITING_WAITLIST_DECISION'
-  | 'AWAITING_WAITLIST_EMAIL'
-  | 'PROCESSING_WAITLIST_SUB'
-  | 'WAITLIST_CONFIRMED'
-  | 'CONVO_ENDED_NO_WAITLIST'
-  | 'CONVO_ENDED';
+  | 'GREETING' // Initial GIA greeting
+  | 'AWAITING_USER_NAME' // GIA asks for user's name
+  | 'AWAITING_PET_NAME' // GIA asks for pet's name
+  | 'AWAITING_PET_SPECIES' // GIA asks for pet's species
+  | 'AWAITING_MAIN_QUESTION' // GIA asks for the main question
+  | 'PROCESSING_AI' // Waiting for AI response to the main question
+  | 'AI_RESPONSE_DISPLAYED' // AI has responded, GIA will now offer waitlist
+  | 'AWAITING_WAITLIST_DECISION' // GIA asks if user wants to join waitlist
+  | 'AWAITING_WAITLIST_EMAIL' // GIA asks for email for waitlist
+  | 'PROCESSING_WAITLIST_SUB' // Submitting email to waitlist
+  | 'WAITLIST_CONFIRMED' // Waitlist subscription confirmed
+  | 'CONVO_ENDED_NO_WAITLIST' // User declined waitlist
+  | 'CONVO_ENDED'; // Conversation explicitly ended
 
 interface CollectedData {
   userName?: string;
-  email?: string;
+  email?: string; // Will be collected only for waitlist
   petName?: string;
   species?: string;
   question?: string;
-  // petAge?: number; // Removed
 }
 
 export default function GIAClient() {
@@ -58,7 +55,6 @@ export default function GIAClient() {
   const receivedAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Preload audio files
     sentAudioRef.current = new Audio('/sounds/message-sent.mp3');
     receivedAudioRef.current = new Audio('/sounds/message-received.mp3');
   }, []);
@@ -71,27 +67,20 @@ export default function GIAClient() {
     if (scrollAreaRef.current) {
       const viewport = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
       if (viewport) {
-        setTimeout(() => { // Delay scroll to ensure DOM update
+        setTimeout(() => {
           viewport.scrollTop = viewport.scrollHeight;
         }, 0);
       }
     }
   }, [messages]);
 
-  // useEffect para el saludo inicial de GIA
   useEffect(() => {
-    // Esta función se ejecutará solo una vez cuando el componente se monte.
-    // Verificamos si ya hay mensajes para evitar duplicados si el componente se remontara.
     if (messages.length === 0 && conversationStage === "GREETING") {
-      addMessage(
-        "¡Hola! Soy GIA, tu asistente IA de PetSync. Para comenzar, ¿me podrías decir tu nombre?",
-        "gia"
-      );
+      addMessage("¡Hola! Soy GIA, tu asistente IA de PetSync. Para comenzar, ¿me podrías decir tu nombre?", "gia");
       setConversationStage("AWAITING_USER_NAME");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // El array de dependencias vacío [] asegura que esto se ejecute SOLO UNA VEZ.
-
+  }, []);
 
   useEffect(() => {
     const stagesRequiringTextInput: ConversationStage[] = [
@@ -101,20 +90,18 @@ export default function GIAClient() {
       'AWAITING_MAIN_QUESTION',
       'AWAITING_WAITLIST_EMAIL'
     ];
-    const shouldFocus =
-        stagesRequiringTextInput.includes(conversationStage) ||
-        (conversationStage === 'AI_RESPONSE_DISPLAYED' && !messages[messages.length - 1]?.options && conversationStage !== 'AWAITING_WAITLIST_DECISION');
+    const shouldFocus = stagesRequiringTextInput.includes(conversationStage) && !isInputCurrentlyDisabled();
 
-    if (shouldFocus && !isInputCurrentlyDisabled()) {
+    if (shouldFocus) {
       inputRef.current?.focus();
     }
-  }, [conversationStage, messages, isPending]); // isPending re-added as it affects input disabled state
+  }, [conversationStage, messages, isPending]);
 
 
   const handleOptionClick = (value: string, label: string) => {
     addMessage(label, 'user');
     sentAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de envío:", e));
-    setCurrentInput("");
+    setCurrentInput(""); // Clear input after option click
 
     if (conversationStage === 'AWAITING_WAITLIST_DECISION') {
       if (value === 'yes_waitlist') {
@@ -126,9 +113,10 @@ export default function GIAClient() {
       }
     } else if (conversationStage === 'WAITLIST_CONFIRMED' || conversationStage === 'CONVO_ENDED_NO_WAITLIST') {
         if (value === 'new_question') {
-            setCollectedData(prev => ({ ...prev, question: undefined, email: prev.email })); // Reset question, keep email if provided for waitlist
-            addMessage("Claro, ¿cuál es tu nueva pregunta sobre tu mascota?", "gia");
-            setConversationStage('AWAITING_MAIN_QUESTION');
+            // Reset question and related pet info, keep userName and email (if provided for waitlist)
+            setCollectedData(prev => ({ userName: prev.userName, email: prev.email, petName: undefined, species: undefined, question: undefined }));
+            addMessage("Claro, ¿cuál es tu nueva pregunta? Si es sobre una mascota diferente, dímelo primero.", "gia");
+            setConversationStage('AWAITING_MAIN_QUESTION'); // Or a stage to re-confirm pet if needed
         } else if (value === 'end_convo') {
             addMessage("¡Gracias por chatear conmigo! Que tengas un buen día. 🐾", "gia");
             setConversationStage('CONVO_ENDED');
@@ -140,177 +128,170 @@ export default function GIAClient() {
     if (e) e.preventDefault();
     const userInput = currentInput.trim();
 
-    if (!userInput &&
-        conversationStage !== 'AWAITING_WAITLIST_DECISION' &&
-        conversationStage !== 'WAITLIST_CONFIRMED' &&
-        conversationStage !== 'CONVO_ENDED_NO_WAITLIST'
-    ) {
-      return;
+    if (!userInput && !['AI_RESPONSE_DISPLAYED', 'AWAITING_WAITLIST_DECISION', 'WAITLIST_CONFIRMED', 'CONVO_ENDED_NO_WAITLIST'].includes(conversationStage)) {
+      return; // Don't send empty messages unless it's a stage where GIA expects an action (like clicking a button handled by handleOptionClick)
     }
-
+    
     if (userInput) {
       addMessage(userInput, "user");
       sentAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de envío:", e));
     }
     setCurrentInput("");
 
+    let nextStage: ConversationStage = conversationStage;
+    let giaMessage = "";
+    let giaOptions: Array<{ label: string, value: string }> | undefined = undefined;
+
     switch (conversationStage) {
       case 'AWAITING_USER_NAME':
         setCollectedData(prev => ({ ...prev, userName: userInput || undefined }));
-        addMessage(`¡Un gusto, ${userInput || 'usuario'}! Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?`, "gia");
-        setConversationStage('AWAITING_PET_NAME');
+        giaMessage = `¡Un gusto, ${userInput || 'usuario'}! Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?`;
+        nextStage = 'AWAITING_PET_NAME';
         break;
       case 'AWAITING_PET_NAME':
         setCollectedData(prev => ({ ...prev, petName: userInput || undefined }));
-        addMessage(`¡Lindo nombre! Para ${userInput || 'tu mascota'}, ¿cuál es su especie? (Ej: Perro, Gato)`, "gia");
-        setConversationStage('AWAITING_PET_SPECIES');
+        giaMessage = `¡Lindo nombre${userInput ? ` para ${userInput}` : ''}! ¿Cuál es su especie? (Ej: Perro, Gato)`;
+        nextStage = 'AWAITING_PET_SPECIES';
         break;
       case 'AWAITING_PET_SPECIES':
         if (!userInput) {
-            addMessage("Por favor, indícame la especie de tu mascota (Ej: Perro, Gato).", "gia");
+            giaMessage = "Por favor, indícame la especie de tu mascota (Ej: Perro, Gato).";
+            // nextStage remains AWAITING_PET_SPECIES
             break;
         }
         setCollectedData(prev => ({ ...prev, species: userInput }));
-        addMessage(`Muy bien, ${collectedData.userName || 'dime'}. ¿En qué puedo ayudarte hoy con ${collectedData.petName || 'tu mascota'} (el/la ${userInput})?`, "gia");
-        setConversationStage('AWAITING_MAIN_QUESTION');
+        giaMessage = `Muy bien, ${collectedData.userName || 'dime'}. ¿En qué puedo ayudarte hoy con ${collectedData.petName || 'tu mascota'} (${userInput})?`;
+        nextStage = 'AWAITING_MAIN_QUESTION';
         break;
       case 'AWAITING_MAIN_QUESTION':
         if (!userInput) {
-            addMessage("Por favor, escribe tu pregunta.", "gia");
+            giaMessage = "Por favor, escribe tu pregunta.";
+            // nextStage remains AWAITING_MAIN_QUESTION
             break;
         }
         setCollectedData(prev => ({ ...prev, question: userInput }));
-        setConversationStage('PROCESSING_AI');
-        // addMessage("Entendido. Estoy procesando tu pregunta...", "gia"); // This is now handled by the isPending loader
+        nextStage = 'PROCESSING_AI';
         startTransition(async () => {
           const payload: GenericQueryFormValues = {
             userName: collectedData.userName,
-            // email: collectedData.email, // Email is not sent with the main query anymore
+            // email is not sent to AI initially
             petName: collectedData.petName,
-            species: collectedData.species as string, // species is required for the query
+            species: collectedData.species as string, 
             question: userInput,
           };
           const response = await askGenericQuestionAction(payload);
-          // setMessages(prev => prev.slice(0, -1)); // Remove "Procesando..." if it was added
-
           if (response.success && response.data?.answer) {
             addMessage(response.data.answer, "gia");
             receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción:", e));
           } else {
-            addMessage(response.message || "GIA no pudo generar una respuesta en este momento. Por favor, intenta reformular tu pregunta o inténtalo más tarde.", "gia");
+            addMessage(response.message || "GIA no pudo generar una respuesta en este momento.", "gia");
             toast({
               title: "Error de GIA",
               description: response.message || "No se pudo obtener una respuesta.",
               variant: "destructive",
             });
           }
-          setConversationStage('AI_RESPONSE_DISPLAYED');
+          setConversationStage('AI_RESPONSE_DISPLAYED'); // Intermediate stage
+          // Now trigger the waitlist offer
           addMessage("Espero que esta información te haya sido útil. PetSync está en desarrollo y pronto lanzaremos nuestra app completa. ¿Te gustaría unirte a nuestra waitlist para ser de los primeros en saber cuándo puedes descargarla y recibir novedades?", "gia", [{label: "Sí, ¡unirme a la waitlist!", value: "yes_waitlist"}, {label: "No, gracias por ahora", value: "no_waitlist"}]);
           setConversationStage('AWAITING_WAITLIST_DECISION');
         });
-        break;
+        return; // Return early as state transitions are handled within startTransition
+        
       case 'AWAITING_WAITLIST_EMAIL':
          if (!userInput || !userInput.includes('@') || !userInput.includes('.')) {
-            addMessage("Parece que ese no es un correo válido. Por favor, inténtalo de nuevo.", "gia");
+            giaMessage = "Parece que ese no es un correo válido. Por favor, inténtalo de nuevo.";
+            // nextStage remains AWAITING_WAITLIST_EMAIL
             break;
         }
         setCollectedData(prev => ({ ...prev, email: userInput }));
-        setConversationStage('PROCESSING_WAITLIST_SUB');
-        // addMessage("Procesando tu suscripción...", "gia"); // Handled by isPending loader
+        nextStage = 'PROCESSING_WAITLIST_SUB';
         startTransition(async () => {
-            const waitlistPayload: WaitlistFormValues = { email: userInput, userType: 'tutor' }; 
+            const waitlistPayload: WaitlistSubscriptionValues = { email: userInput, userType: 'tutor' }; 
             const wlResponse = await subscribeToWaitlistAction(waitlistPayload);
-            // setMessages(prev => prev.slice(0, -1)); // Remove "Procesando..." if added
-
             if (wlResponse.success) {
                 addMessage(`¡Perfecto, ${userInput} ha sido añadido a nuestra waitlist! Te avisaremos en cuanto PetSync esté listo para despegar. ¿Hay algo más en lo que pueda ayudarte hoy?`, "gia", [{label: "Tengo otra pregunta", value: "new_question"}, {label: "Finalizar", value: "end_convo"}]);
                 receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción:", e));
                 setConversationStage('WAITLIST_CONFIRMED');
             } else {
                 addMessage(`Hubo un problema al suscribirte: ${wlResponse.message || 'Intenta de nuevo más tarde.'} ¿Puedo ayudarte con algo más o finalizamos aquí?`, "gia", [{label: "Tengo otra pregunta", value: "new_question"}, {label: "Finalizar", value: "end_convo"}]);
-                setConversationStage('AI_RESPONSE_DISPLAYED'); 
+                setConversationStage('AI_RESPONSE_DISPLAYED'); // Go back to a stage allowing further interaction or end
             }
         });
-        break;
-      case 'AI_RESPONSE_DISPLAYED': 
+        return; // Return early
+
+      // Handle cases where user types instead of clicking buttons after options are presented
+      case 'AI_RESPONSE_DISPLAYED': // This stage is now very brief, immediately followed by AWAITING_WAITLIST_DECISION
+      case 'AWAITING_WAITLIST_DECISION':
       case 'WAITLIST_CONFIRMED':
       case 'CONVO_ENDED_NO_WAITLIST':
-        // This case handles when the user types something after GIA has given options
-        // OR after the main AI response if no options were directly clicked.
-        // It's effectively a new question.
-        if (userInput) {
-            setCollectedData(prev => ({ ...prev, question: userInput, email: prev.email }));
-            setConversationStage('PROCESSING_AI');
-            // addMessage("Entendido. Estoy procesando tu nueva pregunta...", "gia"); // Handled by isPending
+        if (userInput) { // If user types something instead of clicking an option
+            setCollectedData(prev => ({ ...prev, question: userInput })); // New question
+            nextStage = 'PROCESSING_AI';
             startTransition(async () => {
               const payload: GenericQueryFormValues = {
                 userName: collectedData.userName,
                 petName: collectedData.petName,
                 species: collectedData.species as string,
                 question: userInput,
-                // email: collectedData.email, // Not sent for main query
               };
               const response = await askGenericQuestionAction(payload);
-              // setMessages(prev => prev.slice(0, -1)); // Remove "Procesando..." if added
               if (response.success && response.data?.answer) {
                 addMessage(response.data.answer, "gia");
                 receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción:", e));
               } else {
                 addMessage(response.message || "GIA no pudo generar una respuesta en este momento.", "gia");
               }
-              // Offer waitlist again after a new question
+              setConversationStage('AI_RESPONSE_DISPLAYED');
               addMessage("Espero que esta información te haya sido útil. ¿Te gustaría unirte a nuestra waitlist para novedades de PetSync?", "gia", [{label: "Sí, ¡unirme!", value: "yes_waitlist"}, {label: "No, gracias", value: "no_waitlist"}]);
               setConversationStage('AWAITING_WAITLIST_DECISION');
             });
+            return;
         }
-        break;
+        break; // If no user input, do nothing in these stages (wait for button click)
+
       default:
-        addMessage("Algo no salió como esperaba. ¿Podemos intentarlo de nuevo?", "gia");
-        setConversationStage('GREETING');
-        setMessages([]); // Clear messages
+        giaMessage = "Algo no salió como esperaba. ¿Podemos intentarlo de nuevo?";
+        nextStage = 'GREETING'; // Reset
+        setMessages([]);
         setCollectedData({});
-        // GREETING will be re-triggered by the useEffect on next render if messages are empty
+        // The GREETING useEffect will re-trigger the initial message
         break;
+    }
+
+    if (giaMessage) {
+      addMessage(giaMessage, "gia", giaOptions);
+      receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción:", e));
+    }
+    if (nextStage !== conversationStage) {
+      setConversationStage(nextStage);
     }
   };
 
   const isInputCurrentlyDisabled = (): boolean => {
-    // Etapas donde el input DEBE estar SIEMPRE deshabilitado:
     if (
-      conversationStage === 'GREETING' || // Mientras GIA saluda
-      conversationStage === 'PROCESSING_AI' || // Mientras GIA procesa la respuesta de la IA
-      conversationStage === 'PROCESSING_WAITLIST_SUB' || // Mientras se procesa la suscripción a la waitlist
-      conversationStage === 'CONVO_ENDED' // Cuando la conversación ha finalizado explícitamente
+      conversationStage === 'GREETING' ||
+      conversationStage === 'PROCESSING_AI' ||
+      conversationStage === 'PROCESSING_WAITLIST_SUB' ||
+      conversationStage === 'CONVO_ENDED'
     ) {
       return true;
     }
-  
-    // Si la última acción de GIA fue presentar botones, el input debe estar deshabilitado
-    // hasta que el usuario haga clic en un botón.
     const lastMessage = messages[messages.length - 1];
     if (lastMessage?.sender === 'gia' && lastMessage?.options && lastMessage.options.length > 0) {
       return true;
     }
-    
-    // Si estamos en una etapa donde se espera input del usuario Y GIA no acaba de dar opciones:
-    // (AWAITING_USER_NAME, AWAITING_EMAIL_INPUT, AWAITING_PET_NAME, AWAITING_PET_SPECIES, AWAITING_MAIN_QUESTION)
-    // Entonces el input NO está deshabilitado (return false).
-    // En cualquier otro caso no contemplado, por seguridad, lo dejamos deshabilitado.
+    // Enable input for these stages if GIA isn't presenting options
     if (
       conversationStage === 'AWAITING_USER_NAME' ||
-      conversationStage === 'AWAITING_EMAIL_INPUT' ||
       conversationStage === 'AWAITING_PET_NAME' ||
       conversationStage === 'AWAITING_PET_SPECIES' ||
-      conversationStage === 'AWAITING_MAIN_QUESTION'
+      conversationStage === 'AWAITING_MAIN_QUESTION' ||
+      conversationStage === 'AWAITING_WAITLIST_EMAIL'
     ) {
-      // Si el último mensaje fue del usuario, o si fue de GIA pero SIN opciones, habilita el input.
-      if (!lastMessage || lastMessage.sender === 'user' || (lastMessage.sender === 'gia' && (!lastMessage.options || lastMessage.options.length === 0))) {
-          return false;
-      }
+      return false; // Explicitly enable if no GIA options are pending
     }
-  
-    // Por defecto, si no es una etapa clara de input del usuario, deshabilitar.
-    return true;
+    return true; // Default to disabled for other states or if conditions not met
   };
 
   const getPlaceholderText = (): string => {
@@ -330,10 +311,6 @@ export default function GIAClient() {
         case 'AWAITING_PET_SPECIES': return "Especie (Ej: Perro, Gato)...";
         case 'AWAITING_MAIN_QUESTION': return "Escribe tu pregunta para GIA...";
         case 'AWAITING_WAITLIST_EMAIL': return "Escribe tu correo electrónico...";
-        case 'AI_RESPONSE_DISPLAYED': // After AI response, if user can type again
-        case 'WAITLIST_CONFIRMED':
-        case 'CONVO_ENDED_NO_WAITLIST':
-             return "Escribe tu siguiente pregunta o elige una opción...";
         default: return "Escribe tu mensaje...";
     }
   }
@@ -374,6 +351,7 @@ export default function GIAClient() {
                       size="sm"
                       onClick={() => handleOptionClick(option.value, option.label)}
                       className="text-xs h-auto py-1 px-2"
+                      disabled={isPending}
                     >
                       {option.label}
                     </Button>
@@ -426,7 +404,7 @@ export default function GIAClient() {
             type="submit"
             size="sm"
             className="text-xs"
-            disabled={isInputCurrentlyDisabled() || (!currentInput.trim() && !(messages[messages.length - 1]?.sender === 'gia' && messages[messages.length - 1]?.options))}
+            disabled={isInputCurrentlyDisabled() || (!currentInput.trim() && !['AI_RESPONSE_DISPLAYED', 'AWAITING_WAITLIST_DECISION', 'WAITLIST_CONFIRMED', 'CONVO_ENDED_NO_WAITLIST'].includes(conversationStage) && !(messages[messages.length - 1]?.sender === 'gia' && messages[messages.length - 1]?.options))}
         >
           {(isPending && (conversationStage === 'PROCESSING_AI' || conversationStage === 'PROCESSING_WAITLIST_SUB')) ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
           <span className="sr-only sm:not-sr-only ml-0 sm:ml-1.5">Enviar</span>

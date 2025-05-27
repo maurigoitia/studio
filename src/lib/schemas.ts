@@ -45,3 +45,10 @@ export const NewPetFormSchema = z.object({
   ownerPhone: z.string().min(7, { message: "El teléfono debe tener al menos 7 dígitos." }).max(20).optional(),
 });
 export type NewPetFormValues = z.infer<typeof NewPetFormSchema>;
+
+// Schema for waitlist subscription via GIA chat
+export const WaitlistSubscriptionSchema = z.object({
+  email: z.string().email({ message: "Por favor, introduce un correo electrónico válido." }),
+  userType: z.literal('tutor').default('tutor'), // Default to tutor for GIA chat signups
+});
+export type WaitlistSubscriptionValues = z.infer<typeof WaitlistSubscriptionSchema>;

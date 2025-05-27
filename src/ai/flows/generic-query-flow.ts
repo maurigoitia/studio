@@ -10,11 +10,11 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { GenericQueryFormSchema } from '@/lib/schemas';
+import { GenericQueryFormSchema } from '@/lib/schemas'; // Using the base schema for input structure
 
 const GenericQueryInputSchema = GenericQueryFormSchema.extend({
-  userName: z.string().optional().describe("The name of the user asking the question."),
-  // email, petName, species, question ya están definidos en GenericQueryFormSchema
+  // userName, email, petName, species, question are already defined in GenericQueryFormSchema
+  // No petAge here as per the new flow
 });
 export type GenericQueryInput = z.infer<typeof GenericQueryInputSchema>;
 
