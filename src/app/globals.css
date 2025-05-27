@@ -9,7 +9,7 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 96%; /* Light Gray base (similar to #F5F5F7) */
+    --background: 0 0% 94.1%; /* Light Gray #F0F0F0 */
     --foreground: 240 10% 3.9%; /* Near Black for text */
 
     --card: 0 0% 100%; /* White for cards */
@@ -18,92 +18,92 @@ body {
     --popover: 0 0% 100%; /* White */
     --popover-foreground: 240 10% 3.9%; /* Near Black */
 
-    /* Primary Color: Purple (from PetSyncPro image) */
-    --primary: 250 60% 55%; /* Purple, e.g., hsl(250, 60%, 55%) */
+    /* Primary Color: Teal (from PRD) */
+    --primary: 180 100% 25%; /* Teal #008080 */
     --primary-foreground: 0 0% 100%; /* White text on Primary */
 
-    /* Secondary Color: Lighter shade of purple or a complementary light gray */
-    --secondary: 250 60% 96%; /* Very Light Purple/Gray */
-    --secondary-foreground: 250 60% 30%; /* Darker Purple for text on secondary */
+    /* Secondary Color: Lighter shade of teal or a complementary light gray */
+    --secondary: 180 100% 95%; /* Very Light Teal/Gray */
+    --secondary-foreground: 180 100% 20%; /* Darker Teal for text on secondary */
 
-    --muted: 0 0% 90%; /* Slightly darker Light Gray */
+    --muted: 0 0% 88%; /* Slightly darker Light Gray */
     --muted-foreground: 240 5% 45%; /* Medium Gray text */
 
-    /* Accent Color: A bright, contrasting color or a more vibrant purple */
-    --accent: 250 70% 65%; /* Brighter Purple or distinct accent like a Gold/Teal if desired */
+    /* Accent Color: Coral (from PRD) */
+    --accent: 16 100% 66%; /* Coral #FF7F50 */
     --accent-foreground: 0 0% 100%; /* White text on Accent */
     
     --destructive: 0 84% 60%; /* Red */
     --destructive-foreground: 0 0% 98%; /* Light text on red */
 
-    --border: 0 0% 88%; /* Light Gray border */
-    --input: 0 0% 100%; /* White input background or very light gray */
-    --ring: 250 60% 60%; /* Purple for focus rings */
+    --border: 0 0% 85%; /* Light Gray border, slightly darker than background */
+    --input: 0 0% 100%; /* White input background */
+    --ring: 180 100% 30%; /* Teal for focus rings, slightly brighter */
 
-    /* Chart colors - Adapt to new purple theme */
-    --chart-1: 250 60% 55%; /* Primary Purple */
-    --chart-2: 250 70% 70%;  /* Lighter Purple */
-    --chart-3: 280 50% 60%; /* Another shade of Purple/Violet */
-    --chart-4: 30 80% 60%; /* A contrasting warm color like Gold/Orange */
-    --chart-5: 0 0% 65%;  /* A neutral Gray */
+    /* Chart colors - Adapt to new Teal/Coral theme */
+    --chart-1: 180 100% 25%;  /* Primary Teal */
+    --chart-2: 16 100% 66%;   /* Accent Coral */
+    --chart-3: 200 80% 50%;   /* A complementary Blue */
+    --chart-4: 90 50% 55%;    /* A natural Green */
+    --chart-5: 0 0% 65%;     /* A neutral Gray */
     --radius: 0.5rem;
 
-    /* Sidebar variables */
-    --sidebar-background: 0 0% 98%; /* Very light, almost white */
+    /* Sidebar variables - Adapt to new theme */
+    --sidebar-background: 0 0% 98%; 
     --sidebar-foreground: 240 10% 10%; 
-    --sidebar-primary: 250 55% 50%; /* Slightly darker purple for sidebar primary elements */
+    --sidebar-primary: 180 90% 30%; 
     --sidebar-primary-foreground: 0 0% 100%; 
-    --sidebar-accent: 250 65% 60%; /* Brighter purple for sidebar accent */
+    --sidebar-accent: 16 90% 70%; 
     --sidebar-accent-foreground: 0 0% 100%; 
     --sidebar-border: 0 0% 92%; 
-    --sidebar-ring: 250 60% 60%; 
+    --sidebar-ring: 180 90% 35%; 
   }
 
   .dark {
-    --background: 250 10% 12%; /* Dark Purple/Gray */
-    --foreground: 250 10% 90%; /* Light Gray text */
+    --background: 220 15% 10%; /* Dark Blue/Gray */
+    --foreground: 220 10% 90%; /* Light Gray text */
 
-    --card: 250 10% 18%; /* Darker card background */
-    --card-foreground: 250 10% 90%;
+    --card: 220 15% 15%; /* Darker card background */
+    --card-foreground: 220 10% 90%;
 
-    --popover: 250 10% 18%;
-    --popover-foreground: 250 10% 90%;
+    --popover: 220 15% 15%;
+    --popover-foreground: 220 10% 90%;
 
-    --primary: 250 65% 65%; /* Brighter Purple for Dark Mode */
-    --primary-foreground: 0 0% 98%; /* White text on Primary */
+    --primary: 180 70% 45%; /* Brighter Teal for Dark Mode */
+    --primary-foreground: 180 95% 96%; /* Very Light Teal/White text */
 
-    --secondary: 250 10% 22%; /* Darker secondary */
-    --secondary-foreground: 250 10% 88%;
+    --secondary: 220 15% 20%; 
+    --secondary-foreground: 220 10% 88%;
 
-    --muted: 250 10% 25%; 
-    --muted-foreground: 250 10% 65%;
+    --muted: 220 15% 25%; 
+    --muted-foreground: 220 10% 65%;
 
-    --accent: 250 70% 70%; /* Brighter Purple Accent for Dark Mode */
+    --accent: 16 90% 70%; /* Brighter Coral Accent for Dark Mode */
     --accent-foreground: 0 0% 100%; 
 
     --destructive: 0 70% 50%; /* Red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 250 10% 30%; 
-    --input: 250 10% 25%; 
-    --ring: 250 65% 70%; 
+    --border: 220 15% 28%; 
+    --input: 220 15% 22%; 
+    --ring: 180 70% 50%; 
     
     /* chart colors for dark mode */
-    --chart-1: 250 65% 65%; 
-    --chart-2: 250 70% 75%;  
-    --chart-3: 280 55% 70%; 
-    --chart-4: 30 75% 70%;  
+    --chart-1: 180 70% 45%; 
+    --chart-2: 16 90% 70%;  
+    --chart-3: 200 75% 60%; 
+    --chart-4: 90 50% 65%;  
     --chart-5: 0 0% 55%;   
 
     /* Sidebar variables for dark mode */
-    --sidebar-background: 250 10% 10%; 
-    --sidebar-foreground: 250 10% 88%;
-    --sidebar-primary: 250 60% 60%; 
+    --sidebar-background: 220 15% 8%; 
+    --sidebar-foreground: 220 10% 88%;
+    --sidebar-primary: 180 65% 50%; 
     --sidebar-primary-foreground: 0 0% 95%;
-    --sidebar-accent: 250 65% 70%; 
+    --sidebar-accent: 16 85% 75%; 
     --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 250 10% 25%;
-    --sidebar-ring: 250 65% 70%;
+    --sidebar-border: 220 15% 25%;
+    --sidebar-ring: 180 65% 55%;
   }
 }
 
@@ -116,5 +116,5 @@ body {
   }
 }
     
-
     
+

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb, Image as ImageIcon, Sparkles, Info } from "lucide-react";
 import Link from "next/link";
-import { Logo } from "@/components/logo"; // Ensure Logo is imported if used
+import { Logo } from "@/components/logo"; 
 import React from "react";
 
 const GOOGLE_FORM_VET_EARLY_ACCESS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link";
@@ -100,7 +100,7 @@ export default function VetPortalInfoPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {features.map((feature, index) => (
-                <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col text-center items-center p-6 bg-card">
+                <Card key={index} className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col text-center items-center p-6 bg-card">
                   {feature.icon}
                   <CardTitle className="text-xl font-semibold mt-2 mb-2">{feature.title}</CardTitle>
                   <CardDescription className="text-muted-foreground text-sm flex-grow">{feature.description}</CardDescription>
@@ -191,4 +191,3 @@ export default function VetPortalInfoPage() {
     </div>
   );
 }
-

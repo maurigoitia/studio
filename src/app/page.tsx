@@ -4,40 +4,40 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from "@/components/ui/badge";
-import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, Smartphone, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn, PawPrint, HandCoins, Stethoscope, Syringe, Microscope, Pill, FileHeart, Image as ImageIcon, Eye, MessageCircle, UserPlus, Clock, AlertTriangle, Send, Bot } from 'lucide-react';
+import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, Smartphone, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn, PawPrint, HandCoins, Stethoscope, Syringe, Microscope, Pill, FileHeart, Image as ImageIcon, Eye, MessageCircle, UserPlus, Clock, AlertTriangle, Send, Bot, HeartPulse, Search } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
   {
-    question: "¿Qué es PetSyncPro y cómo puede ayudarme?",
-    answer: "PetSyncPro es una plataforma que conecta a tutores de mascotas y veterinarias para simplificar la gestión de la salud animal. Te ayuda a agendar turnos, acceder a historiales médicos, recibir recordatorios y mucho más, todo en un solo lugar."
+    question: "¿Qué es PetSync y cómo puede ayudarme?",
+    answer: "PetSync es una plataforma que conecta a tutores de mascotas y veterinarias para simplificar la gestión de la salud animal. Te ayuda a agendar turnos, acceder a historiales médicos, recibir recordatorios y mucho más, todo en un solo lugar."
   },
   {
-    question: "¿Cómo me registro en PetSyncPro?",
-    answer: "Actualmente estamos en versión beta. Déjanos tu contacto en nuestra waitlist y te avisaremos tan pronto como puedas registrarte para ser de los primeros en probar PetSyncPro."
+    question: "¿Cómo me registro en PetSync?",
+    answer: "Actualmente estamos en versión beta. Déjanos tu contacto en nuestra waitlist y te avisaremos tan pronto como puedas registrarte para ser de los primeros en probar PetSync."
   },
   {
-    question: "¿PetSyncPro tiene costo para los tutores de mascotas?",
-    answer: "La versión básica de PetSyncPro para tutores será gratuita. Ofreceremos funciones premium opcionales en el futuro. ¡Regístrate en la waitlist para conocer los detalles del lanzamiento!"
+    question: "¿PetSync tiene costo para los tutores de mascotas?",
+    answer: "La versión básica de PetSync para tutores será gratuita. Ofreceremos funciones premium opcionales en el futuro. ¡Regístrate en la waitlist para conocer los detalles del lanzamiento!"
   },
   {
-    question: "¿Para quiénes está pensado PetSyncPro?",
-    answer: "PetSyncPro está diseñado principalmente para tutores de mascotas urbanos (25-40 años) y veterinarias en Buenos Aires que buscan optimizar la gestión de la salud de las mascotas y mejorar la conexión entre ellos."
+    question: "¿Para quiénes está pensado PetSync?",
+    answer: "PetSync está diseñado principalmente para tutores de mascotas urbanos (25-40 años) y veterinarias en Buenos Aires que buscan optimizar la gestión de la salud de las mascotas y mejorar la conexión entre ellos."
   },
   {
-    question: "Soy veterinario independiente, ¿PetSyncPro me sirve?",
-    answer: "¡Absolutamente! PetSyncPro está diseñado para ser útil tanto para veterinarios independientes como para clínicas, ofreciendo herramientas para optimizar la agenda, la comunicación y el acceso a la información del paciente (con permiso del tutor)."
+    question: "Soy veterinario independiente, ¿PetSync me sirve?",
+    answer: "¡Absolutamente! PetSync está diseñado para ser útil tanto para veterinarios independientes como para clínicas, ofreciendo herramientas para optimizar la agenda, la comunicación y el acceso a la información del paciente (con permiso del tutor)."
   },
   {
-    question: "Soy una clínica grande, ¿cómo se integra PetSyncPro con lo que ya tengo?",
-    answer: "PetSyncPro está diseñado con una interfaz amigable y buscamos facilitar su adopción. Evaluaremos opciones de integración con sistemas de gestión veterinaria existentes en el futuro. ¡Contáctanos para conversar sobre tus necesidades!"
+    question: "Soy una clínica grande, ¿cómo se integra PetSync con lo que ya tengo?",
+    answer: "PetSync está diseñado con una interfaz amigable y buscamos facilitar su adopción. Evaluaremos opciones de integración con sistemas de gestión veterinaria existentes en el futuro. ¡Contáctanos para conversar sobre tus necesidades!"
   },
   {
-    question: "¿Está segura la información de mi mascota en PetSyncPro?",
+    question: "¿Está segura la información de mi mascota en PetSync?",
     answer: "La seguridad y privacidad de tus datos y los de tu mascota son nuestra máxima prioridad. Utilizamos medidas de seguridad estándar de la industria para proteger tu información. Podés consultar más detalles en nuestra Política de Privacidad."
   },
   {
-    question: "¿Cómo puedo contactar a PetSyncPro si tengo más preguntas?",
+    question: "¿Cómo puedo contactar a PetSync si tengo más preguntas?",
     answer: "Puedes encontrar un enlace de 'Contacto' en el pie de página de nuestro sitio o buscarnos en nuestras redes sociales. ¡Estamos aquí para ayudarte!"
   }
 ];
@@ -46,15 +46,15 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center bg-background">
       {/* Hero Section */}
-      <section className="w-full py-16 md:py-28 bg-primary text-primary-foreground">
+      <section className="w-full py-16 md:py-28 bg-gradient-to-br from-primary/10 via-background to-background">
         <div className="container mx-auto text-center px-4">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-            PetSyncPro: el cuidado veterinario, sin el desorden de siempre.
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground">
+            PetSync: el cuidado veterinario, sin el desorden de siempre.
           </h1>
-          <p className="mt-4 text-lg sm:text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto">
+          <p className="mt-4 text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
             Turnos, historiales y seguimientos organizados.
           </p>
-          <p className="mt-2 text-md sm:text-lg md:text-xl text-primary-foreground/80 max-w-3xl mx-auto">
+          <p className="mt-2 text-md sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Una plataforma para clínicas. Una app para tutores.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -68,9 +68,9 @@ export default function HomePage() {
       {/* Feature Highlights Section */}
       <section id="features" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Simplifica el Cuidado de tu Mascota con PetSyncPro</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Simplifica el Cuidado de tu Mascota con PetSync</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
+            <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <Users className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Para Tutores de Mascotas</CardTitle>
@@ -83,7 +83,7 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
+            <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <UserCog className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Para Clínicas Veterinarias</CardTitle>
@@ -96,7 +96,7 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card md:col-span-1 lg:col-span-1">
+             <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card md:col-span-1 lg:col-span-1">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <BotMessageSquare className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Conoce a GIA (Demo IA)</CardTitle>
@@ -105,7 +105,9 @@ export default function HomePage() {
                 <p className="text-muted-foreground mb-3 text-sm sm:text-base">
                   Prueba nuestro asistente IA para obtener respuestas generales sobre el cuidado de mascotas. ¡GIA aprende y mejora cada día!
                 </p>
-                 <p className="text-sm text-primary font-medium">Busca el ícono de chat de GIA para interactuar.</p>
+                 <Button variant="outline" className="border-accent text-accent hover:bg-accent/10 hover:text-accent mt-2" asChild>
+                    <Link href="/gia">Chatear con GIA</Link>
+                 </Button>
               </CardContent>
             </Card>
           </div>
@@ -184,7 +186,7 @@ export default function HomePage() {
       <section id="como-funciona" className="w-full py-12 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona PetSyncPro?</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona PetSync?</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
             <Card className="shadow-lg border p-4 sm:p-6 bg-card">
@@ -194,7 +196,7 @@ export default function HomePage() {
               <CardContent className="p-0 space-y-3 text-muted-foreground text-sm sm:text-base">
                 <div className="flex items-start">
                     <DownloadCloud className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
-                    <p>Cuando la app PetSyncPro esté lista, descárgala para iOS y Android. Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
+                    <p>Cuando la app PetSync esté lista, descárgala para iOS y Android. Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
                 </div>
                 <div className="flex items-start">
                     <ClipboardList className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
@@ -238,10 +240,10 @@ export default function HomePage() {
           <Card className="p-4 sm:p-6 md:p-8 shadow-xl bg-card">
             <CardContent className="p-0 text-left text-sm sm:text-base">
               <div className="space-y-4 sm:space-y-6 text-muted-foreground">
-                <p>En PetSyncPro, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
-                <p>Por eso creamos PetSyncPro: para transformar ese caos en calma.</p>
+                <p>En PetSync, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
+                <p>Por eso creamos PetSync: para transformar ese caos en calma.</p>
                 <p>Nuestra misión es simple: conectar a tutores y veterinarias con una plataforma intuitiva que organiza historiales, simplifica la gestión y optimiza el tiempo, para que todos podamos dedicarnos a lo que realmente importa: el bienestar de nuestras mascotas.</p>
-                <p>Estamos construyendo PetSyncPro con herramientas inteligentes como GIA, nuestra IA en desarrollo, porque creemos que la tecnología puede ser una gran aliada en el cuidado animal.</p>
+                <p>Estamos construyendo PetSync con herramientas inteligentes como GIA, nuestra IA en desarrollo, porque creemos que la tecnología puede ser una gran aliada en el cuidado animal.</p>
                 <p className="mt-4 sm:mt-6 text-base sm:text-md font-semibold text-foreground">
                   Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
                 </p>
@@ -262,7 +264,7 @@ export default function HomePage() {
             {faqData.map((faq, index) => (
               <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow-md mb-2 border">
                 <AccordionTrigger className="px-3 sm:px-4 py-2 sm:py-3 text-left hover:no-underline flex items-center text-foreground text-sm sm:text-base">
-                  {faq.question === "¿Está segura la información de mi mascota en PetSyncPro?" && <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary shrink-0" /> }
+                  {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary shrink-0" /> }
                   <span className="flex-1">{faq.question}</span>
                 </AccordionTrigger>
                 <AccordionContent className="px-3 sm:px-4 pb-2 sm:pb-3 text-muted-foreground text-xs sm:text-sm">
@@ -279,10 +281,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">¡Estamos en versión beta!</h2>
           <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base">
-            Sumate a la waitlist para ser de los primeros en probar PetSyncPro y ayudarnos a construir la mejor herramienta para el cuidado de nuestras mascotas.
+            Sumate a la waitlist para ser de los primeros en probar PetSync y ayudarnos a construir la mejor herramienta para el cuidado de nuestras mascotas.
           </p>
           <WaitlistForm />
-          <p className="mt-6 sm:mt-8 text-xs sm:text-sm text-muted-foreground">PetSyncPro y GIA están en desarrollo. ¡Estamos construyendo la app que revolucionará el cuidado de tu mascota!</p>
+          <p className="mt-6 sm:mt-8 text-xs sm:text-sm text-muted-foreground">PetSync y GIA están en desarrollo. ¡Estamos construyendo la app que revolucionará el cuidado de tu mascota!</p>
         </div>
       </section>
     </div>
