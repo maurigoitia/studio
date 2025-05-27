@@ -48,27 +48,34 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center bg-background">
       {/* Hero Section */}
-      <section className="w-full py-16 md:py-28 bg-primary text-primary-foreground">
-        <div className="container mx-auto text-center px-4">
-          <Badge className="bg-primary-foreground/90 text-primary font-medium text-sm sm:text-base px-4 py-1.5 mb-4 shadow">
-            La plataforma #1 para gestión veterinaria
-          </Badge>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-            Gestión veterinaria inteligente
-          </h1>
-          <p className="mt-6 text-lg sm:text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto">
-            Turnos, historiales y seguimientos organizados. Una plataforma para clínicas. Una app para tutores.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 shadow-lg transform hover:scale-105 transition-transform w-full sm:w-auto" asChild>
-              <Link href="#features">DESCUBRIR MÁS</Link>
-            </Button>
+      <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 via-background to-background text-center">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl"> {/* Ajustado max-w para mejor encaje de textos largos */}
+            {/* <PawPrint className="mx-auto h-16 w-16 text-primary mb-6" /> */}
+            <h1 className="text-4xl font-extrabold tracking-tighter text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
+              PetSync: el cuidado veterinario, sin el desorden de siempre.
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground md:text-xl">
+              Turnos, historiales y seguimientos organizados.
+            </p>
+            <p className="mt-2 text-md leading-7 text-muted-foreground md:text-lg"> {/* Ajustado margen y leading */}
+              Una plataforma para clínicas. Una app para tutores.
+            </p>
+            <div className="mt-10 flex items-center justify-center gap-x-6">
+              <Button
+                size="lg"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform px-10 py-3 text-lg font-semibold rounded-lg"
+                asChild
+              >
+                <Link href="#features">DESCUBRIR MÁS</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Feature Highlights Section */}
-      <section id="features" className="w-full py-12 md:py-20 bg-secondary/50">
+      <section id="features" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Simplifica el Cuidado de tu Mascota con PetSync</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -98,7 +105,7 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-             <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card md:col-span-2 lg:col-span-1"> {/* Adjusted col-span for responsiveness */}
+            <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card md:col-span-2 lg:col-span-1">
               <CardHeader className="items-center text-center md:items-start md:text-left">
                 <BotMessageSquare className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
                 <CardTitle className="text-xl">Conoce a GIA (Demo IA)</CardTitle>
@@ -151,7 +158,7 @@ export default function HomePage() {
       </section>
 
       {/* Benefits for Veterinarians Section */}
-      <section id="veterinarios" className="w-full py-12 md:py-20 bg-secondary/50">
+      <section id="veterinarios" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Beneficios para veterinarias</h2>
           <Card className="p-4 sm:p-6 md:p-8 shadow-xl bg-card">
@@ -234,7 +241,7 @@ export default function HomePage() {
       </section>
 
       {/* Quiénes Somos Section */}
-      <section id="quienes-somos" className="w-full py-12 md:py-20 bg-secondary/50">
+      <section id="quienes-somos" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-10 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">Quiénes Somos</h2>
