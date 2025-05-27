@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from "@/components/ui/badge";
-import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, Smartphone, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn, PawPrint, HandCoins, Stethoscope, Syringe, Microscope, Pill, FileHeart, Image as ImageIcon, Eye, MessageCircle, UserPlus, Clock, AlertTriangle, Send, Bot, HeartPulse, Search, Info } from 'lucide-react';
+import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, Smartphone, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn, HeartPulse, Search, Info, Bot, UserCircle as UserCircleIcon, Lightbulb } from 'lucide-react'; // UserCircleIcon para evitar conflicto con el componente UserCircle que podrías tener
 import WaitlistForm from '@/components/waitlist-form';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -47,7 +47,7 @@ const faqData = [
 export default function HomePage() {
   return (
     <div className="flex flex-col items-center bg-background">
-      {/* Hero Section */}
+      {/* Hero Section - Estilo visual nuevo, texto original */}
       <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 via-background to-background text-center">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl"> {/* Ajustado max-w para mejor encaje de textos largos */}
