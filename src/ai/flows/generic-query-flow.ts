@@ -55,8 +55,8 @@ const genericQueryFlow = ai.defineFlow(
   },
   async (input) => {
     const {output} = await prompt(input);
-    if (!output) {
-        console.error("No output received from AI model for GIA query. Input:", input);
+    if (!output || !output.answer) {
+        console.error("No output or valid answer received from AI model for GIA query. Input:", input, "Raw output:", output);
         return { answer: "GIA no pudo generar una respuesta en este momento. Por favor, intenta reformular tu pregunta o inténtalo más tarde." };
     }
     return output;

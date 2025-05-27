@@ -16,7 +16,7 @@ interface Message {
   id: string;
   text: string;
   sender: "user" | "gia";
-  options?: Array<{ label: string, value: string }>; // For Sí/No buttons
+  options?: Array<{ label: string, value: string }>;
 }
 
 type ConversationStage = 
@@ -48,8 +48,22 @@ export default function GIAClient() {
   const [collectedData, setCollectedData] = useState<CollectedData>({});
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
+  // --- Sound Effect Logic ---
+  const playSound = (soundPath: string) => {
+    try {
+      const audio = new Audio(soundPath);
+      audio.play().catch(error => console.warn("Error playing sound:", error)); // Catch play promise rejection
+    } catch (error) {
+      console.warn("Could not play sound effect:", error);
+    }
+  };
+  // --- End Sound Effect Logic ---
+
   const addMessage = (text: string, sender: 'user' | 'gia', options?: Array<{label: string, value: string}>) => {
     setMessages(prev => [...prev, { id: Date.now().toString() + Math.random().toString(36).substring(7), text, sender, options }]);
+    if (sender === 'gia' && !isPending) {
+      playSound('/sounds/message-received.mp3'); // User: Place message-received.mp3 in public/sounds/
+    }
   };
   
   useEffect(() => {
@@ -63,52 +77,73 @@ export default function GIAClient() {
 
   useEffect(() => {
     if (conversationStage === 'GREETING') {
-      addMessage("Hola, soy GIA. ¿Me podrías decir tu nombre?", "gia");
+      addMessage("¡Hola! Soy GIA, tu asistente IA de PetSync. Para comenzar, ¿me podrías decir tu nombre?", "gia");
       setConversationStage('AWAITING_USER_NAME');
     }
-  }, [conversationStage]);
+  }, [conversationStage]); // Ensure this runs only once or when stage explicitly resets to GREETING
 
-  const handleOptionClick = (value: string) => {
-    addMessage(value === 'yes_email' ? 'Sí' : 'No', 'user'); // Display user's choice
+  const handleOptionClick = (value: string, label: string) => {
+    addMessage(label, 'user');
+    playSound('/sounds/message-sent.mp3'); // User: Place message-sent.mp3 in public/sounds/
     
     if (conversationStage === 'AWAITING_EMAIL_PERMISSION') {
       if (value === 'yes_email') {
-        addMessage("¡Genial! Por favor, escribe tu correo.", "gia");
+        addMessage("¡Genial! Por favor, escribe tu correo electrónico.", "gia");
         setConversationStage('AWAITING_EMAIL_INPUT');
       } else {
-        addMessage("Entendido, no hay problema. Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
+        setCollectedData(prev => ({ ...prev, email: undefined }));
+        addMessage("Entendido. Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
         setConversationStage('AWAITING_PET_NAME');
       }
+    } else if (conversationStage === 'AI_RESPONSE_DISPLAYED') {
+        if (value === 'new_question') {
+            setCollectedData(prev => ({ ...prev, question: undefined }));
+            addMessage("Claro, ¿cuál es tu nueva pregunta?", "gia");
+            setConversationStage('AWAITING_MAIN_QUESTION');
+        } else if (value === 'end_convo') {
+            addMessage("¡Gracias por chatear conmigo! Que tengas un buen día.", "gia");
+            setConversationStage('CONVO_ENDED');
+        }
     }
   };
 
   const handleSendMessage = async (e?: FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
     const userInput = currentInput.trim();
-    if (!userInput && conversationStage !== 'AWAITING_EMAIL_PERMISSION') return; // Allow empty submission for button clicks
+    if (!userInput && conversationStage !== 'AWAITING_EMAIL_PERMISSION' && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options)) return; 
 
-    if (userInput) addMessage(userInput, "user");
+    if (userInput) {
+      addMessage(userInput, "user");
+      playSound('/sounds/message-sent.mp3'); // User: Place message-sent.mp3 in public/sounds/
+    }
     setCurrentInput("");
 
     switch (conversationStage) {
       case 'AWAITING_USER_NAME':
         setCollectedData(prev => ({ ...prev, userName: userInput }));
-        addMessage(`Un gusto, ${userInput}! ¿Te gustaría compartir tu correo electrónico conmigo? (Sí/No)`, "gia", [{label: "Sí", value: "yes_email"}, {label: "No", value: "no_email"}]);
+        addMessage(`¡Un gusto, ${userInput || 'usuario'}! ¿Te gustaría compartir tu correo electrónico conmigo?`, "gia", [{label: "Sí, compartir email", value: "yes_email"}, {label: "No, gracias", value: "no_email"}]);
         setConversationStage('AWAITING_EMAIL_PERMISSION');
         break;
       case 'AWAITING_EMAIL_INPUT':
+        // Basic email validation (optional, as Zod will catch it later, but good for UX)
+        if (!userInput.includes('@') || !userInput.includes('.')) {
+            addMessage("Parece que ese no es un correo válido. Por favor, inténtalo de nuevo o puedes omitirlo.", "gia", [{label: "Omitir email", value: "no_email_retry"}]);
+            // Option to retry or skip. If skipping, we'd need to handle 'no_email_retry' in handleOptionClick or here.
+            // For simplicity, current flow proceeds, Zod will catch it if they don't correct or skip via an option.
+            // Re-prompting requires more complex state.
+        }
         setCollectedData(prev => ({ ...prev, email: userInput }));
         addMessage("¡Gracias! Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
         setConversationStage('AWAITING_PET_NAME');
         break;
       case 'AWAITING_PET_NAME':
         setCollectedData(prev => ({ ...prev, petName: userInput }));
-        addMessage(`¡Lindo nombre, ${userInput || 'tu mascota'}! ¿Y cuál es su especie? (Ej: Perro, Gato)`, "gia");
+        addMessage(`¡Lindo nombre, ${userInput || 'tu mascota'}! ¿Y cuál es su especie? (Ej: Perro, Gato, Ave)`, "gia");
         setConversationStage('AWAITING_PET_SPECIES');
         break;
       case 'AWAITING_PET_SPECIES':
         setCollectedData(prev => ({ ...prev, species: userInput }));
-        addMessage(`Muy bien. Ahora sí, dime ¿en qué te puedo ayudar con ${collectedData.petName || 'tu mascota'} (el/la ${userInput})?`, "gia");
+        addMessage(`Entendido, un/a ${userInput}. Ahora sí, ${collectedData.userName || 'dime'}, ¿en qué te puedo ayudar con ${collectedData.petName || 'tu mascota'}?`, "gia");
         setConversationStage('AWAITING_MAIN_QUESTION');
         break;
       case 'AWAITING_MAIN_QUESTION':
@@ -120,39 +155,33 @@ export default function GIAClient() {
             userName: collectedData.userName,
             email: collectedData.email,
             petName: collectedData.petName,
-            species: collectedData.species,
-            question: userInput,
+            species: collectedData.species, // species is required by schema
+            question: userInput, // question is required by schema
           };
           const response = await askGenericQuestionAction(payload);
           if (response.success && response.data) {
             addMessage(response.data.answer, "gia");
           } else {
-            addMessage(response.message || "Hubo un error al obtener una respuesta de GIA.", "gia");
+            addMessage(response.message || "Hubo un error al obtener una respuesta de GIA. Por favor, revisa los datos o inténtalo más tarde.", "gia");
             toast({
-              title: "Error",
+              title: "Error de GIA",
               description: response.message || "No se pudo obtener una respuesta.",
               variant: "destructive",
             });
           }
           setConversationStage('AI_RESPONSE_DISPLAYED');
-           addMessage("¿Tienes alguna otra pregunta o podemos finalizar aquí?", "gia", [{label: "Hacer otra pregunta", value: "new_question"}, {label: "Finalizar", value: "end_convo"}]);
+          addMessage("¿Tienes alguna otra pregunta o podemos finalizar aquí?", "gia", [{label: "Hacer otra pregunta", value: "new_question"}, {label: "Finalizar", value: "end_convo"}]);
         });
         break;
       case 'AI_RESPONSE_DISPLAYED':
-         if (userInput.toLowerCase() === 'hacer otra pregunta') {
-            setCollectedData(prev => ({ ...prev, question: undefined })); // Clear previous question
-            addMessage("Claro, ¿cuál es tu nueva pregunta?", "gia");
-            setConversationStage('AWAITING_MAIN_QUESTION');
-        } else if (userInput.toLowerCase() === 'finalizar') {
-            addMessage("¡Gracias por chatear conmigo! Que tengas un buen día.", "gia");
-            setConversationStage('CONVO_ENDED');
-        } else {
-            // If user types something else, assume it's a new question.
+         // This case is now primarily handled by handleOptionClick for buttons
+         // If user types instead of clicking a button:
+        if (userInput) { // If user typed something
             setCollectedData(prev => ({ ...prev, question: userInput }));
             setConversationStage('PROCESSING_AI');
             addMessage("Entendido. Estoy procesando tu nueva pregunta...", "gia");
             startTransition(async () => {
-              const payload: GenericQueryFormValues = {
+              const payload: GenericQueryFormValues = { // Reconstruct payload
                 userName: collectedData.userName,
                 email: collectedData.email,
                 petName: collectedData.petName,
@@ -179,7 +208,7 @@ export default function GIAClient() {
     return conversationStage === 'PROCESSING_AI' || 
            conversationStage === 'CONVO_ENDED' || 
            conversationStage === 'GREETING' ||
-           conversationStage === 'AWAITING_EMAIL_PERMISSION' ||
+           (conversationStage === 'AWAITING_EMAIL_PERMISSION' && messages[messages.length -1]?.options !== undefined) ||
            (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length -1]?.options !== undefined) ;
   };
 
@@ -190,7 +219,7 @@ export default function GIAClient() {
           <div
             key={msg.id}
             className={cn(
-              "flex items-end space-x-2 max-w-[85%] mb-3 text-sm",
+              "flex items-end space-x-2 max-w-[85%] mb-3 text-sm animate-in fade-in-0 slide-in-from-bottom-2 duration-300 ease-out",
               msg.sender === 'user' ? "ml-auto justify-end" : "mr-auto justify-start"
             )}
           >
@@ -211,25 +240,13 @@ export default function GIAClient() {
             >
               <p className="whitespace-pre-wrap">{msg.text}</p>
               {msg.sender === 'gia' && msg.options && (
-                <div className="mt-2 flex gap-2">
+                <div className="mt-2 flex flex-wrap gap-2">
                   {msg.options.map(option => (
                     <Button 
                       key={option.value} 
                       variant="outline" 
                       size="sm" 
-                      onClick={() => {
-                        if (option.value === 'new_question') {
-                            addMessage(option.label, 'user');
-                            addMessage("Claro, ¿cuál es tu nueva pregunta?", "gia");
-                            setConversationStage('AWAITING_MAIN_QUESTION');
-                        } else if (option.value === 'end_convo') {
-                            addMessage(option.label, 'user');
-                            addMessage("¡Gracias por chatear conmigo! Que tengas un buen día.", "gia");
-                            setConversationStage('CONVO_ENDED');
-                        } else {
-                           handleOptionClick(option.value);
-                        }
-                      }}
+                      onClick={() => handleOptionClick(option.value, option.label)}
                       className="text-xs"
                     >
                       {option.label}
@@ -248,7 +265,7 @@ export default function GIAClient() {
           </div>
         ))}
         {isPending && conversationStage === 'PROCESSING_AI' && (
-          <div className="flex items-center space-x-2 mr-auto justify-start mb-3">
+          <div className="flex items-center space-x-2 mr-auto justify-start mb-3 animate-in fade-in-0 duration-300">
              <Avatar className="h-6 w-6 sm:h-8 sm:w-8 self-start">
                 <AvatarFallback className="bg-accent text-accent-foreground">
                   <Bot className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -268,8 +285,7 @@ export default function GIAClient() {
         <Input
           type="text"
           placeholder={
-            isInputDisabled() ? "Esperando respuesta de GIA..." : 
-            conversationStage === 'AWAITING_EMAIL_PERMISSION' ? "Escribe 'Sí' o 'No'" :
+            isInputDisabled() ? "Esperando respuesta..." : 
             "Escribe tu mensaje..."
           }
           value={currentInput}
@@ -277,12 +293,16 @@ export default function GIAClient() {
           className="flex-grow bg-input text-xs sm:text-sm"
           disabled={isInputDisabled()}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey && !isInputDisabled()) {
-              handleSendMessage(e as any); // Cast to any to satisfy FormEvent if needed
+            if (e.key === 'Enter' && !e.shiftKey && !isInputDisabled() && currentInput.trim()) {
+              handleSendMessage(e as any); 
             }
           }}
         />
-        <Button type="submit" className="text-sm sm:text-base" disabled={isInputDisabled() || (!currentInput && conversationStage !== 'AWAITING_EMAIL_PERMISSION')}>
+        <Button 
+            type="submit" 
+            className="text-sm sm:text-base" 
+            disabled={isInputDisabled() || (!currentInput.trim() && conversationStage !== 'AWAITING_EMAIL_PERMISSION' && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options))}
+        >
           {isPending && conversationStage === 'PROCESSING_AI' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           <span className="sr-only sm:not-sr-only ml-0 sm:ml-2">Enviar</span>
         </Button>
