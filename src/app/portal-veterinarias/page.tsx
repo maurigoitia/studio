@@ -4,14 +4,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb } from "lucide-react";
+import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import React from "react";
 
 const GOOGLE_FORM_VET_EARLY_ACCESS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link";
 
-// Example data for features
+// Example data for simplified features
 const portalFeatures = [
   {
     icon: CalendarCog,
@@ -31,17 +31,12 @@ const portalFeatures = [
   {
     icon: ActivitySquare,
     title: "Gestión de Sala de Espera y Triage",
-    description: "Organiza el flujo de pacientes espontáneos y urgencias con un sistema de priorización visual, mejorando la eficiencia y la experiencia en tu clínica.",
+    description: "Organiza el flujo de pacientes espontáneos y urgencias con un sistema de priorización visual, mejorando la eficiencia y la experiencia en tu clínica (próximamente con más detalle).",
   },
   {
     icon: BrainCircuit,
     title: "Asistencia IA (GIA) para Veterinarios",
     description: "GIA, nuestra IA, te ayudará a optimizar tu tiempo generando resúmenes de consulta, buscando información relevante en historiales y más (próximamente).",
-  },
-  {
-    icon: UserCog,
-    title: "Gestión de Múltiples Usuarios y Roles",
-    description: "Define diferentes perfiles (administradores, veterinarios, recepción) con permisos específicos para un control total de la información y las funciones del portal.",
   },
 ];
 
@@ -78,62 +73,6 @@ export default function VetPortalPage() {
           </div>
         </section>
 
-        {/* Canva Embed Section - Main Focus */}
-        <section id="presentation-vet-portal" className="py-8 md:py-12 bg-secondary/30">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-6 sm:mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                Explora el Portal PetSync en Detalle
-              </h2>
-              <CardDescription className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-                Visualiza cómo PetSync puede transformar la operativa de tu clínica y mejorar la experiencia de atención.
-              </CardDescription>
-            </div>
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              height: 0,
-              paddingTop: '56.2225%', // Aspect ratio 16:9
-              paddingBottom: 0,
-              boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
-              marginTop: '1.6em',
-              marginBottom: '0.9em',
-              overflow: 'hidden',
-              borderRadius: '8px',
-              willChange: 'transform'
-            }}>
-              <iframe
-                loading="lazy"
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  top: 0,
-                  left: 0,
-                  border: 'none',
-                  padding: 0,
-                  margin: 0
-                }}
-                src="https://www.canva.com/design/DAGoMHRHfj4/w_dUftQymojeLI2Qa10vGw/view?embed"
-                allowFullScreen
-                allow="fullscreen"
-                title="Presentación del Portal PetSync para Veterinarias"
-              ></iframe>
-            </div>
-            <p className="text-center mt-4 text-sm text-muted-foreground">
-              <a
-                href="https://www.canva.com/design/DAGoMHRHfj4/w_dUftQymojeLI2Qa10vGw/view?utm_content=DAGoMHRHfj4&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-primary underline"
-              >
-                Presentación del Portal PetSync para Veterinarias
-              </a>
-              {' '}por PetSync Team.
-            </p>
-          </div>
-        </section>
-
         {/* Why Choose PetSync Section */}
         <section id="why-petsync-vet" className="py-12 md:py-16 bg-background">
           <div className="container mx-auto px-4 text-center">
@@ -147,17 +86,17 @@ export default function VetPortalPage() {
           </div>
         </section>
 
-        {/* Features Grid Section */}
-        <section id="features-vet-portal" className="py-12 md:py-16 bg-secondary/30">
+        {/* Simplified Features Section */}
+        <section id="features-vet-portal-simplified" className="py-12 md:py-16 bg-secondary/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground">Funcionalidades Destacadas del Portal</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">Funcionalidades Clave para tu Clínica</h2>
               <CardDescription className="text-muted-foreground mt-2 max-w-2xl mx-auto">
                 Herramientas pensadas para potenciar cada aspecto de tu práctica veterinaria.
               </CardDescription>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {portalFeatures.map((feature, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {portalFeatures.slice(0, 3).map((feature, index) => ( // Show first 3 for brevity
                 <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col text-center items-center p-6 bg-card">
                   <CardHeader className="p-0 mb-4">
                     <feature.icon className="h-12 w-12 text-primary mx-auto" />
@@ -169,6 +108,11 @@ export default function VetPortalPage() {
                 </Card>
               ))}
             </div>
+            {portalFeatures.length > 3 && (
+                 <div className="text-center mt-8">
+                    <p className="text-muted-foreground">Y mucho más, incluyendo gestión de sala de espera, asistencia IA y más...</p>
+                 </div>
+            )}
           </div>
         </section>
         
@@ -187,8 +131,7 @@ export default function VetPortalPage() {
                  </Button>
               </div>
               <div className="hidden lg:block p-4">
-                 {/* Placeholder for an image showing app interface or vet-tutor interaction */}
-                <div className="bg-muted rounded-lg h-64 w-full flex items-center justify-center">
+                <div className="bg-muted rounded-lg h-64 w-full flex items-center justify-center" data-ai-hint="app interface vet tutor">
                   <ImageIcon className="h-24 w-24 text-muted-foreground/50" />
                 </div>
               </div>
