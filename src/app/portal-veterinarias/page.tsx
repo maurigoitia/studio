@@ -11,36 +11,6 @@ import React from "react";
 
 const GOOGLE_FORM_VET_EARLY_ACCESS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link";
 
-// Example data for simplified features
-const portalFeatures = [
-  {
-    icon: CalendarCog,
-    title: "Agenda Inteligente y Turnos Online",
-    description: "Gestiona tu calendario, programa citas y permite que los tutores reserven online, optimizando tu tiempo y reduciendo ausencias con recordatorios automáticos.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Historiales Clínicos Digitales",
-    description: "Accede y gestiona fichas clínicas completas, centralizadas y seguras para cada paciente. Comparte información relevante con los tutores de forma sencilla.",
-  },
-  {
-    icon: MessagesSquare,
-    title: "Comunicación Directa con Tutores",
-    description: "Envía recordatorios, resultados y seguimientos directamente a la app PetSync del tutor o a su email, fortaleciendo la relación y asegurando una atención continua.",
-  },
-  {
-    icon: ActivitySquare,
-    title: "Gestión de Sala de Espera y Triage",
-    description: "Organiza el flujo de pacientes espontáneos y urgencias con un sistema de priorización visual, mejorando la eficiencia y la experiencia en tu clínica (próximamente con más detalle).",
-  },
-  {
-    icon: BrainCircuit,
-    title: "Asistencia IA (GIA) para Veterinarios",
-    description: "GIA, nuestra IA, te ayudará a optimizar tu tiempo generando resúmenes de consulta, buscando información relevante en historiales y más (próximamente).",
-  },
-];
-
-
 export default function VetPortalPage() {
 
   return (
@@ -86,33 +56,65 @@ export default function VetPortalPage() {
           </div>
         </section>
 
-        {/* Simplified Features Section */}
-        <section id="features-vet-portal-simplified" className="py-12 md:py-16 bg-secondary/30">
+        {/* Key Features Section - More Narrative */}
+        <section id="features-vet-portal" className="py-12 md:py-16 bg-secondary/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 sm:mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground">Funcionalidades Clave para tu Clínica</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">Herramientas Diseñadas para tu Éxito</h2>
               <CardDescription className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-                Herramientas pensadas para potenciar cada aspecto de tu práctica veterinaria.
+                El Portal PetSync para Veterinarias te equipará con todo lo necesario para una gestión moderna y eficiente:
               </CardDescription>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {portalFeatures.slice(0, 3).map((feature, index) => ( // Show first 3 for brevity
-                <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col text-center items-center p-6 bg-card">
-                  <CardHeader className="p-0 mb-4">
-                    <feature.icon className="h-12 w-12 text-primary mx-auto" />
-                  </CardHeader>
-                  <CardTitle className="text-xl mb-2">{feature.title}</CardTitle>
-                  <CardDescription className="text-sm text-muted-foreground flex-grow">
-                    {feature.description}
-                  </CardDescription>
-                </Card>
-              ))}
+            <div className="max-w-3xl mx-auto space-y-8">
+              <div className="flex items-start gap-4">
+                <CalendarCog className="h-8 w-8 text-primary mt-1 shrink-0" />
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-1">Agenda Inteligente y Turnos Online</h3>
+                  <p className="text-muted-foreground">
+                    Gestiona tu calendario, programa citas y permite que los tutores reserven online, optimizando tu tiempo y reduciendo ausencias con recordatorios automáticos.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <ClipboardCheck className="h-8 w-8 text-primary mt-1 shrink-0" />
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-1">Historiales Clínicos Digitales</h3>
+                  <p className="text-muted-foreground">
+                    Accede y gestiona fichas clínicas completas, centralizadas y seguras para cada paciente. Comparte información relevante con los tutores de forma sencilla.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <MessagesSquare className="h-8 w-8 text-primary mt-1 shrink-0" />
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-1">Comunicación Directa con Tutores</h3>
+                  <p className="text-muted-foreground">
+                    Envía recordatorios, resultados y seguimientos directamente a la app PetSync del tutor o a su email, fortaleciendo la relación y asegurando una atención continua.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <ActivitySquare className="h-8 w-8 text-primary mt-1 shrink-0" />
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-1">Gestión de Sala de Espera y Triage</h3>
+                  <p className="text-muted-foreground">
+                    Organiza el flujo de pacientes espontáneos y urgencias con un sistema de priorización visual, mejorando la eficiencia y la experiencia en tu clínica (próximamente con más detalle).
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <BrainCircuit className="h-8 w-8 text-primary mt-1 shrink-0" />
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-1">Asistencia IA (GIA) para Veterinarios</h3>
+                  <p className="text-muted-foreground">
+                    Nuestra IA, GIA, te ayudará a optimizar tu tiempo generando resúmenes de consulta, buscando información relevante en historiales y más (próximamente).
+                  </p>
+                </div>
+              </div>
+              <p className="text-center text-muted-foreground mt-6">
+                Y muchas más funcionalidades como gestión de múltiples usuarios, reportes y analíticas, y herramientas de facturación están en nuestro roadmap.
+              </p>
             </div>
-            {portalFeatures.length > 3 && (
-                 <div className="text-center mt-8">
-                    <p className="text-muted-foreground">Y mucho más, incluyendo gestión de sala de espera, asistencia IA y más...</p>
-                 </div>
-            )}
           </div>
         </section>
         
@@ -178,7 +180,6 @@ export default function VetPortalPage() {
                  <p className="text-xs text-muted-foreground mt-4">(Email de ejemplo: soporte-vets@petsync.example.com)</p>
             </div>
         </section>
-
       </main>
 
       {/* Page-specific simple footer */}
@@ -195,5 +196,4 @@ export default function VetPortalPage() {
     </div>
   );
 }
-
     
