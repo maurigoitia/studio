@@ -3,13 +3,11 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from "@/components/ui/badge"; // Asegúrate que esta línea está descomentada
+// Badge ya no es necesario
 import {
-  BrainCircuit,
   CalendarClock,
   Users,
   Smartphone,
-  BotMessageSquare,
   UserCog,
   ClipboardList,
   BellRing,
@@ -20,7 +18,8 @@ import {
   MessagesSquare,
   ShieldCheck,
   DownloadCloud,
-  HelpCircle // Añadido si se usa para FAQ
+  HelpCircle,
+  ChevronRight
 } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
@@ -63,22 +62,22 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center bg-background text-foreground">
       {/* Hero Section */}
-      <section className="w-full py-20 md:py-32 bg-gradient-to-br from-primary/10 via-background to-background text-center">
+      <section className="w-full py-20 md:py-28 lg:py-36 bg-slate-50 dark:bg-slate-900 text-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl md:text-6xl">
               PetSync: el cuidado veterinario, sin el desorden de siempre.
             </h1>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground md:text-xl">
+            <p className="mt-6 text-lg leading-relaxed text-slate-700 dark:text-slate-300 sm:text-xl md:mt-8">
               Turnos, historiales y seguimientos organizados.
             </p>
-            <p className="mt-2 text-md leading-7 text-muted-foreground md:text-lg">
+            <p className="mt-2 text-md leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
               Una plataforma para clínicas. Una app para tutores.
             </p>
             <div className="mt-10">
               <Button
                 size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform px-10 py-3 text-lg font-semibold rounded-lg"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-md transform hover:scale-105 transition-transform px-10 py-3 text-base font-semibold rounded-lg sm:text-lg"
                 asChild
               >
                 <Link href="#features">DESCUBRIR MÁS</Link>
@@ -88,28 +87,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Feature Highlights Section */}
-      <section id="features" className="w-full py-16 md:py-24 bg-secondary/30 dark:bg-secondary/20">
+      {/* Feature Highlights Section - Ahora con 2 tarjetas */}
+      <section id="features" className="w-full py-16 md:py-24 bg-background dark:bg-slate-800/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-16">Simplifica el Cuidado de tu Mascota con PetSync</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card p-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-12 md:mb-16">Simplifica el Cuidado de tu Mascota con PetSync</h2>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto"> {/* Ajustado para 2 columnas */}
+            <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card p-6 rounded-xl">
               <CardHeader className="items-center text-center p-0 mb-4 md:items-start md:text-left">
                 <Users className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
-                <CardTitle className="text-xl sm:text-2xl">Para Tutores de Mascotas</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl text-foreground">Para Tutores de Mascotas</CardTitle>
               </CardHeader>
               <CardContent className="text-center p-0 md:text-left">
                 <ul className="list-disc list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
                   <li>Historial médico centralizado y siempre accesible.</li>
-                  <li>GIA: Tu copiloto IA para dudas y orientación (beta).</li>
                   <li>Agenda inteligente para turnos y recordatorios.</li>
                 </ul>
               </CardContent>
             </Card>
-            <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card p-6">
+            <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card p-6 rounded-xl">
               <CardHeader className="items-center text-center p-0 mb-4 md:items-start md:text-left">
                 <UserCog className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
-                <CardTitle className="text-xl sm:text-2xl">Para Clínicas Veterinarias</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl text-foreground">Para Clínicas Veterinarias</CardTitle>
               </CardHeader>
               <CardContent className="text-center p-0 md:text-left">
                 <ul className="list-disc list-inside space-y-2 text-muted-foreground text-sm sm:text-base">
@@ -119,49 +117,29 @@ export default function HomePage() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-card p-6 md:col-span-2 lg:col-span-1">
-              <CardHeader className="items-center text-center p-0 mb-4 md:items-start md:text-left">
-                <BotMessageSquare className="h-10 w-10 text-primary mb-3 mx-auto md:mx-0" />
-                <CardTitle className="text-xl sm:text-2xl">Conoce a GIA (Demo IA)</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center p-0 md:text-left">
-                <p className="text-muted-foreground mb-4 text-sm sm:text-base">
-                  Prueba nuestro asistente IA para obtener respuestas generales sobre el cuidado de mascotas. ¡GIA aprende y mejora cada día!
-                </p>
-                 <Button className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto mt-2" asChild> {/* Botón con color primario */}
-                    <Link href="/gia">Chatear con GIA</Link>
-                 </Button>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
       
-      {/* Benefits for Tutors Section */}
-      <section id="tutores" className="w-full py-16 md:py-24 bg-background">
+      {/* Benefits for Tutors Section - Sin mención a GIA */}
+      <section id="tutores" className="w-full py-16 md:py-24 bg-slate-50 dark:bg-slate-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-16">Beneficios para tutores</h2>
-          <Card className="p-6 sm:p-8 shadow-xl bg-card">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-12 md:mb-16">Beneficios para tutores</h2>
+          <Card className="p-6 sm:p-8 shadow-xl bg-card rounded-xl">
             <CardContent className="p-0">
               <div className="space-y-8 md:space-y-10">
                 <div className="flex flex-col items-center text-center gap-4 md:flex-row md:items-start md:text-left md:gap-6">
                   <Smartphone className="h-10 w-10 sm:h-12 sm:w-12 text-primary shrink-0" />
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-semibold mb-2">Información de tu Mascota, Siempre Accesible</h3>
+                    <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">Información de tu Mascota, Siempre Accesible</h3>
                     <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">Mantén el historial médico completo de tu mascota en un solo lugar seguro en la nube: vacunas, tratamientos, cirugías, alergias y enfermedades crónicas. Accede desde cualquier dispositivo y comparte fácilmente la información con tu veterinario o cuidadores.</p>
                   </div>
                 </div>
-                <div className="flex flex-col items-center text-center gap-4 md:flex-row md:items-start md:text-left md:gap-6">
-                  <BrainCircuit className="h-10 w-10 sm:h-12 sm:w-12 text-primary shrink-0" />
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-semibold mb-2">GIA: Tu Copiloto Inteligente <Badge variant="outline" className="ml-2 border-primary text-primary align-middle">Versión Beta</Badge></h3>
-                    <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">Experimenta cómo GIA puede ayudarte con dudas generales sobre tu mascota y, próximamente en la app, accederá a su historial médico de forma inteligente. Recuerda: GIA es una guía en desarrollo y no sustituye la consulta profesional.</p>
-                  </div>
-                </div>
+                {/* Beneficio de GIA eliminado */}
                 <div className="flex flex-col items-center text-center gap-4 md:flex-row md:items-start md:text-left md:gap-6">
                   <CalendarClock className="h-10 w-10 sm:h-12 sm:w-12 text-primary shrink-0" />
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-semibold mb-2">Agenda Inteligente, Cero Estrés</h3>
+                    <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">Agenda Inteligente, Cero Estrés</h3>
                     <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">Organiza citas, vacunas y desparasitaciones sin esfuerzo. Programa y recibe recordatorios para medicamentos, y recibe alertas de salud sobre citas próximas o chequeos necesarios para que nunca olvides nada importante.</p>
                   </div>
                 </div>
@@ -171,31 +149,31 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Benefits for Veterinarians Section */}
-      <section id="veterinarios" className="w-full py-16 md:py-24 bg-secondary/30 dark:bg-secondary/20">
+      {/* Benefits for Veterinarians Section (sin cambios aquí, ya no mencionaba IA) */}
+      <section id="veterinarios" className="w-full py-16 md:py-24 bg-background dark:bg-slate-800/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 md:mb-16">Beneficios para veterinarias</h2>
-          <Card className="p-6 sm:p-8 shadow-xl bg-card">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-12 md:mb-16">Beneficios para veterinarias</h2>
+          <Card className="p-6 sm:p-8 shadow-xl bg-card rounded-xl">
             <CardContent className="p-0">
               <div className="space-y-8 md:space-y-10"> 
                 <div className="flex flex-col items-center text-center gap-4 md:flex-row md:items-start md:text-left md:gap-6">
                   <CalendarClock className="h-10 w-10 sm:h-12 sm:w-12 text-primary shrink-0" />
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-semibold mb-2">Agenda inteligente, menos fricción</h3>
+                    <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">Agenda inteligente, menos fricción</h3>
                     <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">Gestioná turnos en tiempo real con disponibilidad clara, sin llamados ni idas y vueltas. Menos tareas administrativas, más foco en tus pacientes.</p>
                   </div>
                 </div>
                 <div className="flex flex-col items-center text-center gap-4 md:flex-row md:items-start md:text-left md:gap-6">
                   <ClipboardList className="h-10 w-10 sm:h-12 sm:w-12 text-primary shrink-0" />
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-semibold mb-2">Historiales médicos centralizados y siempre accesibles</h3>
+                    <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">Historiales médicos centralizados y siempre accesibles</h3>
                     <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">Cada mascota tiene su ficha clínica completa, organizada y actualizada. Vos cargás la info, el tutor accede. Información compartida, sin errores ni duplicados.</p>
                   </div>
                 </div>
                 <div className="flex flex-col items-center text-center gap-4 md:flex-row md:items-start md:text-left md:gap-6">
                   <MessagesSquare className="h-10 w-10 sm:h-12 sm:w-12 text-primary shrink-0" />
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-semibold mb-2">Comunicación directa con cada tutor</h3>
+                    <h3 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">Comunicación directa con cada tutor</h3>
                     <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">Mensajes, recordatorios automáticos y seguimientos en un solo canal. Nada se pierde, todo queda registrado. Sin depender de WhatsApp ni llamados de último momento.</p>
                   </div>
                 </div>
@@ -205,16 +183,16 @@ export default function HomePage() {
         </div>
       </section>
       
-      {/* How it Works Section */}
-      <section id="como-funciona" className="w-full py-16 md:py-24 bg-background">
+      {/* How it Works Section (sin cambios aquí, ya no mencionaba IA) */}
+      <section id="como-funciona" className="w-full py-16 md:py-24 bg-slate-50 dark:bg-slate-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold">¿Cómo funciona PetSync?</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">¿Cómo funciona PetSync?</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-            <Card className="shadow-lg border p-6 sm:p-8 bg-card">
+            <Card className="shadow-lg border p-6 sm:p-8 bg-card rounded-lg">
               <CardHeader className="p-0 mb-3 sm:mb-4">
-                <CardTitle className="text-xl sm:text-2xl">Para Tutores</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl text-foreground">Para Tutores</CardTitle>
               </CardHeader>
               <CardContent className="p-0 space-y-4 text-muted-foreground text-sm sm:text-base">
                 <div className="flex items-start gap-3">
@@ -231,9 +209,9 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="shadow-lg border p-6 sm:p-8 bg-card">
+            <Card className="shadow-lg border p-6 sm:p-8 bg-card rounded-lg">
               <CardHeader className="p-0 mb-3 sm:mb-4">
-                <CardTitle className="text-xl sm:text-2xl">Para Clínicas Veterinarias</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl text-foreground">Para Clínicas Veterinarias</CardTitle>
               </CardHeader>
               <CardContent className="p-0 space-y-4 text-muted-foreground text-sm sm:text-base">
                  <div className="flex items-start gap-3">
@@ -254,19 +232,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Quiénes Somos Section */}
-      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-secondary/30 dark:bg-secondary/20">
+      {/* Quiénes Somos Section - Sin mención a GIA */}
+      <section id="quienes-somos" className="w-full py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold">Quiénes Somos</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Quiénes Somos</h2>
           </div>
-          <Card className="p-6 sm:p-8 shadow-xl bg-card">
+          <Card className="p-6 sm:p-8 shadow-xl bg-card rounded-xl">
             <CardContent className="p-0 text-left">
               <div className="space-y-4 sm:space-y-6 text-muted-foreground text-sm sm:text-base leading-relaxed">
                 <p>En PetSync, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
                 <p>Por eso creamos PetSync: para transformar ese caos en calma.</p>
                 <p>Nuestra misión es simple: conectar a tutores y veterinarias con una plataforma intuitiva que organiza historiales, simplifica la gestión y optimiza el tiempo, para que todos podamos dedicarnos a lo que realmente importa: el bienestar de nuestras mascotas.</p>
-                <p>Estamos construyendo PetSync con herramientas inteligentes como GIA, nuestra IA en desarrollo, porque creemos que la tecnología puede ser una gran aliada en el cuidado animal.</p>
+                {/* Frase sobre GIA eliminada */}
                 <p className="mt-6 text-base sm:text-lg font-semibold text-foreground text-center">
                   Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
                 </p>
@@ -276,11 +254,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section id="faq" className="w-full py-16 md:py-24 bg-background">
+      {/* FAQ Section (sin cambios aquí, ya no mencionaba IA) */}
+      <section id="faq" className="w-full py-16 md:py-24 bg-slate-50 dark:bg-slate-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold">Preguntas Frecuentes</h2>
+             <HelpCircle className="h-10 w-10 text-primary mx-auto mb-4" />
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">Preguntas Frecuentes</h2>
           </div>
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((faq, index) => (
@@ -298,7 +277,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Waitlist Section */}
+      {/* Waitlist Section - Sin mención a GIA */}
       <section id="waitlist" className="w-full py-16 md:py-24 bg-primary/10 dark:bg-primary/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 sm:mb-6">¡Estamos en versión beta!</h2>
@@ -306,7 +285,7 @@ export default function HomePage() {
             Sumate a la waitlist para ser de los primeros en probar PetSync y ayudarnos a construir la mejor herramienta para el cuidado de nuestras mascotas.
           </p>
           <WaitlistForm />
-          <p className="mt-8 sm:mt-10 text-xs sm:text-sm text-muted-foreground">PetSync y GIA están en desarrollo. ¡Estamos construyendo la app que revolucionará el cuidado de tu mascota!</p>
+          <p className="mt-8 sm:mt-10 text-xs sm:text-sm text-muted-foreground">PetSync está en desarrollo. ¡Estamos construyendo la app que revolucionará el cuidado de tu mascota!</p>
         </div>
       </section>
     </div>
