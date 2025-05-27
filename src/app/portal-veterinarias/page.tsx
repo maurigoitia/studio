@@ -4,7 +4,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb, Image as ImageIcon, Sparkles, Info } from "lucide-react";
+import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb, Image as ImageIcon, Sparkles, Info, PawPrint, CalendarDays, Users, Mail, Settings, MoreHorizontal, Trash2, FileText, Edit3, Check, ChevronsUpDown, Dog, Cat, Bird, Rabbit, Microscope, Pill, FileHeart } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo"; 
 import React from "react";
@@ -47,41 +47,45 @@ export default function VetPortalInfoPage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Page-specific simple navigation */}
-      <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b">
-        <div className="container mx-auto px-4 h-14 flex items-center justify-between">
+      <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b shadow-sm">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Logo />
           <div className="space-x-4">
-            <Link href={GOOGLE_FORM_VET_EARLY_ACCESS_URL} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-muted-foreground hover:text-primary">
-              Registrarse (Acceso Temprano)
-            </Link>
-            <Link href="#contacto-portal" className="text-sm font-medium text-muted-foreground hover:text-primary">
+            <Button variant="ghost" asChild>
+              <Link href={GOOGLE_FORM_VET_EARLY_ACCESS_URL} target="_blank" rel="noopener noreferrer">
+                Registrarse (Acceso Temprano)
+              </Link>
+            </Button>
+            <Button variant="ghost" asChild>
+            <Link href="#contacto-portal">
               Contáctanos
             </Link>
+            </Button>
           </div>
         </div>
       </nav>
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="py-12 md:py-16 bg-gradient-to-br from-primary/10 via-background to-background text-center">
+        <section className="py-12 md:py-16 bg-primary text-primary-foreground text-center">
           <div className="container mx-auto px-4">
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
               Portal para Veterinarias: Optimiza tu Práctica, Cuida Mejor.
             </h1>
-            <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-md md:text-lg text-primary-foreground/90 max-w-3xl mx-auto">
               Descubre herramientas inteligentes diseñadas para la gestión eficiente de tu clínica, la conexión fluida con tutores y el seguimiento integral de la salud de cada paciente.
             </p>
           </div>
         </section>
 
         {/* Why Choose Section */}
-        <section id="why-petsync-vet" className="py-12 md:py-16 bg-secondary/30">
+        <section id="why-petsync-vet" className="py-12 md:py-16 bg-secondary/50">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">¿Por qué elegir esta plataforma?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">¿Por qué elegir esta plataforma?</h2>
             <div className="flex justify-center mb-6">
-              <Logo /> 
+              {/* Logo could be placed here if desired, but it's in the nav already */}
             </div>
             <p className="text-md md:text-lg text-muted-foreground max-w-2xl mx-auto">
               Nuestra plataforma está diseñada para simplificar tu día a día, permitiéndote enfocarte en la atención al paciente mientras optimizas la gestión de tu clínica y fortaleces la relación con los tutores a través de un sistema conectado e inteligente.
@@ -114,7 +118,7 @@ export default function VetPortalInfoPage() {
         </section>
         
         {/* Connect with Pet Owners Section */}
-        <section id="connect-tutores-vet" className="py-12 md:py-16 bg-secondary/30">
+        <section id="connect-tutores-vet" className="py-12 md:py-16 bg-secondary/50">
           <div className="container mx-auto px-4">
             <Card className="shadow-xl overflow-hidden lg:grid lg:grid-cols-2 lg:items-center bg-card">
               <div className="p-6 sm:p-8 lg:p-10">
@@ -123,7 +127,7 @@ export default function VetPortalInfoPage() {
                 <p className="text-muted-foreground text-md mb-6">
                   La app para tutores asegura una comunicación transparente y eficiente. Ellos acceden a historiales médicos compartidos, reciben recordatorios automáticos y se mantienen al tanto del cuidado de sus mascotas, facilitando una atención coordinada y reduciendo tu carga administrativa.
                 </p>
-                 <Button variant="outline" asChild>
+                 <Button variant="outline" asChild className="border-primary text-primary hover:bg-primary/10">
                     <Link href="/#tutores">Conocer más sobre la app para Tutores</Link>
                  </Button>
               </div>
@@ -169,10 +173,10 @@ export default function VetPortalInfoPage() {
                 <CardDescription className="text-muted-foreground mb-6">
                     Si tienes alguna duda sobre el Portal para Veterinarias o el programa de acceso temprano, no dudes en escribirnos.
                 </CardDescription>
-                <Button variant="outline" asChild>
-                    <Link href="mailto:soporte-vets@petsyncpro.example.com">Enviar un Email</Link>
+                <Button variant="outline" className="border-primary text-primary hover:bg-primary/10" asChild>
+                    <Link href="mailto:soporte-vets@petsync.example.com">Enviar un Email</Link>
                 </Button>
-                 <p className="text-xs text-muted-foreground mt-4">(Email de ejemplo: soporte-vets@petsyncpro.example.com)</p>
+                 <p className="text-xs text-muted-foreground mt-4">(Email de ejemplo: soporte-vets@petsync.example.com)</p>
             </div>
         </section>
       </main>
@@ -180,7 +184,7 @@ export default function VetPortalInfoPage() {
       {/* Page-specific simple footer */}
       <footer className="border-t bg-background">
         <div className="container py-8 px-4 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} PetSyncPro. Todos los derechos reservados.</p>
+          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} PetSync. Todos los derechos reservados.</p>
           <div className="mt-4 sm:mt-0">
              <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
               Centro de ayuda (Próximamente)
