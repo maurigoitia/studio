@@ -11,8 +11,8 @@ export type WaitlistFormValues = z.infer<typeof WaitlistFormSchema>;
 export const GenericQueryFormSchema = z.object({
   userName: z.string().optional().describe("The optional name of the user asking the question."),
   email: z.string().email({ message: "Por favor, introduce un correo electrónico válido." }).optional().describe('The optional email of the user asking the question.'),
-  petName: z.string().min(1, { message: "El nombre de la mascota es requerido." }).max(50, { message: "El nombre de la mascota no puede exceder los 50 caracteres." }).optional().describe("The optional name of the user's pet."),
-  species: z.string().min(1, { message: "La especie de la mascota es requerida." }).max(50, { message: "La especie no puede exceder los 50 caracteres." }).optional().describe("Optional species of the pet (e.g., Dog, Cat)"),
+  petName: z.string().min(1).max(50).optional().describe("The optional name of the user's pet."),
+  species: z.string().min(1).max(50).optional().describe("Optional species of the pet (e.g., Dog, Cat)"),
   question: z.string().min(1, { message: "La pregunta no puede estar vacía." }).max(1000, { message: "La pregunta no puede exceder los 1000 caracteres." }).describe('The question to ask GIA.'),
 });
 export type GenericQueryFormValues = z.infer<typeof GenericQueryFormSchema>;
@@ -44,8 +44,10 @@ export const NewPetFormSchema = z.object({
 });
 export type NewPetFormValues = z.infer<typeof NewPetFormSchema>;
 
+// Schema para suscripción a waitlist desde GIA (simplificado)
 export const WaitlistSubscriptionSchema = z.object({
   email: z.string().email({ message: "Por favor, introduce un correo electrónico válido." }),
+  // userType es opcional y se puede omitir si el origen es GIA, o poner un default
   userType: z.literal('tutor').default('tutor'), 
 });
 export type WaitlistSubscriptionValues = z.infer<typeof WaitlistSubscriptionSchema>;

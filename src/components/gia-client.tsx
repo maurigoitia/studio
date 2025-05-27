@@ -49,12 +49,13 @@ export default function GIAClient() {
   }, [messages]);
 
   useEffect(() => {
+    // GIA's initial greeting message
     if (messages.length === 0) {
         addMessage("¡Hola! Soy GIA. ¿En qué puedo ayudarte hoy sobre el cuidado de tu mascota?", "gia");
     }
     inputRef.current?.focus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages.length]); // Re-enfocar si la cantidad de mensajes cambia y es relevante.
+  }, []); // Empty dependency array ensures this runs once on mount
 
   const handleSendMessage = async (e?: FormEvent<HTMLFormElement>) => {
     if (e) e.preventDefault();
@@ -69,12 +70,11 @@ export default function GIAClient() {
     setCurrentInput("");
 
     startTransition(async () => {
-      // Para el chat básico, solo enviamos la pregunta.
-      // Los campos opcionales (userName, email, petName, species) no se envían
-      // a menos que decidas recolectarlos de otra manera en este chat básico.
+      // For basic chat, only send the question.
+      // Optional fields (userName, email, petName, species) can be added if collected elsewhere.
       const payload: GenericQueryFormValues = {
         question: userInput,
-        // userName, email, petName, species serían undefined aquí
+        // userName, email, petName, species would be undefined here if not collected
       };
       const response = await askGenericQuestionAction(payload);
       if (response.success && response.data?.answer) {
@@ -165,7 +165,7 @@ export default function GIAClient() {
           disabled={isInputDisabled()}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey && !isInputDisabled()) {
-                handleSendMessage(e as any);
+                handleSendMessage(e as any); // Cast to any to avoid type issues with preventDefault
             }
           }}
         />
