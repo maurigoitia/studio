@@ -66,13 +66,12 @@ const genericQueryFlow = ai.defineFlow(
   async (input) => {
     const {output} = await prompt(input);
     if (!output || !output.answer) {
-        console.error("Error en genericQueryFlowGIA: No se recibió respuesta o la respuesta no tiene 'answer'. Input:", input, "Raw output:", output);
-        // Considera si quieres devolver un mensaje de error específico al usuario aquí
-        // o si la lógica del cliente debe manejar un 'output' nulo.
-        // Por ahora, se devuelve un objeto que podría no ser lo esperado si output es null.
-        // Mejor sería devolver un error o un objeto de respuesta de error estándar.
-        return { answer: "GIA no pudo generar una respuesta en este momento. Por favor, intenta reformular tu pregunta o inténtalo más tarde." };
+        const errorMsg = "Error en genericQueryFlowGIA: No se recibió una respuesta válida de la IA o la respuesta no tiene el campo 'answer'.";
+        console.error(errorMsg, "Input:", input, "Raw output:", output);
+        // Lanza un error para que sea capturado por la Server Action
+        throw new Error("GIA no pudo generar una respuesta estructurada en este momento.");
     }
     return output;
   }
 );
+
