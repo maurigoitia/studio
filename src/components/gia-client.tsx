@@ -12,22 +12,18 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import type { GenericQueryFormValues } from "@/lib/schemas";
 
-interface Message { id: string; text: string; sender: "user" | "gia"; }
-
-type ConversationStage =
-  | "INIT"
-  | "AWAITING_USER_QUESTION"
-  | "PROCESSING_AI"
-  | "AI_RESPONSE_DISPLAYED"
-  | "CONVO_ENDED"; // Aunque no se usa activamente, lo mantenemos por si acaso
+interface Message {
+  id: string;
+  text: string;
+  sender: "user" | "gia";
+}
 
 export default function GIAClient() {
   const { toast } = useToast();
   const [isProcessingAI, startTransition] = useTransition();
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentInput, setCurrentInput] = useState("");
-  const [conversationStage, setConversationStage] = useState<ConversationStage>("INIT");
-  const [isGiaAcknowledging, setIsGiaAcknowledging] = useState(false);
+  const [initialGreetingSent, setInitialGreetingSent] = useState(false); // Nuevo estado
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,9 +34,13 @@ export default function GIAClient() {
   useEffect(() => {
     if (scrollAreaRef.current) {
       const viewport = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
-      if (viewport) setTimeout(() => { viewport.scrollTop = viewport.scrollHeight; }, 100);
+      if (viewport) {
+        setTimeout(() => {
+          viewport.scrollTop = viewport.scrollHeight;
+        }, 50); // Ajustado el delay
+      }
     }
-  }, [messages.length, isGiaAcknowledging, isProcessingAI]); // Ajustado para incluir más triggers de scroll
+  }, [messages.length]); // Dependencia ajustada
 
   useEffect(() => {
     sentAudioRef.current = new Audio('/sounds/message-sent.mp3');
@@ -48,20 +48,19 @@ export default function GIAClient() {
   }, []);
 
   useEffect(() => {
-    // Saludo inicial de GIA: Se ejecuta solo una vez cuando el componente se monta.
-    if (messages.length === 0 && conversationStage === "INIT") {
+    // Saludo inicial de GIA
+    if (!initialGreetingSent && messages.length === 0) {
       addMessage("¡Hola! Soy GIA.", "gia");
-      setConversationStage("AWAITING_USER_QUESTION");
+      setInitialGreetingSent(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); // Se ejecuta solo una vez al montar
 
   useEffect(() => {
-    const canFocusInput = !isInputDisabled();
-    if (canFocusInput) {
+    if (!isProcessingAI) {
       inputRef.current?.focus();
     }
-  }, [conversationStage, messages, isProcessingAI, isGiaAcknowledging]);
+  }, [isProcessingAI, messages]);
 
 
   // --- Manejo de Mensajes ---
@@ -69,7 +68,7 @@ export default function GIAClient() {
     setMessages(prev => [...prev, { id: crypto.randomUUID(), text, sender }]);
     if (sender === "user") {
       sentAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de envío:", e));
-    } else if (sender === "gia" && !isGiaAcknowledging) { // Solo suena si no es el ack
+    } else { // Simplificado para el saludo y respuesta de GIA
       receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción:", e));
     }
   };
@@ -79,60 +78,55 @@ export default function GIAClient() {
     if (e && 'preventDefault' in e) e.preventDefault();
 
     const userInput = currentInput.trim();
-    if (!userInput || isInputDisabled()) {
+    if (!userInput || isProcessingAI) {
       return;
     }
 
-    addMessage(userInput, "user");
+    addUserMessage(userInput); // Muestra el mensaje del usuario
     const questionToSubmit = userInput;
-    setCurrentInput("");
-    
-    setIsGiaAcknowledging(true);
-    addMessage("Ok, leyendo... ya te ayudo 🐾", "gia"); // Añadido emoji
-    
-    // Pequeño delay para que el mensaje "Ok, leyendo..." sea visible antes de procesar
-    setTimeout(() => {
-      setConversationStage("PROCESSING_AI");
-      startTransition(async () => {
-        setIsGiaAcknowledging(false); // Resetear aquí
-        try {
-          // Aunque el schema permite otros campos, solo enviamos la pregunta
-          const payload: GenericQueryFormValues = { question: questionToSubmit };
-          const response = await askGenericQuestionAction(payload);
+    setCurrentInput(""); // Limpia el input
 
-          if (response.success && response.data?.answer) {
-            addMessage(response.data.answer, "gia");
-          } else {
-            addMessage(response.message || "GIA no pudo generar una respuesta. Inténtalo de nuevo.", "gia");
-            toast({
-              title: "Error de GIA",
-              description: response.message || "No se pudo obtener respuesta de GIA.",
-              variant: "destructive",
-            });
-          }
-        } catch (error) {
-          console.error("Error en askGenericQuestionAction:", error);
-          addMessage("Hubo un problema técnico al contactar a GIA. Por favor, intenta más tarde.", "gia");
+    // GIA acusa recibo
+    addMessage("Ok, leyendo... ya te ayudo 🐾", "gia");
+
+    startTransition(async () => {
+      try {
+        const payload: GenericQueryFormValues = { question: questionToSubmit };
+        const response = await askGenericQuestionAction(payload);
+
+        // Elimina el mensaje "Ok, leyendo..." antes de añadir la respuesta real
+        setMessages(prev => prev.filter(msg => !(msg.sender === 'gia' && msg.text.startsWith("Ok, leyendo..."))));
+        
+        if (response.success && response.data?.answer) {
+          addMessage(response.data.answer, "gia");
+        } else {
+          addMessage(response.message || "GIA no pudo generar una respuesta. Inténtalo de nuevo.", "gia");
           toast({
-            title: "Error de Conexión",
-            description: "No se pudo conectar con el asistente de IA.",
+            title: "Error de GIA",
+            description: response.message || "No se pudo obtener respuesta de GIA.",
             variant: "destructive",
           });
-        } finally {
-          setConversationStage("AWAITING_USER_QUESTION"); // Volver a esperar pregunta
         }
-      });
-    }, 300); // Delay para el mensaje de "leyendo"
+      } catch (error) {
+        setMessages(prev => prev.filter(msg => !(msg.sender === 'gia' && msg.text.startsWith("Ok, leyendo..."))));
+        console.error("Error en askGenericQuestionAction:", error);
+        addMessage("Hubo un problema técnico al contactar a GIA. Por favor, intenta más tarde.", "gia");
+        toast({
+          title: "Error de Conexión",
+          description: "No se pudo conectar con el asistente de IA.",
+          variant: "destructive",
+        });
+      }
+    });
   };
   
   const isInputDisabled = (): boolean => {
-    return isProcessingAI || isGiaAcknowledging || conversationStage === 'INIT';
+    return isProcessingAI;
   };
 
   const getPlaceholderText = (): string => {
-    if (isGiaAcknowledging) return "GIA está leyendo tu pregunta...";
     if (isProcessingAI) return "GIA está pensando...";
-    if (conversationStage === 'INIT') return "Cargando...";
+    if (!initialGreetingSent) return "Cargando...";
     return "¿En qué puedo ayudarte hoy?";
   }
 
@@ -175,7 +169,7 @@ export default function GIAClient() {
             )}
           </div>
         ))}
-        {(isGiaAcknowledging || isProcessingAI) && (
+        {isProcessingAI && (
           <div className="flex items-center space-x-2 mr-auto justify-start mb-3 animate-in fade-in-0 duration-300">
              <Avatar className="h-7 w-7 self-start shrink-0">
                 <AvatarFallback className="bg-primary text-primary-foreground">
@@ -185,9 +179,7 @@ export default function GIAClient() {
             <div className="bg-card border text-card-foreground p-2.5 rounded-lg shadow-sm rounded-bl-none">
               <div className="flex items-center space-x-1.5 text-xs text-muted-foreground">
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                <span>
-                  {isGiaAcknowledging ? "GIA está leyendo tu pregunta..." : (isProcessingAI ? "GIA está pensando..." : "")}
-                </span>
+                <span>GIA está pensando...</span>
               </div>
             </div>
           </div>
