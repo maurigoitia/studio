@@ -77,7 +77,7 @@ export default function GIAClient() {
       addMessage("¡Hola! Soy GIA, tu asistente IA de PetSync. Para comenzar, ¿me podrías decir tu nombre?", "gia");
       setConversationStage('AWAITING_USER_NAME');
     }
-  }, [conversationStage]);
+  }, [conversationStage]); // Removed addMessage from dependency array to avoid re-triggering
 
   useEffect(() => {
     const stagesRequiringTextInput = [
@@ -94,7 +94,7 @@ export default function GIAClient() {
     if (shouldFocus && !isInputDisabled()) {
       inputRef.current?.focus();
     }
-  }, [conversationStage, messages]); // Removed isPending from dependency array
+  }, [conversationStage, messages]);
 
 
   const handleOptionClick = (value: string, label: string) => {
@@ -142,10 +142,8 @@ export default function GIAClient() {
         setConversationStage('AWAITING_EMAIL_PERMISSION');
         break;
       case 'AWAITING_EMAIL_INPUT':
-        // Basic email validation, enhance if needed
         if (userInput && (!userInput.includes('@') || !userInput.includes('.'))) {
             addMessage("Parece que ese no es un correo válido. Por favor, inténtalo de nuevo o puedes presionar 'No, gracias' si prefieres omitirlo.", "gia");
-            // No change in stage, user needs to retry or skip
         } else {
             setCollectedData(prev => ({ ...prev, email: userInput }));
             addMessage("¡Gracias! Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
@@ -179,12 +177,11 @@ export default function GIAClient() {
             userName: collectedData.userName,
             email: collectedData.email,
             petName: collectedData.petName,
-            species: collectedData.species as string, // species is now required
+            species: collectedData.species as string, 
             question: userInput,
           };
           const response = await askGenericQuestionAction(payload);
           
-          // Remove "Estoy procesando..." message before adding GIA's actual answer
           setMessages(prev => prev.slice(0, -1));
 
           if (response.success && response.data?.answer) {
@@ -203,7 +200,6 @@ export default function GIAClient() {
         });
         break;
       case 'AI_RESPONSE_DISPLAYED':
-        // This case is now primarily handled by button clicks. If user types and sends:
         if (userInput) {
             setCollectedData(prev => ({ ...prev, question: userInput }));
             setConversationStage('PROCESSING_AI');
@@ -217,7 +213,7 @@ export default function GIAClient() {
                 question: userInput,
               };
               const response = await askGenericQuestionAction(payload);
-              setMessages(prev => prev.slice(0, -1)); // Remove processing message
+              setMessages(prev => prev.slice(0, -1)); 
               if (response.success && response.data?.answer) {
                 addMessage(response.data.answer, "gia");
                 receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción:", e));
@@ -230,9 +226,9 @@ export default function GIAClient() {
         }
         break;
       default:
-        // Should not happen
         addMessage("Algo no salió como esperaba. ¿Podemos intentarlo de nuevo?", "gia");
-        setConversationStage('GREETING'); // Reset
+        setConversationStage('GREETING'); 
+        setCollectedData({});
         break;
     }
   };
@@ -240,9 +236,9 @@ export default function GIAClient() {
   const isInputDisabled = (): boolean => {
     return conversationStage === 'PROCESSING_AI' ||
            conversationStage === 'CONVO_ENDED' ||
-           conversationStage === 'GREETING' || // Disable while GIA is greeting
-           (conversationStage === 'AWAITING_EMAIL_PERMISSION' && messages[messages.length -1]?.options !== undefined) || // Disable if options are shown
-           (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length -1]?.options !== undefined) ; // Disable if options are shown
+           conversationStage === 'GREETING' ||
+           conversationStage === 'AWAITING_EMAIL_PERMISSION' ||
+           (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length -1]?.options !== undefined) ;
   };
 
   const getPlaceholderText = (): string => {
@@ -327,7 +323,6 @@ export default function GIAClient() {
         )}
       </ScrollArea>
 
-      {/* Input Form */}
       <form onSubmit={handleSendMessage} className="p-2 sm:p-3 border-t bg-background flex items-center space-x-2">
         <Input
           ref={inputRef}
@@ -335,14 +330,12 @@ export default function GIAClient() {
           placeholder={getPlaceholderText()}
           value={currentInput}
           onChange={(e) => setCurrentInput(e.target.value)}
-          className="flex-grow bg-input text-xs" // Use text-xs for smaller font
+          className="flex-grow bg-input text-xs" 
           disabled={isInputDisabled()}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey && !isInputDisabled()) {
-              // Allow Enter submission if input has text OR if options are present (as user might want to submit an empty input before clicking an option, though this is less common)
               if (currentInput.trim() || (messages[messages.length - 1]?.options && (conversationStage === 'AWAITING_EMAIL_PERMISSION' || conversationStage === 'AI_RESPONSE_DISPLAYED'))) {
                 if (conversationStage === 'AWAITING_EMAIL_PERMISSION' || (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options)) {
-                    // If options are shown, and user typed something, allow send. Otherwise, prevent default if empty.
                     if (currentInput.trim()) {
                         handleSendMessage(e as any);
                     } else {
@@ -352,7 +345,6 @@ export default function GIAClient() {
                     handleSendMessage(e as any);
                 }
               } else if (!currentInput.trim()) {
-                // If input is empty and no options that allow empty enter submission, prevent default
                 e.preventDefault();
               }
             }
@@ -360,8 +352,8 @@ export default function GIAClient() {
         />
         <Button
             type="submit"
-            size="sm" // Make button slightly smaller
-            className="text-xs" // Smaller text on button
+            size="sm" 
+            className="text-xs" 
             disabled={isInputDisabled() || (!currentInput.trim() && !(conversationStage === 'AWAITING_EMAIL_PERMISSION' && messages[messages.length -1]?.options) && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length -1]?.options))}
         >
           {isPending && conversationStage === 'PROCESSING_AI' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
@@ -371,6 +363,3 @@ export default function GIAClient() {
     </div>
   );
 }
-
-
-    
