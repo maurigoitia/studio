@@ -31,6 +31,7 @@ export async function genericQuery(input: GenericQueryInput): Promise<GenericQue
 
 const prompt = ai.definePrompt({
   name: 'genericQueryPromptGIA',
+  model: 'googleai/gemini-1.5-flash-latest', // Explicitly set recommended model
   input: {schema: GenericQueryInputSchema},
   output: {schema: GenericQueryOutputSchema},
   prompt: `Eres GIA, una IA asistente amigable y servicial de PetSync, especializada en proporcionar información general y sugerencias sobre el cuidado de mascotas. Estás en una fase beta.
@@ -62,4 +63,3 @@ const genericQueryFlow = ai.defineFlow(
     return output;
   }
 );
-
