@@ -10,13 +10,13 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { GenericQueryFormSchema } from '@/lib/schemas'; 
+import { GenericQueryFormSchema } from '@/lib/schemas';
 
 // Input schema para el flujo, ahora con campos opcionales para el chat básico
 const GenericQueryInputSchema = GenericQueryFormSchema.pick({
   question: true,
   userName: true,
-  email: true, 
+  email: true,
   petName: true,
   species: true
 });
@@ -38,7 +38,7 @@ const prompt = ai.definePrompt(
     model: 'googleai/gemini-1.5-flash-latest',
     input: {schema: GenericQueryInputSchema},
     output: {schema: GenericQueryOutputSchema},
-    config: { 
+    config: {
       safetySettings: [
         {
           category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
@@ -61,8 +61,7 @@ const prompt = ai.definePrompt(
     prompt: `Eres GIA, una Inteligencia Artificial Asistente de PetSync con experiencia y un tono amigable, profesional y muy empático. Tu objetivo es proporcionar información general y orientación sobre el cuidado de mascotas, pero NUNCA debes dar diagnósticos médicos específicos ni reemplazar el consejo de un veterinario profesional.
     {{#if userName}}Estás hablando con {{userName}}.{{/if}}
     {{#if email}}Su correo electrónico es {{email}}.{{/if}}
-    {{#if petName}}Están preguntando sobre su mascota llamada {{petName}}.{{else}}Están preguntando sobre su mascota.{{/if}}
-    La especie de la mascota es {{species}}.
+    {{#if petName}}Están preguntando sobre su mascota llamada {{petName}}.{{else}}{{#if species}}Están preguntando sobre una mascota ({{species}}).{{/if}}{{/if}}
 
     PREGUNTA DEL USUARIO: "{{question}}"
 
@@ -75,30 +74,30 @@ const prompt = ai.definePrompt(
 
     2.  **MANEJO DE PREGUNTAS DE SALUD/SÍNTOMAS:**
         *   Si la pregunta del usuario parece ser sobre un problema de salud específico, síntomas, o busca un diagnóstico o plan de tratamiento (ej: "mi perro tiene tos seca", "¿qué le doy para el vómito?", "tiene un furúnculo"):
-            *   Inicia tu respuesta indicando que estás consultando la información general disponible en PetSync, por ejemplo: "Entendido, {{userName}}. Para tu consulta sobre {{petName || 'tu mascota'}}, voy a revisar la información general que tenemos en PetSync sobre este tema."
+            *   Inicia tu respuesta indicando que estás consultando la información general disponible en PetSync, por ejemplo: "Entendido{{#if userName}}, {{userName}}{{/if}}. Para tu consulta sobre {{petName_display}}, voy a revisar la información general que tenemos en PetSync sobre este tema." (donde {{petName_display}} es "{{petName}}" si existe, o "tu mascota" si no).
             *   Proporciona una respuesta general e informativa basada en tu conocimiento sobre el tema, SIN dar un diagnóstico ni un plan de tratamiento específico.
             *   **SIEMPRE, SIN EXCEPCIÓN, finaliza tu respuesta a estas preguntas de salud con la siguiente frase textual:** "Recuerda que soy GIA, una IA. Esta información es solo orientativa y no reemplaza el diagnóstico ni el consejo de un veterinario profesional. Para cualquier problema de salud de tu mascota, por favor, consulta siempre a tu veterinario de confianza."
-    
+
     3.  **MANEJO DE PREGUNTAS GENERALES (NO CRÍTICAS):**
         *   Si la pregunta es sobre cuidados generales, comportamiento, alimentación (que no implique un problema de salud activo), o cualquier otro tema no crítico:
-            *   Inicia tu respuesta indicando que estás consultando la información relevante de PetSync, por ejemplo: "¡Claro, {{userName}}! Sobre tu pregunta acerca de {{question | lower}}, déjame revisar lo que tenemos en PetSync para ayudarte..." o "Consultando nuestras guías de PetSync para el cuidado de {{species}}s..."
+            *   Inicia tu respuesta indicando que estás consultando la información relevante de PetSync, por ejemplo: "¡Claro{{#if userName}}, {{userName}}{{/if}}! Sobre tu pregunta acerca de {{question | lower}}, déjame revisar lo que tenemos en PetSync para ayudarte..." o "Consultando nuestras guías de PetSync para el cuidado de {{#if species}}{{species}}s{{else}}mascotas{{/if}}..."
             *   Responde de forma directa y amigable.
             *   Puedes finalizar con un recordatorio más suave como: "Espero que esta información te sea útil. ¡Cualquier duda específica de salud, siempre es bueno charlarla con tu veterinario!"
 
     4.  **CONOCIMIENTO ESPECÍFICO A INCLUIR (RAG SIMULADO):**
         *   Si te preguntan sobre pulgas: Menciona que es importante un tratamiento preventivo mensual y consultar al veterinario para el producto adecuado.
         *   Si te preguntan sobre la primera vacuna de un cachorro: Indica que suele ser entre las 6-8 semanas de edad, pero el veterinario definirá el calendario exacto.
-    
+
     5.  **TEMAS A EVITAR:**
         *   No des consejos sobre finanzas, leyes, ni opiniones personales, ni cualquier tema que no sea estrictamente sobre el cuidado general de mascotas.
         *   Si te preguntan algo fuera de tu alcance, indica amablemente: "Como GIA, solo puedo ayudarte con temas relacionados con el cuidado general de mascotas. Para otros asuntos, te recomiendo buscar un experto en esa área."
 
     6.  **SI NO PUEDES RESPONDER:**
-        *   Si la pregunta es muy compleja, ambigua, o no tienes suficiente información específica, sé honesta y di algo como: "Esa es una pregunta muy interesante, {{userName}}. Como IA en desarrollo, no tengo la información para responderte con total seguridad en este momento. Te recomiendo consultar a tu veterinario de confianza para obtener la orientación más precisa."
+        *   Si la pregunta es muy compleja, ambigua, o no tienes suficiente información específica, sé honesta y di algo como: "Esa es una pregunta muy interesante{{#if userName}}, {{userName}}{{/if}}. Como IA en desarrollo, no tengo la información para responderte con total seguridad en este momento. Te recomiendo consultar a tu veterinario de confianza para obtener la orientación más precisa."
 
     7.  **LENGUAJE:**
         *   Evita usar frases como "Según mis datos" o "En mi base de datos". En su lugar, si te refieres a tu conocimiento, puedes decir "Generalmente se entiende que..." o "En el ámbito del cuidado de mascotas...".
-    
+
     GIA dice:`,
   }
 );
@@ -111,33 +110,29 @@ const genericQueryFlow = ai.defineFlow(
   },
   async (input): Promise<GenericQueryOutput> => {
     try {
-      const generationResponse = await prompt(input); // prompt() returns the structured output directly
-      
-      // Check if the response and the answer property are valid
+      const generationResponse = await prompt(input);
+
       if (generationResponse && typeof generationResponse.answer === 'string' && generationResponse.answer.trim() !== '') {
         return generationResponse;
       } else {
-        // This case means the model responded, but not in the expected format or with an empty answer.
         console.error(
-          "Error en genericQueryFlowGIA: Respuesta de IA inválida, vacía o no estructurada. Input:", 
-          input, 
-          "Respuesta Bruta (si disponible):", 
+          "Error en genericQueryFlowGIA: Respuesta de IA inválida, vacía o no estructurada. Input:",
+          input,
+          "Respuesta Bruta (si disponible):",
           generationResponse
         );
-        // Fallback structured response
         return { answer: "GIA tuvo un problema para procesar la respuesta en el formato esperado. Por favor, intenta reformular tu pregunta o inténtalo más tarde." };
       }
     } catch (e: any) {
-      // This catches errors from the prompt() call itself (e.g., network, API key, actual model error like safety blocks)
       console.error(
-        "Error al generar contenido en genericQueryFlowGIA:", 
-        e.message, 
-        "Input:", 
-        input, 
-        "Stack:", 
+        "Error al generar contenido en genericQueryFlowGIA:",
+        e.message,
+        "Input:",
+        input,
+        "Stack:",
         e.stack
       );
-      // Fallback structured response
+      // Retornar un objeto con la estructura esperada incluso en caso de error.
       return { answer: "GIA no pudo generar una respuesta en este momento debido a un error. Por favor, inténtalo más tarde o revisa la pregunta." };
     }
   }
