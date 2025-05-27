@@ -10,15 +10,20 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { GenericQueryFormSchema } from '@/lib/schemas';
+import { GenericQueryFormSchema } from '@/lib/schemas'; // Standardized path
 
-// Input schema para el flujo, ahora con campos opcionales para el chat básico
+// Input schema para el flujo
 const GenericQueryInputSchema = GenericQueryFormSchema.pick({
   question: true,
   userName: true,
   email: true,
   petName: true,
   species: true
+}).extend({ // All fields are optional from client, but question is required by schema logic
+  userName: z.string().optional().describe("The optional name of the user asking the question."),
+  email: z.string().email().optional().describe('The optional email of the user asking the question.'),
+  petName: z.string().optional().describe("The optional name of the user's pet."),
+  species: z.string().optional().describe("Optional species of the pet (e.g., Dog, Cat)"),
 });
 export type GenericQueryInput = z.infer<typeof GenericQueryInputSchema>;
 
@@ -40,34 +45,22 @@ const prompt = ai.definePrompt(
     output: {schema: GenericQueryOutputSchema},
     config: {
       safetySettings: [
-        {
-          category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-          threshold: 'BLOCK_ONLY_HIGH',
-        },
-        {
-          category: 'HARM_CATEGORY_HATE_SPEECH',
-          threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-        },
-        {
-          category: 'HARM_CATEGORY_HARASSMENT',
-          threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-        },
-        {
-          category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-          threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-        },
+        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
+        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
       ],
     },
     prompt: `Eres GIA, una Inteligencia Artificial Asistente de PetSync con experiencia y un tono amigable, profesional y muy empático. Tu objetivo es proporcionar información general y orientación sobre el cuidado de mascotas, pero NUNCA debes dar diagnósticos médicos específicos ni reemplazar el consejo de un veterinario profesional.
     {{#if userName}}Estás hablando con {{userName}}.{{/if}}
     {{#if email}}Su correo electrónico es {{email}}.{{/if}}
-    {{#if petName}}Están preguntando sobre su mascota llamada {{petName}}.{{else}}{{#if species}}Están preguntando sobre una mascota ({{species}}).{{/if}}{{/if}}
+    {{#if petName}}Están preguntando sobre su mascota llamada {{petName}}.{{else}}{{#if species}}Están preguntando sobre una mascota ({{species}}).{{else}}Están preguntando sobre una mascota.{{/if}}{{/if}}
 
     PREGUNTA DEL USUARIO: "{{question}}"
 
     INSTRUCCIONES IMPORTANTES PARA RESPONDER:
     1.  **PERSONALIDAD Y TONO:**
-        *   Saluda al usuario por su nombre si lo proporcionó (ej. "¡Hola, {{userName}}!").
+        *   Saluda al usuario por su nombre si lo proporcionó (ej. "¡Hola, {{userName}}!"). Si no, un saludo general está bien.
         *   Usa un tono muy cercano, optimista y empático.
         *   Puedes usar emojis de animales de vez en cuando si encaja con la conversación (🐾, 🐶, 🐱).
         *   Evita respuestas demasiado largas; intenta ser concisa pero completa. Usa listas con viñetas si explicas varios puntos.
@@ -78,9 +71,8 @@ const prompt = ai.definePrompt(
             *   **SIEMPRE, SIN EXCEPCIÓN, finaliza tu respuesta a estas preguntas de salud con la siguiente frase textual:** "Recuerda que soy GIA, una IA. Esta información es solo orientativa y no reemplaza el diagnóstico ni el consejo de un veterinario profesional. Para cualquier problema de salud de tu mascota, por favor, consulta siempre a tu veterinario de confianza."
 
     3.  **MANEJO DE PREGUNTAS GENERALES (NO CRÍTICAS):**
-        *   Si la pregunta es sobre cuidados generales, comportamiento, alimentación (que no implique un problema de salud activo), o cualquier otro tema no crítico:
-            *   Responde de forma directa y amigable.
-            *   Puedes finalizar con un recordatorio más suave como: "Espero que esta información te sea útil. ¡Cualquier duda específica de salud, siempre es bueno charlarla con tu veterinario!"
+        *   Responde de forma directa y amigable.
+        *   Puedes finalizar con un recordatorio más suave como: "Espero que esta información te sea útil. ¡Cualquier duda específica de salud, siempre es bueno charlarla con tu veterinario!"
 
     4.  **CONOCIMIENTO ESPECÍFICO A INCLUIR (RAG SIMULADO):**
         *   Si te preguntan sobre pulgas: Menciona que es importante un tratamiento preventivo mensual y consultar al veterinario para el producto adecuado.
@@ -92,7 +84,7 @@ const prompt = ai.definePrompt(
 
     6.  **SI NO PUEDES RESPONDER:**
         *   Si la pregunta es muy compleja, ambigua, o no tienes suficiente información específica, sé honesta y di algo como: "Esa es una pregunta muy interesante{{#if userName}}, {{userName}}{{/if}}. Como IA en desarrollo, no tengo la información para responderte con total seguridad en este momento. Te recomiendo consultar a tu veterinario de confianza para obtener la orientación más precisa."
-
+    
     7.  **LENGUAJE:**
         *   Evita usar frases como "Según mis datos" o "En mi base de datos". En su lugar, si te refieres a tu conocimiento, puedes decir "Generalmente se entiende que..." o "En el ámbito del cuidado de mascotas...".
 
@@ -107,32 +99,31 @@ const genericQueryFlow = ai.defineFlow(
     outputSchema: GenericQueryOutputSchema,
   },
   async (input): Promise<GenericQueryOutput> => {
+    console.log('[genericQueryFlowGIA] Flow started with input:', JSON.stringify(input, null, 2));
     try {
       const generationResponse = await prompt(input);
+      console.log('[genericQueryFlowGIA] Raw response from prompt call:', JSON.stringify(generationResponse, null, 2));
 
       if (generationResponse && typeof generationResponse.answer === 'string' && generationResponse.answer.trim() !== '') {
+        console.log('[genericQueryFlowGIA] Valid AI response received.');
         return generationResponse;
       } else {
         console.error(
-          "Error en genericQueryFlowGIA: Respuesta de IA inválida, vacía o no estructurada. Input:",
-          input,
+          "[genericQueryFlowGIA] AI_RESPONSE_INVALID_STRUCTURE: Respuesta de IA inválida, vacía o no estructurada. Input:",
+          JSON.stringify(input, null, 2),
           "Respuesta Bruta (si disponible):",
-          generationResponse
+          JSON.stringify(generationResponse, null, 2)
         );
-        // Devuelve un objeto con la estructura esperada, indicando el problema.
-        return { answer: "GIA tuvo un problema para procesar la respuesta en el formato esperado. Por favor, intenta reformular tu pregunta o inténtalo más tarde." };
+        return { answer: "GIA tuvo un problema para procesar la respuesta en el formato esperado (cod: GIA_STRUCT_ERR). Por favor, intenta reformular tu pregunta o inténtalo más tarde." };
       }
     } catch (e: any) {
       console.error(
-        "Error al generar contenido en genericQueryFlowGIA:",
-        e.message,
-        "Input:",
-        input,
-        "Stack:",
-        e.stack
+        "[genericQueryFlowGIA] CATCH_BLOCK_ERROR: Error durante la llamada a la IA o procesamiento. Error Object:", e,
+        "Error Message:", e?.message,
+        "Error Stack:", e?.stack,
+        "Input que causó el error:", JSON.stringify(input, null, 2)
       );
-      // Retornar un objeto con la estructura esperada incluso en caso de error.
-      return { answer: "GIA no pudo generar una respuesta en este momento debido a un error. Por favor, inténtalo más tarde o revisa la pregunta." };
+      return { answer: "GIA no pudo generar una respuesta en este momento debido a un error técnico interno (cod: GIA_CATCH_ERR). Por favor, inténtalo más tarde o revisa la pregunta." };
     }
   }
 );

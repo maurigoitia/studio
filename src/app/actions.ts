@@ -5,8 +5,8 @@ import { WaitlistFormSchema, GenericQueryFormSchema, SignUpFormSchema, SignInFor
 import type { WaitlistFormValues, GenericQueryFormValues, SignInFormValues, SignUpFormValues, NewPetFormValues, WaitlistSubscriptionValues } from "@/lib/schemas";
 import { genericQuery } from "@/ai/flows/generic-query-flow";
 import type { GenericQueryInput, GenericQueryOutput } from "@/ai/flows/generic-query-flow";
-import { firestore } from '@/lib/firebase/config'; // Import Firestore
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"; // Import Firestore functions
+import { firestore } from '@/lib/firebase/config';
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 interface WaitlistResponse {
   success: boolean;
@@ -14,8 +14,6 @@ interface WaitlistResponse {
 }
 
 export async function subscribeToWaitlistAction(data: WaitlistSubscriptionValues | WaitlistFormValues ): Promise<WaitlistResponse> {
-  // We check which schema to use based on the presence of userType,
-  // as WaitlistSubscriptionSchema (from GIA chat) doesn't have it.
   const schemaToUse = 'userType' in data ? WaitlistFormSchema : WaitlistSubscriptionSchema;
   const validatedFields = schemaToUse.safeParse(data);
 
@@ -27,13 +25,10 @@ export async function subscribeToWaitlistAction(data: WaitlistSubscriptionValues
   }
 
   const { email } = validatedFields.data;
-  // userType is only present in WaitlistFormValues from the main waitlist form
   const userType = 'userType' in validatedFields.data ? validatedFields.data.userType : 'tutor (via GIA)';
 
-
-  console.log(`Waitlist subscription: Email - ${email}, User Type - ${userType}`);
+  console.log(`[subscribeToWaitlistAction] Waitlist subscription: Email - ${email}, User Type - ${userType}`);
   
-  // Simulate saving to Firestore for now
   try {
     if (firestore) {
       await addDoc(collection(firestore, "waitlistSubscribers"), {
@@ -42,13 +37,12 @@ export async function subscribeToWaitlistAction(data: WaitlistSubscriptionValues
         subscribedAt: serverTimestamp(),
         source: 'userType' in data ? 'waitlist_form_landing' : 'gia_chat_widget'
       });
-      console.log("Waitlist subscriber added to Firestore.");
+      console.log("[subscribeToWaitlistAction] Waitlist subscriber added to Firestore.");
     } else {
-      console.warn("Firestore is not configured. Skipping waitlist save to Firestore.");
+      console.warn("[subscribeToWaitlistAction] Firestore is not configured. Skipping waitlist save to Firestore.");
     }
-  } catch (logError) {
-    console.error("Error saving waitlist subscriber to Firestore:", logError);
-    // Continue without blocking the user's response, but inform them of potential issue
+  } catch (logError: any) {
+    console.error("[subscribeToWaitlistAction] Error saving waitlist subscriber to Firestore:", logError.message, logError.stack);
     return {
       success: false,
       message: "Hubo un problema al registrar tu correo. Inténtalo más tarde o usa el formulario principal.",
@@ -68,11 +62,12 @@ interface GenericQueryResponse {
 }
 
 export async function askGenericQuestionAction(data: GenericQueryFormValues): Promise<GenericQueryResponse> {
+  console.log("[askGenericQuestionAction] Received data:", JSON.stringify(data, null, 2));
   const validatedFields = GenericQueryFormSchema.safeParse(data);
 
   if (!validatedFields.success) {
     const errorMessages = validatedFields.error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
-    console.error("Validation error in askGenericQuestionAction:", errorMessages, "Data:", data);
+    console.error("[askGenericQuestionAction] Validation error:", errorMessages, "Data:", JSON.stringify(data, null, 2));
     return {
       success: false,
       message: `Datos inválidos: ${errorMessages}. Por favor, revisa el formulario.`,
@@ -83,38 +78,40 @@ export async function askGenericQuestionAction(data: GenericQueryFormValues): Pr
 
   try {
     const input: GenericQueryInput = { userName, email, petName, species, question };
+    console.log("[askGenericQuestionAction] Calling genericQuery with input:", JSON.stringify(input, null, 2));
     const result = await genericQuery(input);
+    console.log("[askGenericQuestionAction] Received result from genericQuery:", JSON.stringify(result, null, 2));
 
-    if (!result || !result.answer) {
-        console.error("No answer received from GIA for input:", input);
-        return { success: false, message: "GIA no pudo generar una respuesta en este momento. Inténtalo de nuevo más tarde." };
+    if (!result || typeof result.answer !== 'string' || result.answer.trim() === '') {
+        console.error("[askGenericQuestionAction] Invalid or empty answer from GIA. Input:", JSON.stringify(input, null, 2), "Result:", JSON.stringify(result, null, 2));
+        return { success: false, message: "GIA no pudo generar una respuesta formateada correctamente en este momento (cod: ACTION_NO_ANSWER). Inténtalo de nuevo más tarde." };
     }
 
     // Log conversation to Firestore (do not block response if logging fails)
     try {
       if (firestore) {
         await addDoc(collection(firestore, "giaConversationLogs"), {
-          userId: email || 'anonymous_user', 
+          userId: email || 'anonymous_user_chat', 
           userName: userName || null,
           petName: petName || null,
-          species: species,
+          species: species || null,
           question: question,
           answer: result.answer,
           timestamp: serverTimestamp(),
           flow: 'genericQueryFlowGIA'
         });
-        console.log("GIA conversation logged to Firestore.");
+        console.log("[askGenericQuestionAction] GIA conversation logged to Firestore.");
       } else {
-        console.warn("Firestore is not configured. Skipping conversation log for GIA.");
+        console.warn("[askGenericQuestionAction] Firestore is not configured. Skipping conversation log for GIA.");
       }
-    } catch (logError) {
-      console.error("Error logging GIA conversation to Firestore:", logError);
+    } catch (logError: any) {
+      console.error("[askGenericQuestionAction] Error logging GIA conversation to Firestore:", logError.message, logError.stack);
     }
 
     return { success: true, data: result };
-  } catch (error) {
-    console.error("Error asking generic question:", error);
-    return { success: false, message: "Hubo un error al procesar tu pregunta. Inténtalo de nuevo." };
+  } catch (error: any) {
+    console.error("[askGenericQuestionAction] CATCH_BLOCK_ERROR: Error calling genericQuery. Error:", error, "Error message:", error?.message, "Error stack:", error?.stack, "Input data:", JSON.stringify(data, null, 2));
+    return { success: false, message: "Hubo un error al procesar tu pregunta (cod: ACTION_CATCH_ERR). Inténtalo de nuevo." };
   }
 }
 
@@ -136,7 +133,7 @@ export async function registerNewPetAction(data: NewPetFormValues): Promise<NewP
     };
   }
 
-  console.log("Simulating saving new pet profile to Firestore:", validatedFields.data);
+  console.log("[registerNewPetAction] Simulating saving new pet profile to Firestore:", validatedFields.data);
   
   await new Promise(resolve => setTimeout(resolve, 1000));
 
