@@ -77,7 +77,7 @@ export default function GIAClient() {
       addMessage("¡Hola! Soy GIA, tu asistente IA de PetSync. Para comenzar, ¿me podrías decir tu nombre?", "gia");
       setConversationStage('AWAITING_USER_NAME');
     }
-  }, [conversationStage]); // Removed addMessage from dependency array to avoid re-triggering
+  }, []); // Removed addMessage and conversationStage from dependency array to avoid re-triggering if not needed
 
   useEffect(() => {
     const stagesRequiringTextInput = [
@@ -144,6 +144,7 @@ export default function GIAClient() {
       case 'AWAITING_EMAIL_INPUT':
         if (userInput && (!userInput.includes('@') || !userInput.includes('.'))) {
             addMessage("Parece que ese no es un correo válido. Por favor, inténtalo de nuevo o puedes presionar 'No, gracias' si prefieres omitirlo.", "gia");
+            // No cambia de stage, espera una corrección o que el usuario use las opciones si las tuviera
         } else {
             setCollectedData(prev => ({ ...prev, email: userInput }));
             addMessage("¡Gracias! Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
@@ -182,7 +183,7 @@ export default function GIAClient() {
           };
           const response = await askGenericQuestionAction(payload);
           
-          setMessages(prev => prev.slice(0, -1));
+          setMessages(prev => prev.slice(0, -1)); // Remove the "procesando..." message
 
           if (response.success && response.data?.answer) {
             addMessage(response.data.answer, "gia");
@@ -200,6 +201,8 @@ export default function GIAClient() {
         });
         break;
       case 'AI_RESPONSE_DISPLAYED':
+        // This case is primarily handled by handleOptionClick or if the user types a new question.
+        // If user types instead of clicking an option:
         if (userInput) {
             setCollectedData(prev => ({ ...prev, question: userInput }));
             setConversationStage('PROCESSING_AI');
@@ -229,27 +232,46 @@ export default function GIAClient() {
         addMessage("Algo no salió como esperaba. ¿Podemos intentarlo de nuevo?", "gia");
         setConversationStage('GREETING'); 
         setCollectedData({});
+        setMessages([]); // Reset messages for a fresh start
+        // Trigger initial greeting again
+        addMessage("¡Hola! Soy GIA, tu asistente IA de PetSync. Para comenzar, ¿me podrías decir tu nombre?", "gia");
+        setConversationStage('AWAITING_USER_NAME');
         break;
     }
   };
 
   const isInputDisabled = (): boolean => {
-    return conversationStage === 'PROCESSING_AI' ||
-           conversationStage === 'CONVO_ENDED' ||
-           conversationStage === 'GREETING' ||
-           conversationStage === 'AWAITING_EMAIL_PERMISSION' ||
-           (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length -1]?.options !== undefined) ;
+    // Deshabilitar si GIA está procesando o la conversación terminó
+    if (conversationStage === 'PROCESSING_AI' || conversationStage === 'CONVO_ENDED' || conversationStage === 'GREETING') {
+      return true;
+    }
+    // Deshabilitar si el último mensaje de GIA tiene botones de opciones
+    // (como el Sí/No para el email, o las opciones después de la respuesta de la IA)
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage?.sender === 'gia' && lastMessage?.options && lastMessage.options.length > 0) {
+      return true;
+    }
+    // En cualquier otro caso (esperando nombre de usuario, email, nombre de mascota, especie, o la pregunta principal)
+    // el input DEBERÍA estar habilitado.
+    return false;
   };
 
   const getPlaceholderText = (): string => {
-    if (isInputDisabled()) return "Esperando respuesta...";
+    if (isInputDisabled()) {
+      if (conversationStage === 'PROCESSING_AI') return "GIA está pensando...";
+      if (conversationStage === 'CONVO_ENDED') return "Conversación finalizada.";
+      if (conversationStage === 'AWAITING_EMAIL_PERMISSION' || (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length -1]?.options)) {
+        return "Elige una opción...";
+      }
+      return "Esperando respuesta...";
+    }
     switch(conversationStage) {
         case 'AWAITING_USER_NAME': return "Escribe tu nombre...";
         case 'AWAITING_EMAIL_INPUT': return "Escribe tu correo electrónico...";
         case 'AWAITING_PET_NAME': return "Nombre de tu mascota...";
         case 'AWAITING_PET_SPECIES': return "Especie (Ej: Perro, Gato)...";
         case 'AWAITING_MAIN_QUESTION': return "Escribe tu pregunta para GIA...";
-        case 'AI_RESPONSE_DISPLAYED': return "Escribe tu siguiente pregunta o elige una opción...";
+        case 'AI_RESPONSE_DISPLAYED': return "Escribe tu siguiente pregunta...";
         default: return "Escribe tu mensaje...";
     }
   }
@@ -335,15 +357,14 @@ export default function GIAClient() {
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey && !isInputDisabled()) {
               if (currentInput.trim() || (messages[messages.length - 1]?.options && (conversationStage === 'AWAITING_EMAIL_PERMISSION' || conversationStage === 'AI_RESPONSE_DISPLAYED'))) {
-                if (conversationStage === 'AWAITING_EMAIL_PERMISSION' || (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options)) {
-                    if (currentInput.trim()) {
-                        handleSendMessage(e as any);
-                    } else {
-                        e.preventDefault(); 
-                    }
-                } else {
+                // Allow enter to submit if there's input, OR if there are options presented (e.g. email permission or AI follow-up)
+                // but for options, user should ideally click. This logic is a bit broad for enter key.
+                // More precise handling would be to not submit on enter if options are shown and input is empty.
+                 if (currentInput.trim() || !(lastMessage?.sender === 'gia' && lastMessage?.options && lastMessage.options.length > 0)) {
                     handleSendMessage(e as any);
-                }
+                 } else {
+                    e.preventDefault(); // Prevent submit if only options are shown and input is empty
+                 }
               } else if (!currentInput.trim()) {
                 e.preventDefault();
               }
@@ -354,7 +375,7 @@ export default function GIAClient() {
             type="submit"
             size="sm" 
             className="text-xs" 
-            disabled={isInputDisabled() || (!currentInput.trim() && !(conversationStage === 'AWAITING_EMAIL_PERMISSION' && messages[messages.length -1]?.options) && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length -1]?.options))}
+            disabled={isInputDisabled() || (!currentInput.trim() && !(messages[messages.length - 1]?.sender === 'gia' && messages[messages.length - 1]?.options))}
         >
           {isPending && conversationStage === 'PROCESSING_AI' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
           <span className="sr-only sm:not-sr-only ml-0 sm:ml-1.5">Enviar</span>
