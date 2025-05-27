@@ -1,7 +1,7 @@
 
 import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
 import { getAuth, type Auth } from "firebase/auth";
-// import { getFirestore, type Firestore } from "firebase/firestore";
+import { getFirestore, type Firestore } from "firebase/firestore"; // Asegúrate que esté descomentado
 // import { getStorage, type FirebaseStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
@@ -18,7 +18,7 @@ const firebaseConfig = {
 
 let app: FirebaseApp;
 let auth: Auth;
-// let firestore: Firestore;
+let firestore: Firestore; // Asegúrate que esté descomentado
 // let storage: FirebaseStorage;
 
 if (getApps().length === 0) {
@@ -28,7 +28,8 @@ if (getApps().length === 0) {
 }
 
 auth = getAuth(app);
-// firestore = getFirestore(app);
+firestore = getFirestore(app); // Asegúrate que esté descomentado
 // storage = getStorage(app);
 
-export { app, auth /*, firestore, storage */ };
+export { app, auth, firestore /*, storage */ }; // Asegúrate que firestore esté exportado
+
