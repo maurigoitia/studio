@@ -14,11 +14,11 @@ import { GenericQueryFormSchema } from '@/lib/schemas';
 
 // Input schema para el flujo, ahora con campos opcionales para el chat básico
 const GenericQueryInputSchema = GenericQueryFormSchema.pick({
-  question: true, // question es el único campo requerido ahora por el chat básico
-  userName: true, // Opcional
-  email: true,    // Opcional
-  petName: true,  // Opcional
-  species: true   // Opcional
+  question: true,
+  userName: true,
+  email: true, 
+  petName: true,
+  species: true
 });
 export type GenericQueryInput = z.infer<typeof GenericQueryInputSchema>;
 
@@ -38,7 +38,7 @@ const prompt = ai.definePrompt(
     model: 'googleai/gemini-1.5-flash-latest',
     input: {schema: GenericQueryInputSchema},
     output: {schema: GenericQueryOutputSchema},
-    config: { // Added safety settings
+    config: { 
       safetySettings: [
         {
           category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
@@ -109,14 +109,36 @@ const genericQueryFlow = ai.defineFlow(
     inputSchema: GenericQueryInputSchema,
     outputSchema: GenericQueryOutputSchema,
   },
-  async (input) => {
-    const {output} = await prompt(input);
-    if (!output || !output.answer) {
-        const errorMsg = "Error en genericQueryFlowGIA: No se recibió una respuesta válida de la IA o la respuesta no tiene el campo 'answer'.";
-        console.error(errorMsg, "Input:", input, "Raw output:", output);
-        // Lanza un error para que sea capturado por la Server Action
-        throw new Error("GIA no pudo generar una respuesta estructurada en este momento.");
+  async (input): Promise<GenericQueryOutput> => {
+    try {
+      const generationResponse = await prompt(input); // prompt() returns the structured output directly
+      
+      // Check if the response and the answer property are valid
+      if (generationResponse && typeof generationResponse.answer === 'string' && generationResponse.answer.trim() !== '') {
+        return generationResponse;
+      } else {
+        // This case means the model responded, but not in the expected format or with an empty answer.
+        console.error(
+          "Error en genericQueryFlowGIA: Respuesta de IA inválida, vacía o no estructurada. Input:", 
+          input, 
+          "Respuesta Bruta (si disponible):", 
+          generationResponse
+        );
+        // Fallback structured response
+        return { answer: "GIA tuvo un problema para procesar la respuesta en el formato esperado. Por favor, intenta reformular tu pregunta o inténtalo más tarde." };
+      }
+    } catch (e: any) {
+      // This catches errors from the prompt() call itself (e.g., network, API key, actual model error like safety blocks)
+      console.error(
+        "Error al generar contenido en genericQueryFlowGIA:", 
+        e.message, 
+        "Input:", 
+        input, 
+        "Stack:", 
+        e.stack
+      );
+      // Fallback structured response
+      return { answer: "GIA no pudo generar una respuesta en este momento debido a un error. Por favor, inténtalo más tarde o revisa la pregunta." };
     }
-    return output;
   }
 );
