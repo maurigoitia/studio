@@ -4,9 +4,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { askGenericQuestionAction } from "@/app/actions"; 
+import { askGenericQuestionAction } from "@/app/actions";
 import { useState, useTransition, useRef, useEffect, FormEvent } from "react";
-import { Loader2, Send, Bot, UserCircle, ChevronDown } from "lucide-react"; 
+import { Loader2, Send, Bot, UserCircle, ChevronDown } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -19,7 +19,7 @@ interface Message {
   options?: Array<{ label: string, value: string }>;
 }
 
-type ConversationStage = 
+type ConversationStage =
   | 'GREETING'
   | 'AWAITING_USER_NAME'
   | 'AWAITING_EMAIL_PERMISSION'
@@ -39,7 +39,7 @@ interface CollectedData {
   question?: string;
 }
 
-export default function GIAClient() { 
+export default function GIAClient() {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -48,28 +48,26 @@ export default function GIAClient() {
   const [collectedData, setCollectedData] = useState<CollectedData>({});
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const sentAudioRef = useRef<HTMLAudioElement | null>(null);
+  const receivedAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  const playSound = (soundPath: string) => {
-    try {
-      const audio = new Audio(soundPath);
-      audio.play().catch(error => console.warn("Error playing sound:", error));
-    } catch (error) {
-      console.warn("Could not play sound effect:", error);
-    }
-  };
-  
+  useEffect(() => {
+    // Preload audio files
+    sentAudioRef.current = new Audio('/sounds/message-sent.mp3');
+    receivedAudioRef.current = new Audio('/sounds/message-received.mp3');
+  }, []);
+
   const addMessage = (text: string, sender: 'user' | 'gia', options?: Array<{label: string, value: string}>) => {
     setMessages(prev => [...prev, { id: Date.now().toString() + Math.random().toString(36).substring(7), text, sender, options }]);
-    if (sender === 'gia' && conversationStage !== 'PROCESSING_AI') {
-      playSound('/sounds/message-received.mp3'); 
-    }
   };
-  
+
   useEffect(() => {
     if (scrollAreaRef.current) {
       const viewport = scrollAreaRef.current.querySelector('div[data-radix-scroll-area-viewport]');
       if (viewport) {
-        viewport.scrollTop = viewport.scrollHeight;
+        setTimeout(() => { // Delay scroll to ensure DOM update
+          viewport.scrollTop = viewport.scrollHeight;
+        }, 0);
       }
     }
   }, [messages]);
@@ -89,38 +87,37 @@ export default function GIAClient() {
       'AWAITING_PET_SPECIES',
       'AWAITING_MAIN_QUESTION',
     ];
-    // Also focus if AI has responded and there are no options (implying user can type a follow-up)
-    const shouldFocus = 
+    const shouldFocus =
         stagesRequiringTextInput.includes(conversationStage) ||
         (conversationStage === 'AI_RESPONSE_DISPLAYED' && !messages[messages.length - 1]?.options);
 
     if (shouldFocus && !isInputDisabled()) {
       inputRef.current?.focus();
     }
-  }, [conversationStage, messages]);
+  }, [conversationStage, messages, isPending]);
 
 
   const handleOptionClick = (value: string, label: string) => {
     addMessage(label, 'user');
-    playSound('/sounds/message-sent.mp3');
-    setCurrentInput(""); 
-    
+    sentAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de envío:", e));
+    setCurrentInput("");
+
     if (conversationStage === 'AWAITING_EMAIL_PERMISSION') {
       if (value === 'yes_email') {
         addMessage("¡Genial! Por favor, escribe tu correo electrónico.", "gia");
         setConversationStage('AWAITING_EMAIL_INPUT');
-      } else { 
+      } else {
         setCollectedData(prev => ({ ...prev, email: undefined }));
         addMessage("Entendido. Ahora, cuéntame sobre tu mascota. ¿Cuál es su nombre?", "gia");
         setConversationStage('AWAITING_PET_NAME');
       }
     } else if (conversationStage === 'AI_RESPONSE_DISPLAYED') {
         if (value === 'new_question') {
-            setCollectedData(prev => ({ ...prev, question: undefined })); 
+            setCollectedData(prev => ({ ...prev, question: undefined }));
             addMessage("Claro, ¿cuál es tu nueva pregunta?", "gia");
             setConversationStage('AWAITING_MAIN_QUESTION');
         } else if (value === 'end_convo') {
-            addMessage("¡Gracias por chatear conmigo! Que tengas un buen día.", "gia");
+            addMessage("¡Gracias por chatear conmigo! Que tengas un buen día. 🐾", "gia");
             setConversationStage('CONVO_ENDED');
         }
     }
@@ -130,11 +127,11 @@ export default function GIAClient() {
     if (e) e.preventDefault();
     const userInput = currentInput.trim();
 
-    if (!userInput && conversationStage !== 'AWAITING_EMAIL_PERMISSION' && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options)) return; 
+    if (!userInput && conversationStage !== 'AWAITING_EMAIL_PERMISSION' && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options)) return;
 
     if (userInput) {
       addMessage(userInput, "user");
-      playSound('/sounds/message-sent.mp3'); 
+      sentAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de envío:", e));
     }
     setCurrentInput("");
 
@@ -154,7 +151,7 @@ export default function GIAClient() {
         }
         break;
       case 'AWAITING_PET_NAME':
-        setCollectedData(prev => ({ ...prev, petName: userInput }));
+        setCollectedData(prev => ({ ...prev, petName: userInput || "mi mascota" }));
         addMessage(`¡Lindo nombre, ${userInput || 'tu mascota'}! ¿Y cuál es su especie? (Ej: Perro, Gato, Ave)`, "gia");
         setConversationStage('AWAITING_PET_SPECIES');
         break;
@@ -180,14 +177,15 @@ export default function GIAClient() {
             userName: collectedData.userName,
             email: collectedData.email,
             petName: collectedData.petName,
-            species: collectedData.species as string, 
-            question: userInput, 
+            species: collectedData.species as string,
+            question: userInput,
           };
           const response = await askGenericQuestionAction(payload);
-          if (response.success && response.data) {
+          if (response.success && response.data?.answer) {
             addMessage(response.data.answer, "gia");
+            receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción:", e));
           } else {
-            addMessage(response.message || "Hubo un error al obtener una respuesta de GIA. Por favor, revisa los datos o inténtalo más tarde.", "gia");
+            addMessage(response.message || "GIA no pudo generar una respuesta en este momento. Por favor, intenta reformular tu pregunta o inténtalo más tarde.", "gia");
             toast({
               title: "Error de GIA",
               description: response.message || "No se pudo obtener una respuesta.",
@@ -199,12 +197,12 @@ export default function GIAClient() {
         });
         break;
       case 'AI_RESPONSE_DISPLAYED':
-        if (userInput) { 
+        if (userInput) {
             setCollectedData(prev => ({ ...prev, question: userInput }));
             setConversationStage('PROCESSING_AI');
             addMessage("Entendido. Estoy procesando tu nueva pregunta...", "gia");
             startTransition(async () => {
-              const payload: GenericQueryFormValues = { 
+              const payload: GenericQueryFormValues = {
                 userName: collectedData.userName,
                 email: collectedData.email,
                 petName: collectedData.petName,
@@ -212,10 +210,11 @@ export default function GIAClient() {
                 question: userInput,
               };
               const response = await askGenericQuestionAction(payload);
-              if (response.success && response.data) {
+              if (response.success && response.data?.answer) {
                 addMessage(response.data.answer, "gia");
+                receivedAudioRef.current?.play().catch(e => console.warn("Error al reproducir sonido de recepción:", e));
               } else {
-                addMessage(response.message || "Hubo un error al obtener una respuesta de GIA.", "gia");
+                addMessage(response.message || "GIA no pudo generar una respuesta en este momento.", "gia");
               }
               setConversationStage('AI_RESPONSE_DISPLAYED');
               addMessage("¿Tienes alguna otra pregunta o podemos finalizar aquí?", "gia", [{label: "Hacer otra pregunta", value: "new_question"}, {label: "Finalizar", value: "end_convo"}]);
@@ -226,10 +225,10 @@ export default function GIAClient() {
         break;
     }
   };
-  
+
   const isInputDisabled = (): boolean => {
-    return conversationStage === 'PROCESSING_AI' || 
-           conversationStage === 'CONVO_ENDED' || 
+    return conversationStage === 'PROCESSING_AI' ||
+           conversationStage === 'CONVO_ENDED' ||
            conversationStage === 'GREETING' ||
            (conversationStage === 'AWAITING_EMAIL_PERMISSION' && messages[messages.length -1]?.options !== undefined) ||
            (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length -1]?.options !== undefined) ;
@@ -243,6 +242,7 @@ export default function GIAClient() {
         case 'AWAITING_PET_NAME': return "Nombre de tu mascota...";
         case 'AWAITING_PET_SPECIES': return "Especie (Ej: Perro, Gato)...";
         case 'AWAITING_MAIN_QUESTION': return "Escribe tu pregunta para GIA...";
+        case 'AI_RESPONSE_DISPLAYED': return "Escribe tu siguiente pregunta o elige una opción...";
         default: return "Escribe tu mensaje...";
     }
   }
@@ -260,7 +260,7 @@ export default function GIAClient() {
           >
             {msg.sender === 'gia' && (
               <Avatar className="h-6 w-6 self-start">
-                <AvatarFallback className="bg-accent text-accent-foreground">
+                <AvatarFallback className="bg-primary text-primary-foreground">
                   <Bot className="h-3.5 w-3.5" />
                 </AvatarFallback>
               </Avatar>
@@ -268,8 +268,8 @@ export default function GIAClient() {
             <div
               className={cn(
                 "p-2.5 rounded-lg shadow-sm",
-                msg.sender === 'user' 
-                  ? "bg-primary text-primary-foreground rounded-br-none" 
+                msg.sender === 'user'
+                  ? "bg-primary text-primary-foreground rounded-br-none"
                   : "bg-card border text-card-foreground rounded-bl-none"
               )}
             >
@@ -277,10 +277,10 @@ export default function GIAClient() {
               {msg.sender === 'gia' && msg.options && (
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {msg.options.map(option => (
-                    <Button 
-                      key={option.value} 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      key={option.value}
+                      variant="outline"
+                      size="sm"
                       onClick={() => handleOptionClick(option.value, option.label)}
                       className="text-xs h-auto py-1 px-2"
                     >
@@ -302,7 +302,7 @@ export default function GIAClient() {
         {isPending && conversationStage === 'PROCESSING_AI' && (
           <div className="flex items-center space-x-2 mr-auto justify-start mb-3 animate-in fade-in-0 duration-300">
              <Avatar className="h-6 w-6 self-start">
-                <AvatarFallback className="bg-accent text-accent-foreground">
+                <AvatarFallback className="bg-primary text-primary-foreground">
                   <Bot className="h-3.5 w-3.5" />
                 </AvatarFallback>
               </Avatar>
@@ -315,7 +315,7 @@ export default function GIAClient() {
           </div>
         )}
       </ScrollArea>
-      
+
       <form onSubmit={handleSendMessage} className="p-2 sm:p-3 border-t bg-background flex items-center space-x-2">
         <Input
           ref={inputRef}
@@ -326,15 +326,24 @@ export default function GIAClient() {
           className="flex-grow bg-input text-xs"
           disabled={isInputDisabled()}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey && !isInputDisabled() && currentInput.trim()) {
-              handleSendMessage(e as any); 
+            if (e.key === 'Enter' && !e.shiftKey && !isInputDisabled() && (currentInput.trim() || (conversationStage === 'AWAITING_EMAIL_PERMISSION' || conversationStage === 'AI_RESPONSE_DISPLAYED'))) {
+                if (conversationStage === 'AWAITING_EMAIL_PERMISSION' || (conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options)) {
+                  // Do not submit with enter if options are present and input is empty
+                  if(currentInput.trim()) {
+                     handleSendMessage(e as any);
+                  } else {
+                    e.preventDefault(); // Prevent form submission if only options are expected
+                  }
+                } else {
+                  handleSendMessage(e as any);
+                }
             }
           }}
         />
-        <Button 
-            type="submit" 
+        <Button
+            type="submit"
             size="sm"
-            className="text-xs" 
+            className="text-xs"
             disabled={isInputDisabled() || (!currentInput.trim() && conversationStage !== 'AWAITING_EMAIL_PERMISSION' && !(conversationStage === 'AI_RESPONSE_DISPLAYED' && messages[messages.length-1]?.options))}
         >
           {isPending && conversationStage === 'PROCESSING_AI' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
@@ -344,4 +353,3 @@ export default function GIAClient() {
     </div>
   );
 }
-    
