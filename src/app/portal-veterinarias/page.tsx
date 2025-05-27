@@ -35,7 +35,7 @@ export default function VetPortalPage() {
         <section className="py-12 md:py-16 bg-gradient-to-br from-primary/10 via-background to-background text-center">
           <div className="container mx-auto px-4">
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-              Portal PetSync para Veterinarias: Optimiza tu Práctica, Cuida Mejor.
+              Portal para Veterinarias: Optimiza tu Práctica, Cuida Mejor.
             </h1>
             <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
               Descubre herramientas inteligentes diseñadas para la gestión eficiente de tu clínica, la conexión fluida con tutores y el seguimiento integral de la salud de cada paciente.
@@ -43,15 +43,15 @@ export default function VetPortalPage() {
           </div>
         </section>
 
-        {/* Why Choose PetSync Section */}
+        {/* Why Choose Section */}
         <section id="why-petsync-vet" className="py-12 md:py-16 bg-background">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">¿Por qué elegir PetSync?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">¿Por qué elegir esta plataforma?</h2>
             <div className="flex justify-center mb-6">
               <Logo />
             </div>
             <p className="text-md md:text-lg text-muted-foreground max-w-2xl mx-auto">
-              PetSync está diseñado para simplificar tu día a día, permitiéndote enfocarte en la atención al paciente mientras optimizas la gestión de tu clínica y fortaleces la relación con los tutores a través de una plataforma conectada e inteligente.
+              Nuestra plataforma está diseñada para simplificar tu día a día, permitiéndote enfocarte en la atención al paciente mientras optimizas la gestión de tu clínica y fortaleces la relación con los tutores a través de un sistema conectado e inteligente.
             </p>
           </div>
         </section>
@@ -62,7 +62,7 @@ export default function VetPortalPage() {
             <div className="text-center mb-10 sm:mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">Herramientas Diseñadas para tu Éxito</h2>
               <CardDescription className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-                El Portal PetSync para Veterinarias te equipará con todo lo necesario para una gestión moderna y eficiente:
+                El Portal para Veterinarias te equipará con todo lo necesario para una gestión moderna y eficiente:
               </CardDescription>
             </div>
             <div className="max-w-3xl mx-auto space-y-8">
@@ -89,7 +89,7 @@ export default function VetPortalPage() {
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-1">Comunicación Directa con Tutores</h3>
                   <p className="text-muted-foreground">
-                    Envía recordatorios, resultados y seguimientos directamente a la app PetSync del tutor o a su email, fortaleciendo la relación y asegurando una atención continua.
+                    Envía recordatorios, resultados y seguimientos directamente a la app del tutor o a su email, fortaleciendo la relación y asegurando una atención continua.
                   </p>
                 </div>
               </div>
@@ -126,13 +126,14 @@ export default function VetPortalPage() {
                 <UsersRound className="h-12 w-12 text-primary mb-4" />
                 <h3 className="text-2xl font-bold text-foreground mb-3">Conecta con los tutores de tus pacientes</h3>
                 <p className="text-muted-foreground text-md mb-6">
-                  La app PetSync para tutores asegura una comunicación transparente y eficiente. Ellos acceden a historiales médicos compartidos, reciben recordatorios automáticos y se mantienen al tanto del cuidado de sus mascotas, facilitando una atención coordinada y reduciendo tu carga administrativa.
+                  La app para tutores asegura una comunicación transparente y eficiente. Ellos acceden a historiales médicos compartidos, reciben recordatorios automáticos y se mantienen al tanto del cuidado de sus mascotas, facilitando una atención coordinada y reduciendo tu carga administrativa.
                 </p>
                  <Button variant="outline" asChild>
                     <Link href="/#tutores">Conocer más sobre la app para Tutores</Link>
                  </Button>
               </div>
               <div className="hidden lg:block p-4">
+                {/* Placeholder for an image showing the connection or app interface */}
                 <div className="bg-muted rounded-lg h-64 w-full flex items-center justify-center" data-ai-hint="app interface vet tutor">
                   <ImageIcon className="h-24 w-24 text-muted-foreground/50" />
                 </div>
@@ -145,10 +146,10 @@ export default function VetPortalPage() {
         <section id="early-access-vet" className="py-12 md:py-16 bg-primary/10">
           <div className="container mx-auto px-4 max-w-3xl text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
-              Transforma tu Clínica con PetSync: Solicita una Demostración o Únete al Programa de Acceso Anticipado
+              Transforma tu Clínica: Solicita una Demostración o Únete al Programa de Acceso Anticipado
             </h2>
             <p className="text-muted-foreground mb-8 text-lg">
-              Descubre cómo PetSync puede revolucionar tu práctica diaria. Regístrate para obtener acceso temprano y ayúdanos a construir la plataforma perfecta para tus necesidades.
+              Descubre cómo esta plataforma puede revolucionar tu práctica diaria. Regístrate para obtener acceso temprano y ayúdanos a construir la herramienta perfecta para tus necesidades.
             </p>
             <TooltipProvider>
               <Tooltip>
@@ -172,7 +173,7 @@ export default function VetPortalPage() {
             <div className="container mx-auto px-4 max-w-xl text-center">
                 <h2 className="text-2xl font-bold text-foreground mb-4">¿Preguntas? Contáctanos</h2>
                 <CardDescription className="text-muted-foreground mb-6">
-                    Si tienes alguna duda sobre el Portal PetSync para Veterinarias o el programa de acceso temprano, no dudes en escribirnos.
+                    Si tienes alguna duda sobre el Portal para Veterinarias o el programa de acceso temprano, no dudes en escribirnos.
                 </CardDescription>
                 <Button variant="outline" asChild>
                     <Link href="mailto:soporte-vets@petsync.example.com">Enviar un Email</Link>
@@ -196,4 +197,5 @@ export default function VetPortalPage() {
     </div>
   );
 }
+
     
