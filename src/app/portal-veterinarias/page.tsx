@@ -6,12 +6,45 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb, Image as ImageIcon, Sparkles, Info } from "lucide-react";
 import Link from "next/link";
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/logo"; // Ensure Logo is imported if used
 import React from "react";
 
 const GOOGLE_FORM_VET_EARLY_ACCESS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link";
 
 export default function VetPortalInfoPage() {
+
+  const features = [
+    {
+      icon: <CalendarCog className="h-8 w-8 text-primary mb-2" />,
+      title: "Agenda Inteligente y Turnos Online",
+      description: "Gestiona tu calendario, programa citas y permite que los tutores reserven online, optimizando tu tiempo y reduciendo ausencias con recordatorios automáticos."
+    },
+    {
+      icon: <ClipboardCheck className="h-8 w-8 text-primary mb-2" />,
+      title: "Historiales Clínicos Digitales",
+      description: "Accede y gestiona fichas clínicas completas, centralizadas y seguras para cada paciente. Comparte información relevante con los tutores de forma sencilla."
+    },
+    {
+      icon: <MessagesSquare className="h-8 w-8 text-primary mb-2" />,
+      title: "Comunicación Directa con Tutores",
+      description: "Envía recordatorios, resultados y seguimientos directamente a la app del tutor o a su email, fortaleciendo la relación y asegurando una atención continua."
+    },
+    {
+      icon: <ActivitySquare className="h-8 w-8 text-primary mb-2" />,
+      title: "Gestión de Sala de Espera y Triage",
+      description: "Organiza el flujo de pacientes espontáneos y urgencias con un sistema de priorización visual, mejorando la eficiencia y la experiencia en tu clínica."
+    },
+    {
+      icon: <BrainCircuit className="h-8 w-8 text-primary mb-2" />,
+      title: "Asistencia IA (GIA) para Veterinarios",
+      description: "Nuestra IA, GIA, te ayudará a optimizar tu tiempo generando resúmenes de consulta, buscando información relevante en historiales y más (próximamente)."
+    },
+     {
+      icon: <UserCog className="h-8 w-8 text-primary mb-2" />,
+      title: "Gestión de Múltiples Usuarios",
+      description: "Permite diferentes niveles de acceso para el personal de tu clínica (recepción, veterinarios, administradores), asegurando que cada uno vea solo lo necesario."
+    }
+  ];
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -34,14 +67,11 @@ export default function VetPortalInfoPage() {
         {/* Hero Section */}
         <section className="py-12 md:py-16 bg-gradient-to-br from-primary/10 via-background to-background text-center">
           <div className="container mx-auto px-4">
-            <Badge variant="secondary" className="text-sm sm:text-base py-1.5 px-4 mb-6 bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
-              La plataforma #1 para gestión veterinaria
-            </Badge>
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-              Gestión veterinaria inteligente con PetSyncPro
+              Portal para Veterinarias: Optimiza tu Práctica, Cuida Mejor.
             </h1>
             <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-              PetSyncPro te brinda todas las herramientas que necesitas para mantener a tus pacientes saludables y felices, desde la programación de citas hasta el mantenimiento de registros médicos.
+              Descubre herramientas inteligentes diseñadas para la gestión eficiente de tu clínica, la conexión fluida con tutores y el seguimiento integral de la salud de cada paciente.
             </p>
           </div>
         </section>
@@ -49,75 +79,37 @@ export default function VetPortalInfoPage() {
         {/* Why Choose Section */}
         <section id="why-petsync-vet" className="py-12 md:py-16 bg-secondary/30">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">¿Por qué elegir PetSyncPro?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">¿Por qué elegir esta plataforma?</h2>
             <div className="flex justify-center mb-6">
               <Logo /> 
             </div>
             <p className="text-md md:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Clínicas veterinarias eligen PetSyncPro por su servicio integral, facilidad de uso y las herramientas diseñadas para optimizar su práctica diaria, permitiéndote enfocarte en la atención al paciente.
+              Nuestra plataforma está diseñada para simplificar tu día a día, permitiéndote enfocarte en la atención al paciente mientras optimizas la gestión de tu clínica y fortaleces la relación con los tutores a través de un sistema conectado e inteligente.
             </p>
           </div>
         </section>
 
-        {/* Key Features Section - More Narrative */}
+        {/* Key Features Section */}
         <section id="features-vet-portal" className="py-12 md:py-16 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 sm:mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">Herramientas Diseñadas para tu Éxito</h2>
               <CardDescription className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-                El Portal para Veterinarias de PetSyncPro te equipará con todo lo necesario para una gestión moderna y eficiente:
+                El Portal para Veterinarias te equipará con todo lo necesario para una gestión moderna y eficiente:
               </CardDescription>
             </div>
-            <div className="max-w-3xl mx-auto space-y-8">
-              <div className="flex items-start gap-4">
-                <CalendarCog className="h-8 w-8 text-primary mt-1 shrink-0" />
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-1">Agenda Inteligente y Turnos Online</h3>
-                  <p className="text-muted-foreground">
-                    Gestiona tu calendario, programa citas y permite que los tutores reserven online, optimizando tu tiempo y reduciendo ausencias con recordatorios automáticos.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <ClipboardCheck className="h-8 w-8 text-primary mt-1 shrink-0" />
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-1">Historiales Clínicos Digitales</h3>
-                  <p className="text-muted-foreground">
-                    Accede y gestiona fichas clínicas completas, centralizadas y seguras para cada paciente. Comparte información relevante con los tutores de forma sencilla.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <MessagesSquare className="h-8 w-8 text-primary mt-1 shrink-0" />
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-1">Comunicación Directa con Tutores</h3>
-                  <p className="text-muted-foreground">
-                    Envía recordatorios, resultados y seguimientos directamente a la app del tutor o a su email, fortaleciendo la relación y asegurando una atención continua.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <ActivitySquare className="h-8 w-8 text-primary mt-1 shrink-0" />
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-1">Gestión de Sala de Espera y Triage</h3>
-                  <p className="text-muted-foreground">
-                    Organiza el flujo de pacientes espontáneos y urgencias con un sistema de priorización visual, mejorando la eficiencia y la experiencia en tu clínica.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <BrainCircuit className="h-8 w-8 text-primary mt-1 shrink-0" />
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground mb-1">Asistencia IA (GIA) para Veterinarios</h3>
-                  <p className="text-muted-foreground">
-                    Nuestra IA, GIA, te ayudará a optimizar tu tiempo generando resúmenes de consulta, buscando información relevante en historiales y más (próximamente).
-                  </p>
-                </div>
-              </div>
-              <p className="text-center text-muted-foreground mt-6">
-                Y muchas más funcionalidades como gestión de múltiples usuarios, reportes y analíticas, y herramientas de facturación están en nuestro roadmap.
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {features.map((feature, index) => (
+                <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col text-center items-center p-6 bg-card">
+                  {feature.icon}
+                  <CardTitle className="text-xl font-semibold mt-2 mb-2">{feature.title}</CardTitle>
+                  <CardDescription className="text-muted-foreground text-sm flex-grow">{feature.description}</CardDescription>
+                </Card>
+              ))}
             </div>
+             <p className="text-center text-muted-foreground mt-8 text-sm">
+                Y muchas más funcionalidades como reportes avanzados, integración con laboratorios y herramientas de facturación están en nuestro roadmap para potenciar aún más tu práctica.
+              </p>
           </div>
         </section>
         
@@ -129,7 +121,7 @@ export default function VetPortalInfoPage() {
                 <UsersRound className="h-12 w-12 text-primary mb-4" />
                 <h3 className="text-2xl font-bold text-foreground mb-3">Conecta con los tutores de tus pacientes</h3>
                 <p className="text-muted-foreground text-md mb-6">
-                  La app PetSyncPro para tutores asegura una comunicación transparente y eficiente. Ellos acceden a historiales médicos compartidos, reciben recordatorios automáticos y se mantienen al tanto del cuidado de sus mascotas, facilitando una atención coordinada y reduciendo tu carga administrativa.
+                  La app para tutores asegura una comunicación transparente y eficiente. Ellos acceden a historiales médicos compartidos, reciben recordatorios automáticos y se mantienen al tanto del cuidado de sus mascotas, facilitando una atención coordinada y reduciendo tu carga administrativa.
                 </p>
                  <Button variant="outline" asChild>
                     <Link href="/#tutores">Conocer más sobre la app para Tutores</Link>
@@ -148,7 +140,7 @@ export default function VetPortalInfoPage() {
         <section id="early-access-vet" className="py-12 md:py-16 bg-primary/10">
           <div className="container mx-auto px-4 max-w-3xl text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
-              Transforma tu Clínica: Solicita una Demostración o Únete al Programa de Acceso Anticipado de PetSyncPro
+              Transforma tu Clínica: Solicita una Demostración o Únete al Programa de Acceso Anticipado
             </h2>
             <p className="text-muted-foreground mb-8 text-lg">
               Descubre cómo esta plataforma puede revolucionar tu práctica diaria. Regístrate para obtener acceso temprano y ayúdanos a construir la herramienta perfecta para tus necesidades.
@@ -175,10 +167,10 @@ export default function VetPortalInfoPage() {
             <div className="container mx-auto px-4 max-w-xl text-center">
                 <h2 className="text-2xl font-bold text-foreground mb-4">¿Preguntas? Contáctanos</h2>
                 <CardDescription className="text-muted-foreground mb-6">
-                    Si tienes alguna duda sobre el Portal para Veterinarias de PetSyncPro o el programa de acceso temprano, no dudes en escribirnos.
+                    Si tienes alguna duda sobre el Portal para Veterinarias o el programa de acceso temprano, no dudes en escribirnos.
                 </CardDescription>
                 <Button variant="outline" asChild>
-                    <Link href="mailto:soporte-vets@petsync.example.com">Enviar un Email</Link>
+                    <Link href="mailto:soporte-vets@petsyncpro.example.com">Enviar un Email</Link>
                 </Button>
                  <p className="text-xs text-muted-foreground mt-4">(Email de ejemplo: soporte-vets@petsyncpro.example.com)</p>
             </div>
@@ -199,3 +191,4 @@ export default function VetPortalInfoPage() {
     </div>
   );
 }
+

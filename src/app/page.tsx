@@ -4,40 +4,40 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from "@/components/ui/badge";
-import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, UsersRound, Smartphone, Bot, Search, HeartPulse, ActivitySquare, Lightbulb, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn, PawPrint, HandCoins, Stethoscope, Syringe, Microscope, Pill, FileHeart, Image as ImageIcon, Eye, MessageCircle, UserPlus, Clock, AlertTriangle, Send } from 'lucide-react';
+import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, Smartphone, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn, PawPrint, HandCoins, Stethoscope, Syringe, Microscope, Pill, FileHeart, Image as ImageIcon, Eye, MessageCircle, UserPlus, Clock, AlertTriangle, Send, Bot } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
   {
-    question: "¿Qué es PetSync y cómo puede ayudarme?",
-    answer: "PetSync es una plataforma que conecta a tutores de mascotas y veterinarias para simplificar la gestión de la salud animal. Te ayuda a agendar turnos, acceder a historiales médicos, recibir recordatorios y mucho más, todo en un solo lugar."
+    question: "¿Qué es PetSyncPro y cómo puede ayudarme?",
+    answer: "PetSyncPro es una plataforma que conecta a tutores de mascotas y veterinarias para simplificar la gestión de la salud animal. Te ayuda a agendar turnos, acceder a historiales médicos, recibir recordatorios y mucho más, todo en un solo lugar."
   },
   {
-    question: "¿Cómo me registro en PetSync?",
-    answer: "Actualmente estamos en versión beta. Déjanos tu contacto en nuestra waitlist y te avisaremos tan pronto como puedas registrarte para ser de los primeros en probar PetSync."
+    question: "¿Cómo me registro en PetSyncPro?",
+    answer: "Actualmente estamos en versión beta. Déjanos tu contacto en nuestra waitlist y te avisaremos tan pronto como puedas registrarte para ser de los primeros en probar PetSyncPro."
   },
   {
-    question: "¿PetSync tiene costo para los tutores de mascotas?",
-    answer: "La versión básica de PetSync para tutores será gratuita. Ofreceremos funciones premium opcionales en el futuro. ¡Regístrate en la waitlist para conocer los detalles del lanzamiento!"
+    question: "¿PetSyncPro tiene costo para los tutores de mascotas?",
+    answer: "La versión básica de PetSyncPro para tutores será gratuita. Ofreceremos funciones premium opcionales en el futuro. ¡Regístrate en la waitlist para conocer los detalles del lanzamiento!"
   },
   {
-    question: "¿Para quiénes está pensado PetSync?",
-    answer: "PetSync está diseñado principalmente para tutores de mascotas urbanos (25-40 años) y veterinarias en Buenos Aires que buscan optimizar la gestión de la salud de las mascotas y mejorar la conexión entre ellos."
+    question: "¿Para quiénes está pensado PetSyncPro?",
+    answer: "PetSyncPro está diseñado principalmente para tutores de mascotas urbanos (25-40 años) y veterinarias en Buenos Aires que buscan optimizar la gestión de la salud de las mascotas y mejorar la conexión entre ellos."
   },
   {
-    question: "Soy veterinario independiente, ¿PetSync me sirve?",
-    answer: "¡Absolutamente! PetSync está diseñado para ser útil tanto para veterinarios independientes como para clínicas, ofreciendo herramientas para optimizar la agenda, la comunicación y el acceso a la información del paciente (con permiso del tutor)."
+    question: "Soy veterinario independiente, ¿PetSyncPro me sirve?",
+    answer: "¡Absolutamente! PetSyncPro está diseñado para ser útil tanto para veterinarios independientes como para clínicas, ofreciendo herramientas para optimizar la agenda, la comunicación y el acceso a la información del paciente (con permiso del tutor)."
   },
   {
-    question: "Soy una clínica grande, ¿cómo se integra PetSync con lo que ya tengo?",
-    answer: "PetSync está diseñado con una interfaz amigable y buscamos facilitar su adopción. Evaluaremos opciones de integración con sistemas de gestión veterinaria existentes en el futuro. ¡Contáctanos para conversar sobre tus necesidades!"
+    question: "Soy una clínica grande, ¿cómo se integra PetSyncPro con lo que ya tengo?",
+    answer: "PetSyncPro está diseñado con una interfaz amigable y buscamos facilitar su adopción. Evaluaremos opciones de integración con sistemas de gestión veterinaria existentes en el futuro. ¡Contáctanos para conversar sobre tus necesidades!"
   },
   {
-    question: "¿Está segura la información de mi mascota en PetSync?",
+    question: "¿Está segura la información de mi mascota en PetSyncPro?",
     answer: "La seguridad y privacidad de tus datos y los de tu mascota son nuestra máxima prioridad. Utilizamos medidas de seguridad estándar de la industria para proteger tu información. Podés consultar más detalles en nuestra Política de Privacidad."
   },
   {
-    question: "¿Cómo puedo contactar a PetSync si tengo más preguntas?",
+    question: "¿Cómo puedo contactar a PetSyncPro si tengo más preguntas?",
     answer: "Puedes encontrar un enlace de 'Contacto' en el pie de página de nuestro sitio o buscarnos en nuestras redes sociales. ¡Estamos aquí para ayudarte!"
   }
 ];
@@ -46,16 +46,16 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center bg-background">
       {/* Hero Section */}
-      <section className="w-full py-20 md:py-32 bg-primary text-primary-foreground">
+      <section className="w-full py-16 md:py-28 bg-primary text-primary-foreground">
         <div className="container mx-auto text-center px-4">
-          <Badge variant="secondary" className="text-sm sm:text-base py-1.5 px-4 mb-6 bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
-            La plataforma #1 para gestión veterinaria
-          </Badge>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-            Gestión veterinaria inteligente
+            PetSyncPro: el cuidado veterinario, sin el desorden de siempre.
           </h1>
-          <p className="mt-6 text-lg sm:text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto">
-            Optimiza tu clínica, mejora la atención y conecta con tus pacientes como nunca antes.
+          <p className="mt-4 text-lg sm:text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto">
+            Turnos, historiales y seguimientos organizados.
+          </p>
+          <p className="mt-2 text-md sm:text-lg md:text-xl text-primary-foreground/80 max-w-3xl mx-auto">
+            Una plataforma para clínicas. Una app para tutores.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform w-full sm:w-auto" asChild>
@@ -262,11 +262,11 @@ export default function HomePage() {
             {faqData.map((faq, index) => (
               <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow-md mb-2 border">
                 <AccordionTrigger className="px-3 sm:px-4 py-2 sm:py-3 text-left hover:no-underline flex items-center text-foreground text-sm sm:text-base">
-                  {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary shrink-0" /> }
-                  <span className="flex-1">{faq.question.replace("PetSync", "PetSyncPro")}</span>
+                  {faq.question === "¿Está segura la información de mi mascota en PetSyncPro?" && <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary shrink-0" /> }
+                  <span className="flex-1">{faq.question}</span>
                 </AccordionTrigger>
                 <AccordionContent className="px-3 sm:px-4 pb-2 sm:pb-3 text-muted-foreground text-xs sm:text-sm">
-                  {faq.answer.replace("PetSync", "PetSyncPro")}
+                  {faq.answer}
                 </AccordionContent>
               </AccordionItem>
             ))}
