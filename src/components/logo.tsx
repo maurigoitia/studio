@@ -1,5 +1,7 @@
 
+import Image from 'next/image';
 import Link from 'next/link';
+import { Smile } from 'lucide-react';
 
 export function Logo() {
   // INSTRUCCIONES PARA EL USUARIO (si decide añadir una imagen en el futuro):
@@ -14,17 +16,18 @@ export function Logo() {
 
   return (
     <Link href="/" className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors">
+      <Smile className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
       {/*
       <Image
         src={logoPath}
-        alt="PetSync Logo"
+        alt="PetSyncPro Logo"
         width={logoWidth}
         height={logoHeight}
         className="h-8 w-8 object-contain" 
         priority
       />
       */}
-      <span className="text-2xl font-bold">PetSync</span>
+      <span className="text-xl sm:text-2xl font-bold">PetSyncPro</span>
     </Link>
   );
 }

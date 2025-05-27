@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, UsersRound, Smartphone, Bot, Search, HeartPulse, ActivitySquare, Lightbulb, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn, PawPrint, HandCoins, Stethoscope, Syringe, Microscope, Pill, FileHeart, Image as ImageIcon } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
+import { BrainCircuit, CalendarClock, Users, HelpCircle, ListChecks, UsersRound, Smartphone, Bot, Search, HeartPulse, ActivitySquare, Lightbulb, BotMessageSquare, UserCog, ClipboardList, TriangleAlert, CheckCircle, BellRing, Cloud, FolderKanban, MailCheck, BarChart3, MessagesSquare, ShieldCheck, MapPin, ShoppingBag, DownloadCloud, LogIn, PawPrint, HandCoins, Stethoscope, Syringe, Microscope, Pill, FileHeart, Image as ImageIcon, Eye, MessageCircle, UserPlus, Clock, AlertTriangle, Send } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 
 const faqData = [
@@ -46,16 +46,16 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center bg-background">
       {/* Hero Section */}
-      <section className="w-full py-16 md:py-28 bg-gradient-to-br from-primary/10 via-background to-background">
+      <section className="w-full py-20 md:py-32 bg-primary text-primary-foreground">
         <div className="container mx-auto text-center px-4">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground">
-            PetSync: el cuidado veterinario, sin el desorden de siempre.
+          <Badge variant="secondary" className="text-sm sm:text-base py-1.5 px-4 mb-6 bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
+            La plataforma #1 para gestión veterinaria
+          </Badge>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
+            Gestión veterinaria inteligente
           </h1>
-          <p className="mt-6 text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Turnos, historiales y seguimientos organizados.
-          </p>
-          <p className="mt-4 text-sm sm:text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-            Una plataforma para clínicas. Una app para tutores.
+          <p className="mt-6 text-lg sm:text-xl md:text-2xl text-primary-foreground/90 max-w-3xl mx-auto">
+            Optimiza tu clínica, mejora la atención y conecta con tus pacientes como nunca antes.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg transform hover:scale-105 transition-transform w-full sm:w-auto" asChild>
@@ -68,7 +68,7 @@ export default function HomePage() {
       {/* Feature Highlights Section */}
       <section id="features" className="w-full py-12 md:py-20 bg-secondary/30">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Simplifica el Cuidado de tu Mascota con PetSync</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-10 sm:mb-12">Simplifica el Cuidado de tu Mascota con PetSyncPro</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 bg-card">
               <CardHeader className="items-center text-center md:items-start md:text-left">
@@ -105,7 +105,6 @@ export default function HomePage() {
                 <p className="text-muted-foreground mb-3 text-sm sm:text-base">
                   Prueba nuestro asistente IA para obtener respuestas generales sobre el cuidado de mascotas. ¡GIA aprende y mejora cada día!
                 </p>
-                 {/* Button to open GIA chat widget will be globally available, so no specific link here */}
                  <p className="text-sm text-primary font-medium">Busca el ícono de chat de GIA para interactuar.</p>
               </CardContent>
             </Card>
@@ -185,7 +184,7 @@ export default function HomePage() {
       <section id="como-funciona" className="w-full py-12 md:py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-10 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona PetSync?</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">¿Cómo funciona PetSyncPro?</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
             <Card className="shadow-lg border p-4 sm:p-6 bg-card">
@@ -195,7 +194,7 @@ export default function HomePage() {
               <CardContent className="p-0 space-y-3 text-muted-foreground text-sm sm:text-base">
                 <div className="flex items-start">
                     <DownloadCloud className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
-                    <p>Cuando la app PetSync esté lista, descárgala para iOS y Android. Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
+                    <p>Cuando la app PetSyncPro esté lista, descárgala para iOS y Android. Accedé fácilmente a la información de tu mascota desde cualquier dispositivo, en cualquier momento.</p>
                 </div>
                 <div className="flex items-start">
                     <ClipboardList className="h-5 w-5 mr-3 text-primary shrink-0 mt-1"/>
@@ -239,10 +238,10 @@ export default function HomePage() {
           <Card className="p-4 sm:p-6 md:p-8 shadow-xl bg-card">
             <CardContent className="p-0 text-left text-sm sm:text-base">
               <div className="space-y-4 sm:space-y-6 text-muted-foreground">
-                <p>En PetSync, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
-                <p>Por eso creamos PetSync: para transformar ese caos en calma.</p>
+                <p>En PetSyncPro, somos tutores y desarrolladores apasionados por los animales. Conocemos de primera mano el "vaivén" de la información dispersa, los papeles perdidos y la dificultad para coordinar el cuidado veterinario.</p>
+                <p>Por eso creamos PetSyncPro: para transformar ese caos en calma.</p>
                 <p>Nuestra misión es simple: conectar a tutores y veterinarias con una plataforma intuitiva que organiza historiales, simplifica la gestión y optimiza el tiempo, para que todos podamos dedicarnos a lo que realmente importa: el bienestar de nuestras mascotas.</p>
-                <p>Estamos construyendo PetSync con herramientas inteligentes como GIA, nuestra IA en desarrollo, porque creemos que la tecnología puede ser una gran aliada en el cuidado animal.</p>
+                <p>Estamos construyendo PetSyncPro con herramientas inteligentes como GIA, nuestra IA en desarrollo, porque creemos que la tecnología puede ser una gran aliada en el cuidado animal.</p>
                 <p className="mt-4 sm:mt-6 text-base sm:text-md font-semibold text-foreground">
                   Tu mascota, sus cosas, todo en orden. Para vos y para la veterinaria.
                 </p>
@@ -264,10 +263,10 @@ export default function HomePage() {
               <AccordionItem value={`item-${index}`} key={`faq-${index}`} className="bg-card rounded-lg shadow-md mb-2 border">
                 <AccordionTrigger className="px-3 sm:px-4 py-2 sm:py-3 text-left hover:no-underline flex items-center text-foreground text-sm sm:text-base">
                   {faq.question === "¿Está segura la información de mi mascota en PetSync?" && <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 mr-2 text-primary shrink-0" /> }
-                  <span className="flex-1">{faq.question}</span>
+                  <span className="flex-1">{faq.question.replace("PetSync", "PetSyncPro")}</span>
                 </AccordionTrigger>
                 <AccordionContent className="px-3 sm:px-4 pb-2 sm:pb-3 text-muted-foreground text-xs sm:text-sm">
-                  {faq.answer}
+                  {faq.answer.replace("PetSync", "PetSyncPro")}
                 </AccordionContent>
               </AccordionItem>
             ))}
@@ -280,10 +279,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">¡Estamos en versión beta!</h2>
           <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base">
-            Sumate a la waitlist para ser de los primeros en probarla y ayudarnos a construir la mejor herramienta para el cuidado de nuestras mascotas.
+            Sumate a la waitlist para ser de los primeros en probar PetSyncPro y ayudarnos a construir la mejor herramienta para el cuidado de nuestras mascotas.
           </p>
           <WaitlistForm />
-          <p className="mt-6 sm:mt-8 text-xs sm:text-sm text-muted-foreground">PetSync y GIA están en desarrollo. ¡Estamos construyendo la app que revolucionará el cuidado de tu mascota!</p>
+          <p className="mt-6 sm:mt-8 text-xs sm:text-sm text-muted-foreground">PetSyncPro y GIA están en desarrollo. ¡Estamos construyendo la app que revolucionará el cuidado de tu mascota!</p>
         </div>
       </section>
     </div>

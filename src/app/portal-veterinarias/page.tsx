@@ -4,14 +4,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb, Image as ImageIcon } from "lucide-react";
+import { CalendarCog, ClipboardCheck, MessagesSquare, ActivitySquare, BrainCircuit, UserCog, BarChartBig, ShieldCheck, UsersRound, ExternalLink, Plug, LogIn, UserPlus, Clock, AlertTriangle, Send, FolderKanban, MailCheck, Video, Briefcase, Building, DollarSign, ChevronDown, ClipboardEdit, LifeBuoy, CreditCard, FileSpreadsheet, DownloadCloud, HeartPulse, MapPin, ShoppingBag, Lightbulb, Image as ImageIcon, Sparkles, Info } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import React from "react";
 
 const GOOGLE_FORM_VET_EARLY_ACCESS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_form_id_for_petsync_vets/viewform?usp=sf_link";
 
-export default function VetPortalPage() {
+export default function VetPortalInfoPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -34,11 +34,14 @@ export default function VetPortalPage() {
         {/* Hero Section */}
         <section className="py-12 md:py-16 bg-gradient-to-br from-primary/10 via-background to-background text-center">
           <div className="container mx-auto px-4">
+            <Badge variant="secondary" className="text-sm sm:text-base py-1.5 px-4 mb-6 bg-primary-foreground/20 text-primary-foreground backdrop-blur-sm">
+              La plataforma #1 para gestión veterinaria
+            </Badge>
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-              Portal para Veterinarias: Optimiza tu Práctica, Cuida Mejor.
+              Gestión veterinaria inteligente con PetSyncPro
             </h1>
             <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-              Descubre herramientas inteligentes diseñadas para la gestión eficiente de tu clínica, la conexión fluida con tutores y el seguimiento integral de la salud de cada paciente.
+              PetSyncPro te brinda todas las herramientas que necesitas para mantener a tus pacientes saludables y felices, desde la programación de citas hasta el mantenimiento de registros médicos.
             </p>
           </div>
         </section>
@@ -46,12 +49,12 @@ export default function VetPortalPage() {
         {/* Why Choose Section */}
         <section id="why-petsync-vet" className="py-12 md:py-16 bg-secondary/30">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">¿Por qué elegir esta plataforma?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">¿Por qué elegir PetSyncPro?</h2>
             <div className="flex justify-center mb-6">
-              <Logo />
+              <Logo /> 
             </div>
             <p className="text-md md:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Nuestra plataforma está diseñada para simplificar tu día a día, permitiéndote enfocarte en la atención al paciente mientras optimizas la gestión de tu clínica y fortaleces la relación con los tutores a través de un sistema conectado e inteligente.
+              Clínicas veterinarias eligen PetSyncPro por su servicio integral, facilidad de uso y las herramientas diseñadas para optimizar su práctica diaria, permitiéndote enfocarte en la atención al paciente.
             </p>
           </div>
         </section>
@@ -62,7 +65,7 @@ export default function VetPortalPage() {
             <div className="text-center mb-10 sm:mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">Herramientas Diseñadas para tu Éxito</h2>
               <CardDescription className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-                El Portal para Veterinarias te equipará con todo lo necesario para una gestión moderna y eficiente:
+                El Portal para Veterinarias de PetSyncPro te equipará con todo lo necesario para una gestión moderna y eficiente:
               </CardDescription>
             </div>
             <div className="max-w-3xl mx-auto space-y-8">
@@ -98,7 +101,7 @@ export default function VetPortalPage() {
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-1">Gestión de Sala de Espera y Triage</h3>
                   <p className="text-muted-foreground">
-                    Organiza el flujo de pacientes espontáneos y urgencias con un sistema de priorización visual, mejorando la eficiencia y la experiencia en tu clínica (próximamente con más detalle).
+                    Organiza el flujo de pacientes espontáneos y urgencias con un sistema de priorización visual, mejorando la eficiencia y la experiencia en tu clínica.
                   </p>
                 </div>
               </div>
@@ -126,14 +129,13 @@ export default function VetPortalPage() {
                 <UsersRound className="h-12 w-12 text-primary mb-4" />
                 <h3 className="text-2xl font-bold text-foreground mb-3">Conecta con los tutores de tus pacientes</h3>
                 <p className="text-muted-foreground text-md mb-6">
-                  La app para tutores asegura una comunicación transparente y eficiente. Ellos acceden a historiales médicos compartidos, reciben recordatorios automáticos y se mantienen al tanto del cuidado de sus mascotas, facilitando una atención coordinada y reduciendo tu carga administrativa.
+                  La app PetSyncPro para tutores asegura una comunicación transparente y eficiente. Ellos acceden a historiales médicos compartidos, reciben recordatorios automáticos y se mantienen al tanto del cuidado de sus mascotas, facilitando una atención coordinada y reduciendo tu carga administrativa.
                 </p>
                  <Button variant="outline" asChild>
                     <Link href="/#tutores">Conocer más sobre la app para Tutores</Link>
                  </Button>
               </div>
               <div className="hidden lg:block p-4">
-                {/* Placeholder for an image showing the connection or app interface */}
                 <div className="bg-muted rounded-lg h-64 w-full flex items-center justify-center" data-ai-hint="app interface vet tutor">
                   <ImageIcon className="h-24 w-24 text-muted-foreground/50" />
                 </div>
@@ -146,7 +148,7 @@ export default function VetPortalPage() {
         <section id="early-access-vet" className="py-12 md:py-16 bg-primary/10">
           <div className="container mx-auto px-4 max-w-3xl text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
-              Transforma tu Clínica: Solicita una Demostración o Únete al Programa de Acceso Anticipado
+              Transforma tu Clínica: Solicita una Demostración o Únete al Programa de Acceso Anticipado de PetSyncPro
             </h2>
             <p className="text-muted-foreground mb-8 text-lg">
               Descubre cómo esta plataforma puede revolucionar tu práctica diaria. Regístrate para obtener acceso temprano y ayúdanos a construir la herramienta perfecta para tus necesidades.
@@ -173,12 +175,12 @@ export default function VetPortalPage() {
             <div className="container mx-auto px-4 max-w-xl text-center">
                 <h2 className="text-2xl font-bold text-foreground mb-4">¿Preguntas? Contáctanos</h2>
                 <CardDescription className="text-muted-foreground mb-6">
-                    Si tienes alguna duda sobre el Portal para Veterinarias o el programa de acceso temprano, no dudes en escribirnos.
+                    Si tienes alguna duda sobre el Portal para Veterinarias de PetSyncPro o el programa de acceso temprano, no dudes en escribirnos.
                 </CardDescription>
                 <Button variant="outline" asChild>
                     <Link href="mailto:soporte-vets@petsync.example.com">Enviar un Email</Link>
                 </Button>
-                 <p className="text-xs text-muted-foreground mt-4">(Email de ejemplo: soporte-vets@petsync.example.com)</p>
+                 <p className="text-xs text-muted-foreground mt-4">(Email de ejemplo: soporte-vets@petsyncpro.example.com)</p>
             </div>
         </section>
       </main>
@@ -186,7 +188,7 @@ export default function VetPortalPage() {
       {/* Page-specific simple footer */}
       <footer className="border-t bg-background">
         <div className="container py-8 px-4 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} PetSync. Todos los derechos reservados.</p>
+          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} PetSyncPro. Todos los derechos reservados.</p>
           <div className="mt-4 sm:mt-0">
              <Link href="#" className="text-sm text-muted-foreground hover:text-primary">
               Centro de ayuda (Próximamente)
@@ -197,5 +199,3 @@ export default function VetPortalPage() {
     </div>
   );
 }
-
-    
