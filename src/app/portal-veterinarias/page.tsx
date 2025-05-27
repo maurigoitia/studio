@@ -44,7 +44,7 @@ export default function VetPortalPage() {
         </section>
 
         {/* Why Choose Section */}
-        <section id="why-petsync-vet" className="py-12 md:py-16 bg-background">
+        <section id="why-petsync-vet" className="py-12 md:py-16 bg-secondary/30">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">¿Por qué elegir esta plataforma?</h2>
             <div className="flex justify-center mb-6">
@@ -57,7 +57,7 @@ export default function VetPortalPage() {
         </section>
 
         {/* Key Features Section - More Narrative */}
-        <section id="features-vet-portal" className="py-12 md:py-16 bg-secondary/30">
+        <section id="features-vet-portal" className="py-12 md:py-16 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10 sm:mb-12">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">Herramientas Diseñadas para tu Éxito</h2>
@@ -119,7 +119,7 @@ export default function VetPortalPage() {
         </section>
         
         {/* Connect with Pet Owners Section */}
-        <section id="connect-tutores-vet" className="py-12 md:py-16 bg-background">
+        <section id="connect-tutores-vet" className="py-12 md:py-16 bg-secondary/30">
           <div className="container mx-auto px-4">
             <Card className="shadow-xl overflow-hidden lg:grid lg:grid-cols-2 lg:items-center bg-card">
               <div className="p-6 sm:p-8 lg:p-10">
