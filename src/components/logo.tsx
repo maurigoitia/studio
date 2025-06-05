@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 
 import Image from 'next/image';
+=======
+>>>>>>> 175e358 (saca lo del asistnbte de ia usa la parte el desorden de siempre , aca la)
 import Link from 'next/link';
 
 export function Logo() {
@@ -15,6 +18,7 @@ export function Logo() {
   const logoIntrinsicHeight = 32; // Alto intrínseco de tu imagen de logo
 
   return (
+<<<<<<< HEAD
     <Link href="/" className="flex items-center gap-2 group">
       <Image
         src={logoPath}
@@ -27,6 +31,8 @@ export function Logo() {
       <span className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
         PetSync
       </span>
-    </Link>
-  );
-}
+=======
+    <Link href="/" className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors">
+      <span className="text-2xl font-bold">PetSync</span>
+>>>>>>> 
+

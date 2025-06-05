@@ -4,9 +4,12 @@
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
+<<<<<<< HEAD
 import { Brain, LayoutDashboard, Menu, Lightbulb, LogIn } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import * as React from "react";
+=======
+>>>>>>> 175e358 (saca lo del asistnbte de ia usa la parte el desorden de siempre , aca la)
 
 export default function Header() {
   return (
@@ -23,11 +26,17 @@ export default function Header() {
           <Button variant="ghost" asChild>
             <Link href="/#faq">Preguntas Frecuentes</Link>
           </Button>
+<<<<<<< HEAD
           {/* GIA Chat button removed from here */}
           <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
             <Link href="/portal-veterinarias">
               <LogIn className="mr-2 h-5 w-5" />
               Portal Veterinarias
+=======
+          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Link href="/#waitlist">
+              Únete a la Waitlist
+>>>>>>> 175e358 (saca lo del asistnbte de ia usa la parte el desorden de siempre , aca la)
             </Link>
           </Button>
         </nav>
