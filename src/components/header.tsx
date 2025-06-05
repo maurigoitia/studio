@@ -8,18 +8,9 @@ export default function Header() {
       <div className="container flex h-16 items-center justify-between">
         <Logo />
         <nav className="flex items-center gap-4">
-          <Button variant="ghost" asChild>
-            <Link href="/#tutores">Para Tutores</Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link href="/#veterinarios">Para Veterinarios</Link>
-          </Button>
-          <Button variant="ghost" asChild>
-            <Link href="/#faq">Preguntas Frecuentes</Link>
-          </Button>
-          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+          <Button asChild className="bg-blue-600 hover:bg-blue-700 text-white">
             <Link href="/#waitlist">
-              Únete a la Waitlist
+              Sumate a la Waitlist
             </Link>
           </Button>
         </nav>
