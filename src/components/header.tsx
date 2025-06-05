@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
-import { Stethoscope, Users } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -18,10 +17,9 @@ export default function Header() {
           <Button variant="ghost" asChild>
             <Link href="/#faq">Preguntas Frecuentes</Link>
           </Button>
-          <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-            <Link href="/asistente-medico">
-              Asistente IA
-              <Stethoscope className="ml-2 h-4 w-4" />
+          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Link href="/#waitlist">
+              Únete a la Waitlist
             </Link>
           </Button>
         </nav>
